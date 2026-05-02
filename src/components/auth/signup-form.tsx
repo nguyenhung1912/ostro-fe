@@ -2,10 +2,10 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "./ui/label";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Label } from "../ui/label";
 
 const signUpSchema = z.object({
   firstname: z.string().min(1, "Tên bắt buộc phải có"),
@@ -17,7 +17,7 @@ const signUpSchema = z.object({
 
 type SignUpFormValues = z.infer<typeof signUpSchema>;
 
-export function SignupForm({
+export function SignUpForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
@@ -46,7 +46,9 @@ export function SignupForm({
                 </a>
 
                 <h1 className="text-2xl font-bold">Tạo tài khoản Ostro</h1>
-                <p className="text-muted-foreground text-balance"></p>
+                <p className="text-muted-foreground text-balance">
+                  Chào mừng bạn! Hãy đăng ký để bắt đầu!
+                </p>
               </div>
 
               {/* name */}
