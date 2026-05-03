@@ -37,6 +37,8 @@ clearState: () => {
       const { accessToken } = await authService.signIn(username, password);
       set({ accessToken });
 
+      await get().fetchMe();
+      
       toast.success("Chào mừng bạn quay lại với Ostro");
     } catch (error) {
       console.error(error);
@@ -54,6 +56,22 @@ clearState: () => {
     } catch (error) {
         console.error(error);
         toast.error("Lỗi xảy ra khi đăng xuất. Hãy thử lại")
+    } finally {
+      set({loading: false})
+    }
+  },
+
+  fetchMe: async () => {
+    try {
+      set({loading: true});
+      const user = await authService.fetchMe();
+      set({user})
+    } catch (error) {
+      console.error(error);
+      set({user: null, accessToken: null});
+      toast.error("Lỗi xảy ra khi lấy dữ liệu người dùng. Hãy thử lại!")
+    } finally {
+      set({loading: false})
     }
   }
 }));
