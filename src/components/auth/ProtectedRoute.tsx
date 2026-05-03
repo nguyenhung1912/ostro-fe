@@ -1,29 +1,18 @@
 import { useAuthStore } from "@/stores/useAuthStore";
-import { useEffect, useState } from "react";
-import { Navigate, Outlet } from "react-router";
+import { useEffect } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute = () => {
-  const { accessToken, user, loading, refresh, fetchMe } = useAuthStore();
-  const [starting, setStarting] = useState(true);
-
-  const init = async () => {
-    if (!accessToken) {
-      await refresh();
-    }
-
-    if (accessToken && !user) {
-      await fetchMe();
-    }
-
-    setStarting(false);
-  };
+  const accessToken = useAuthStore((s) => s.accessToken);
+  const loading = useAuthStore((s) => s.loading);
+  const authChecked = useAuthStore((s) => s.authChecked);
+  const initializeAuth = useAuthStore((s) => s.initializeAuth);
 
   useEffect(() => {
-    init();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    void initializeAuth();
+  }, [initializeAuth]);
 
-  if (starting || loading) {
+  if (!authChecked || loading) {
     return (
       <div className="flex h-screen items-center justify-center">
         Đang tải trang...
@@ -34,6 +23,6 @@ const ProtectedRoute = () => {
   if (!accessToken) {
     return <Navigate to="/signin" replace />;
   }
-  return <Outlet></Outlet>;
+  return <Outlet />;
 };
 export default ProtectedRoute;
