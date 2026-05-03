@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "../ui/label";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 
 const signUpSchema = z.object({
   firstname: z.string().min(1, "Tên bắt buộc phải có"),
@@ -23,7 +23,7 @@ export function SignUpForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const { signUp } = useAuthStore();
+  const signUp = useAuthStore((s) => s.signUp);
   const navigate = useNavigate();
   const {
     register,
@@ -36,10 +36,10 @@ export function SignUpForm({
   const onSubmit = async (data: SignUpFormValues) => {
     const { firstname, lastname, username, email, password } = data;
 
-    // call API sign up
-    await signUp(username, password, email, firstname, lastname);
-
-    navigate("/signin");
+    const signedUp = await signUp(username, password, email, firstname, lastname);
+    if (signedUp) {
+      navigate("/signin");
+    }
   };
 
   return (
@@ -50,9 +50,9 @@ export function SignUpForm({
             <div className="flex flex-col gap-6">
               {/* header - logo*/}
               <div className="flex flex-col items-center text-center gap-2">
-                <a href="/" className="mx-auto block w-fit text-center">
+                <Link to="/" className="mx-auto block w-fit text-center">
                   <img src="/logo.svg" alt="logo" />
-                </a>
+                </Link>
 
                 <h1 className="text-2xl font-bold">Tạo tài khoản Ostro</h1>
                 <p className="text-muted-foreground text-balance">
@@ -155,9 +155,9 @@ export function SignUpForm({
 
               <div className="text-center text-sm">
                 Đã có tài khoản? {""}
-                <a href="/signin" className="underline underline-offset-4">
+                <Link to="/signin" className="underline underline-offset-4">
                   Đăng nhập
-                </a>
+                </Link>
               </div>
             </div>
           </form>

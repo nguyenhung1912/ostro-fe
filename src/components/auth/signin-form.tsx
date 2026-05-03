@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "../ui/label";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 
 const signInSchema = z.object({
   username: z.string().min(3, "Tên đăng nhập phải có ít nhất 3 ký tự"),
@@ -20,7 +20,7 @@ export function SignInForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const { signIn } = useAuthStore();
+  const signIn = useAuthStore((s) => s.signIn);
   const navigate = useNavigate();
   const {
     register,
@@ -32,8 +32,10 @@ export function SignInForm({
 
   const onSubmit = async (data: SignInFormValues) => {
     const { username, password } = data;
-    await signIn(username, password);
-    navigate("/");
+    const signedIn = await signIn(username, password);
+    if (signedIn) {
+      navigate("/");
+    }
   };
 
   return (
@@ -44,9 +46,9 @@ export function SignInForm({
             <div className="flex flex-col gap-6">
               {/* header - logo*/}
               <div className="flex flex-col items-center text-center gap-2">
-                <a href="/" className="mx-auto block w-fit text-center">
+                <Link to="/" className="mx-auto block w-fit text-center">
                   <img src="/logo.svg" alt="logo" />
-                </a>
+                </Link>
 
                 <h1 className="text-2xl font-bold">Chào mừng quay lại</h1>
                 <p className="text-muted-foreground text-balance">
@@ -98,9 +100,9 @@ export function SignInForm({
 
               <div className="text-center text-sm">
                 Chưa có tài khoản? {""}
-                <a href="/signup" className="underline underline-offset-4">
+                <Link to="/signup" className="underline underline-offset-4">
                   Đăng ký
-                </a>
+                </Link>
               </div>
             </div>
           </form>
