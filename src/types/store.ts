@@ -1,4 +1,4 @@
-import type { User } from "./User";
+import type { User } from "./user";
 
 export interface AuthState {
   accessToken: string | null;
@@ -16,4 +16,5 @@ export interface AuthState {
   ) => Promise<void>;
   signIn: (username: string, password: string) => Promise<void>;
   signOut: () => Promise<void>
+  fetchMe: () => Promise<void>
 }
