@@ -1,9 +1,6 @@
 import { useAuthStore } from "@/stores/useAuthStore";
+import type { AccessTokenResponse } from "@/types/store";
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
-
-interface AccessTokenResponse {
-  accessToken: string;
-}
 
 type RetryableRequestConfig = InternalAxiosRequestConfig & {
   _isRetry?: boolean;
@@ -32,7 +29,7 @@ api.interceptors.request.use((config) => {
 const getFreshAccessToken = () => {
   if (!refreshTokenRequest) {
     refreshTokenRequest = api
-      .post<AccessTokenResponse>("/auth/refresh", {}, { withCredentials: true })
+      .post<AccessTokenResponse>("/auth/refresh")
       .then((res) => res.data.accessToken)
       .finally(() => {
         refreshTokenRequest = null;
