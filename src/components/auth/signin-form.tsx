@@ -99,7 +99,7 @@ export function SignInForm({
               </Button>
 
               <div className="text-center text-sm">
-                Chưa có tài khoản? {""}
+                Chưa có tài khoản?{" "}
                 <Link to="/signup" className="underline underline-offset-4">
                   Đăng ký
                 </Link>

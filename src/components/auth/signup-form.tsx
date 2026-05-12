@@ -36,7 +36,13 @@ export function SignUpForm({
   const onSubmit = async (data: SignUpFormValues) => {
     const { firstname, lastname, username, email, password } = data;
 
-    const signedUp = await signUp(username, password, email, firstname, lastname);
+    const signedUp = await signUp(
+      username,
+      password,
+      email,
+      firstname,
+      lastname,
+    );
     if (signedUp) {
       navigate("/signin");
     }
@@ -154,7 +160,7 @@ export function SignUpForm({
               </Button>
 
               <div className="text-center text-sm">
-                Đã có tài khoản? {""}
+                Đã có tài khoản?{" "}
                 <Link to="/signin" className="underline underline-offset-4">
                   Đăng nhập
                 </Link>

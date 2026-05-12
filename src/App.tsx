@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import ChatAppPage from "./pages/ChatAppPage";
@@ -18,6 +18,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<ChatAppPage />} />
           </Route>
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </>

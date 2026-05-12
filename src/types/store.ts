@@ -1,5 +1,13 @@
 import type { User } from "./user";
 
+export interface AccessTokenResponse {
+  accessToken: string;
+}
+
+export interface FetchMeResponse {
+  user: User;
+}
+
 export interface FetchMeOptions {
   showErrorToast?: boolean;
 }
