@@ -82,6 +82,8 @@ export const useAuthStore = create<AuthState>()(
           }
 
           explicitSignOut.clear();
+          useChatStore.getState().fetchConversations();
+
           authToast.success("Chào mừng bạn quay lại với Ostro");
           return true;
         } catch (error) {
