@@ -6,6 +6,7 @@ import {
   explicitSignOut,
   getAuthErrorMessage,
 } from "@/lib/authUtils";
+import { clearPersistedSessionState } from "@/lib/sessionState";
 import { persist } from "zustand/middleware";
 import { useChatStore } from "./useChatStore";
 
@@ -30,8 +31,8 @@ export const useAuthStore = create<AuthState>()(
           loading: false,
           authChecked: true,
         });
-        localStorage.clear();
         useChatStore.getState().reset();
+        clearPersistedSessionState();
       },
 
       signUp: async (username, password, email, firstName, lastName) => {
@@ -67,7 +68,7 @@ export const useAuthStore = create<AuthState>()(
         try {
           set({ loading: true });
 
-          localStorage.clear();
+          clearPersistedSessionState();
           useChatStore.getState().reset();
 
           const { accessToken } = await authService.signIn(username, password);
