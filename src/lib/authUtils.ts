@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "sonner";
+import { EXPLICIT_SIGN_OUT_KEY } from "@/lib/storageKeys";
 
 const AUTH_TOAST_ID = "auth-status";
-const EXPLICIT_SIGN_OUT_KEY = "ostro-explicit-sign-out";
 
 export const explicitSignOut = {
   check: (): boolean => {
