@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 
 export const useChatStore = create<ChatState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       conversations: [],
       messages: {},
       activeConversationId: null,
@@ -22,16 +22,15 @@ export const useChatStore = create<ChatState>()(
       },
       fetchConversations: async () => {
         try {
-          set({loading: true});
-          const {conversations} = await chatService.fetchConversations();
+          set({ loading: true });
+          const { conversations } = await chatService.fetchConversations();
 
-          set({conversations, loading: false});
+          set({ conversations, loading: false });
         } catch (error) {
           console.error("Lỗi khi fetchConversations:", error);
-          set({loading: false});
-          
+          set({ loading: false });
         }
-      }
+      },
     }),
     {
       name: "chat-storage",
