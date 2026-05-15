@@ -32,6 +32,8 @@ export const useAuthStore = create<AuthState>()(
           authChecked: true,
         });
         useChatStore.getState().reset();
+        localStorage.clear();
+        sessionStorage.clear();
         clearPersistedSessionState();
       },
 
@@ -66,6 +68,7 @@ export const useAuthStore = create<AuthState>()(
 
       signIn: async (username, password) => {
         try {
+          get().clearState();
           set({ loading: true });
 
           clearPersistedSessionState();
