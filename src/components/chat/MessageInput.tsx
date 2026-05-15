@@ -17,20 +17,20 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
 
   const sendMessage = async () => {
     if (!value.trim()) return;
+    const currentValue = value;
+    setValue("");
 
     try {
       if (selectedConvo.type === "direct") {
         const participants = selectedConvo.participants;
         const otherUser = participants.filter((p) => p._id !== user._id)[0];
-        await sendDirectMessage(otherUser._id, value);
+        await sendDirectMessage(otherUser._id, currentValue);
       } else {
-        await sendGroupMessage(selectedConvo._id, value);
+        await sendGroupMessage(selectedConvo._id, currentValue);
       }
     } catch (error) {
       console.error(error);
       toast.error("Lỗi xảy ra khi gửi tin nhắn. Bạn hãy thử lại!");
-    } finally {
-      setValue("");
     }
   };
 
@@ -53,7 +53,7 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
 
       <div className="flex-1 relative">
         <Input
-          onKeyDown={handleKeyPress}
+          onKeyPress={handleKeyPress}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Soạn tin nhắn..."
