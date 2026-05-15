@@ -23,7 +23,7 @@ const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
         className="bg-transparent border-none shadow-none drop-shadow-none mb-12"
       >
         <Picker
-          them={isDark ? "dark" : "light"}
+          theme={isDark ? "dark" : "light"}
           data={data}
           onEmojiSelect={(emoji: any) => onChange(emoji.native)}
           emojiSize={24}
