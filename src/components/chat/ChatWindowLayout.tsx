@@ -4,26 +4,25 @@ import ChatWindowSkeleton from "./ChatWindowSkeleton";
 import { SidebarInset } from "../ui/sidebar";
 import ChatWindowHeader from "./ChatWindowHeader";
 import ChatWindowBody from "./ChatWindowBody";
-import MessagesInput from "./MessageInput";
+import MessageInput from "./MessageInput";
 
 const ChatWindowLayout = () => {
   const {
     activeConversationId,
     conversations,
     messageLoading: loading,
-    messages,
   } = useChatStore();
 
-  const selectdConvo =
+  const selectedConvo =
     conversations.find((c) => c._id === activeConversationId) ?? null;
 
-  if (!selectdConvo) return <ChatWelcomeScreen />;
+  if (!selectedConvo) return <ChatWelcomeScreen />;
 
   if (loading) return <ChatWindowSkeleton />;
   return (
     <SidebarInset className="flex flex-col h-full flex-1 overflow-hidden rounded-sm shadow-md">
       {/* Header */}
-      <ChatWindowHeader />
+      <ChatWindowHeader chat={selectedConvo} />
 
       {/* Body */}
       <div className="flex-1 overflow-y-auto bg-primary-foreground">
@@ -31,7 +30,7 @@ const ChatWindowLayout = () => {
       </div>
 
       {/* Footer */}
-      <MessageInput />
+      <MessageInput selectedConvo={selectedConvo} />
     </SidebarInset>
   );
 };

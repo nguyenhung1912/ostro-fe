@@ -1,6 +1,6 @@
 import type { Participant } from "@/types/chat";
 import UserAvatar from "./UserAvatar";
-import { Ellipse } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 
 interface GroupChatAvatarProps {
   participants: Participant[];
@@ -32,7 +32,7 @@ const GroupChatAvatar = ({ participants, type }: GroupChatAvatarProps) => {
           className="flex items-center z-10 justify-center size-8 
           rounded-full bg-muted ring-2 ring-background text-muted-foreground"
         >
-          <Ellipse className="size-4" />
+          <Ellipsis className="size-4" />
         </div>
       )}
     </div>
