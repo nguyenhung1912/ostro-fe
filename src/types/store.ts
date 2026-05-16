@@ -59,6 +59,7 @@ export interface ChatState {
   activeConversationId: string | null;
   convoLoading: boolean;
   messageLoading: boolean;
+  loading: boolean;
   reset: () => void;
 
   setActiveConversation: (id: string | null) => void;
@@ -77,7 +78,9 @@ export interface ChatState {
   // add message
   addMessage: (message: Message) => Promise<void>;
   // update conversation
-  updateConversation: (conversation: Conversation) => void;
+  updateConversation: (
+    conversation: Partial<Conversation> & { _id: string },
+  ) => void;
   markAsSeen: () => Promise<void>;
   addConvo: (convo: Conversation) => void;
   createConversation: (
