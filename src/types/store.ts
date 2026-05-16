@@ -60,19 +60,19 @@ export interface ChatState {
   convoLoading: boolean;
   messageLoading: boolean;
   reset: () => void;
-  
+
   setActiveConversation: (id: string | null) => void;
   fetchConversations: () => Promise<void>;
   fetchMessages: (conversationId?: string) => Promise<void>;
   sendDirectMessage: (
     receipientId: string,
     content: string,
-    imgUrl?: string
+    imgUrl?: string,
   ) => Promise<void>;
   sendGroupMessage: (
     conversationId: string,
     content: string,
-    imgUrl: string
+    imgUrl: string,
   ) => Promise<void>;
   // add message
   addMessage: (message: Message) => Promise<void>;
@@ -86,4 +86,10 @@ export interface SocketState {
   onlineUsers: string[];
   connectSocket: () => void;
   disconnectSocket: () => void;
+}
+
+export interface FriendState {
+  loading: boolean;
+  searchByUsername: (username: string) => Promise<User | null>;
+  addFriend: (to: string, message?: string) => Promise<string>;
 }
