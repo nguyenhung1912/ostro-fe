@@ -6,7 +6,7 @@ interface FetchMessageProps {
   cursor?: string;
 }
 
-const pageLimit = 20;
+const pageLimit = 50;
 
 export const chatService = {
   async fetchConversations(): Promise<ConversationResponse> {
@@ -21,24 +21,47 @@ export const chatService = {
     return { messages: res.data.messages, cursor: res.data.nextCursor };
   },
 
-  async sendDirectMessage(recipientId: string, content: string = "", imgUrl?: string, conversationId?: string){
+  async sendDirectMessage(
+    recipientId: string,
+    content: string = "",
+    imgUrl?: string,
+    conversationId?: string,
+  ) {
     const res = await api.post("/messages/direct", {
-      recipientId, content, imgUrl, conversationId
-    })
+      recipientId,
+      content,
+      imgUrl,
+      conversationId,
+    });
 
     return res.data.message;
   },
 
-  async sendGroupMessage(conversationId: string, content: string = "", imgUrl?: string) {
+  async sendGroupMessage(
+    conversationId: string,
+    content: string = "",
+    imgUrl?: string,
+  ) {
     const res = await api.post("/messages/group", {
-      conversationId, content, imgUrl,
+      conversationId,
+      content,
+      imgUrl,
     });
-    
+
     return res.data.message;
   },
 
   async markAsSeen(conversationId: string) {
     const res = await api.patch(`/conversations/${conversationId}/seen`);
-    return res.data
-  }
+    return res.data;
+  },
+
+  async createConversation(
+    type: "direct" | "group",
+    name: string,
+    memberIds: string[],
+  ) {
+    const res = await api.post("/conversations", { type, name, memberIds });
+    return res.data.conversation;
+  },
 };

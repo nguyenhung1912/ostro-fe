@@ -3,6 +3,7 @@ import type { ChatState } from "@/types/store";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { useAuthStore } from "./useAuthStore";
+import { useSocketStore } from "./useSocketStore";
 
 export const useChatStore = create<ChatState>()(
   persist(
@@ -155,7 +156,7 @@ export const useChatStore = create<ChatState>()(
         }
       },
 
-      updateConversation: async (conversation) => {
+      updateConversation: (conversation) => {
         set((state) => ({
           conversations: state.conversations.map((c) =>
             c._id === conversation._id ? { ...c, ...conversation } : c,
@@ -165,12 +166,14 @@ export const useChatStore = create<ChatState>()(
 
       markAsSeen: async () => {
         try {
-          const { user } = useAuthStore.getState(); 
-          const {activeConversationId, conversations} = get();
+          const { user } = useAuthStore.getState();
+          const { activeConversationId, conversations } = get();
 
           if (!activeConversationId || !user) return;
 
-          const convo = conversations.find((c) => c._id === activeConversationId);
+          const convo = conversations.find(
+            (c) => c._id === activeConversationId,
+          );
 
           if (!convo) return;
 
@@ -179,21 +182,55 @@ export const useChatStore = create<ChatState>()(
           await chatService.markAsSeen(activeConversationId);
 
           set((state) => ({
-            conversations: state.conversations.map((c) => (
-              c._id === activeConversationId && c.lastMessage ? {
-                ...c,
-                unreadCounts: {
-                  ...c.unreadCounts,
-                  [user._id]: 0
-                }
-              }
-              : c
-            ))
-          }))
+            conversations: state.conversations.map((c) =>
+              c._id === activeConversationId && c.lastMessage
+                ? {
+                    ...c,
+                    unreadCounts: {
+                      ...c.unreadCounts,
+                      [user._id]: 0,
+                    },
+                  }
+                : c,
+            ),
+          }));
         } catch (error) {
-          console.error("Lỗi xảy ra khi gọi markAsSeen trong store", error);   
+          console.error("Lỗi xảy ra khi gọi markAsSeen trong store", error);
         }
-      }
+      },
+
+      addConvo: (convo) => {
+        set((state) => {
+          const exists = state.conversations.some(
+            (c) => c._id.toString() === convo._id.toString(),
+          );
+
+          return {
+            conversations: exists
+              ? state.conversations
+              : [convo, ...state.conversations],
+            activeConversationId: convo._id,
+          };
+        });
+      },
+
+      createConversation: async (type, name, memberIds) => {
+        try {
+          const conversation = await chatService.createConversation(
+            type,
+            name,
+            memberIds,
+          );
+
+          get().addConvo(conversation);
+
+          useSocketStore
+            .getState()
+            .socket?.emit("join-conversation", conversation._id);
+        } catch (error) {
+          console.error("Lỗi khi gọi createConversation trong store", error);
+        }
+      },
     }),
     {
       name: "chat-storage",
