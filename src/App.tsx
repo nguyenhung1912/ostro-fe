@@ -24,7 +24,7 @@ function App() {
     }
 
     return () => disconnectSocket();
-  }, [accessToken]);
+  }, [accessToken, connectSocket, disconnectSocket]);
 
   return (
     <>
