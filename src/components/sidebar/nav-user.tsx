@@ -21,7 +21,7 @@ import { ChevronsUpDownIcon, SparklesIcon, UserIcon, Bell } from "lucide-react";
 import Logout from "../auth/Logout";
 import { useState } from "react";
 import FriendRequestDialog from "../friendRequest/FriendRequestDialog";
-import ProfileDialog from "../profile/ProfileDialog";
+import ProfileDialog from "../profile/frontend/src/components/profile/ProfileDialog";
 
 export function NavUser({ user }: { user: User }) {
   const { isMobile } = useSidebar();
