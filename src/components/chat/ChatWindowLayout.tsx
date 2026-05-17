@@ -1,22 +1,28 @@
-import { useChatStore } from "@/stores/useChatStore";
-import ChatWelcomeScreen from "./ChatWelcomeScreen";
-import ChatWindowSkeleton from "./ChatWindowSkeleton";
-import { SidebarInset } from "../ui/sidebar";
-import ChatWindowHeader from "./ChatWindowHeader";
-import ChatWindowBody from "./ChatWindowBody";
-import MessageInput from "./MessageInput";
 import { useEffect } from "react";
+import { useChatStore } from "@/stores/useChatStore";
+import { SidebarInset } from "../ui/sidebar";
+import ChatWindowSkeleton from "../skeleton/ChatWindowSkeleton";
+import ChatWelcomeScreen from "./ChatWelcomeScreen";
+import ChatWindowBody from "./ChatWindowBody";
+import ChatWindowHeader from "./ChatWindowHeader";
+import MessageInput from "./MessageInput";
 
 const ChatWindowLayout = () => {
   const {
     activeConversationId,
     conversations,
-    messageLoading: loading,
     markAsSeen,
+    messageLoading,
+    messages,
   } = useChatStore();
 
   const selectedConvo =
-    conversations.find((c) => c._id === activeConversationId) ?? null;
+    conversations.find(
+      (conversation) => conversation._id === activeConversationId,
+    ) ?? null;
+  const selectedMessages = selectedConvo
+    ? (messages[selectedConvo._id]?.items ?? [])
+    : [];
 
   useEffect(() => {
     if (!selectedConvo) return;
@@ -34,20 +40,21 @@ const ChatWindowLayout = () => {
 
   if (!selectedConvo) return <ChatWelcomeScreen />;
 
-  if (loading) return <ChatWindowSkeleton />;
+  if (messageLoading && selectedMessages.length === 0) {
+    return <ChatWindowSkeleton />;
+  }
+
   return (
-    <SidebarInset className="flex flex-col h-full flex-1 overflow-hidden rounded-sm shadow-md">
-      {/* Header */}
+    <SidebarInset className="flex h-full flex-1 flex-col overflow-hidden rounded-sm shadow-md">
       <ChatWindowHeader chat={selectedConvo} />
 
-      {/* Body */}
       <div className="flex-1 overflow-y-auto bg-primary-foreground">
         <ChatWindowBody />
       </div>
 
-      {/* Footer */}
       <MessageInput selectedConvo={selectedConvo} />
     </SidebarInset>
   );
 };
+
 export default ChatWindowLayout;
