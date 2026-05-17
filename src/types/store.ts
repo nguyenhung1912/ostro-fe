@@ -74,7 +74,7 @@ export interface ChatState {
   sendGroupMessage: (
     conversationId: string,
     content: string,
-    imgUrl: string,
+    imgUrl?: string,
   ) => Promise<void>;
   // add message
   addMessage: (message: Message) => Promise<void>;
