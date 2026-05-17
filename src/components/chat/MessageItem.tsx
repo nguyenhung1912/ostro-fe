@@ -30,7 +30,7 @@ const MessageItem = ({
   const isGroupBreak = isShowTime || message.senderId !== prev?.senderId;
 
   const participant = selectedConvo.participants.find(
-    (p: Participant) => p._id.toString() === message._id.toString(),
+    (p: Participant) => p._id.toString() === message.senderId.toString(),
   );
   return (
     <>
@@ -62,10 +62,10 @@ const MessageItem = ({
 
         {/* message */}
         <div
-          className={
-            (cn("max-w-xs lg:max-w-md space-y-1 flex flex-col"),
-            message.isOwn ? "items-end" : "items-start")
-          }
+          className={cn(
+            "max-w-xs lg:max-w-md space-y-1 flex flex-col",
+            message.isOwn ? "items-end" : "items-start",
+          )}
         >
           <Card
             className={cn(
