@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { authService } from "@/services/authService";
 import type { AuthState, FetchMeOptions, RefreshOptions } from "@/types/store";
 import {
@@ -6,8 +7,10 @@ import {
   explicitSignOut,
   getAuthErrorMessage,
 } from "@/lib/authUtils";
-import { clearPersistedSessionState } from "@/lib/sessionState";
-import { persist } from "zustand/middleware";
+import {
+  clearChatScrollSessionState,
+  clearPersistedSessionState,
+} from "@/lib/sessionState";
 import { useChatStore } from "./useChatStore";
 
 let authInitializationPromise: Promise<void> | null = null;
@@ -35,10 +38,10 @@ export const useAuthStore = create<AuthState>()(
           loading: false,
           authChecked: true,
         });
+
         useChatStore.getState().reset();
-        localStorage.clear();
-        sessionStorage.clear();
         clearPersistedSessionState();
+        clearChatScrollSessionState();
       },
 
       signUp: async (username, password, email, firstName, lastName) => {
@@ -110,6 +113,7 @@ export const useAuthStore = create<AuthState>()(
 
       signOut: async () => {
         set({ loading: true });
+
         try {
           await authService.signOut();
           authToast.success("Đăng xuất thành công");
@@ -131,11 +135,13 @@ export const useAuthStore = create<AuthState>()(
           return true;
         } catch {
           set({ user: null, accessToken: null, authChecked: true });
+
           if (showErrorToast) {
             authToast.error(
               "Lỗi xảy ra khi lấy dữ liệu người dùng. Hãy thử lại!",
             );
           }
+
           return false;
         } finally {
           set({ loading: false });
@@ -165,6 +171,7 @@ export const useAuthStore = create<AuthState>()(
               "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!",
             );
           }
+
           get().clearState();
           return false;
         } finally {
