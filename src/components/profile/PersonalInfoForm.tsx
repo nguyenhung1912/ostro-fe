@@ -1,16 +1,16 @@
 import { Heart } from "lucide-react";
+import type { User } from "@/types/user";
+import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import type { User } from "@/types/user";
 
 type EditableField = {
   key: keyof Pick<User, "displayName" | "username" | "email" | "phone">;
@@ -40,12 +40,17 @@ const PersonalInfoForm = ({ userInfo }: Props) => {
           Thông tin cá nhân
         </CardTitle>
         <CardDescription>
-          Cập nhật chi tiết cá nhân và thông tin hồ sơ của bạn
+          Cập nhật hồ sơ chi tiết sẽ được bổ sung sau. Các trường dưới đây hiện
+          ở chế độ chỉ xem.
         </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="rounded-lg border border-border/30 bg-background/40 p-3 text-sm text-muted-foreground">
+          Hiện tại chỉ hỗ trợ cập nhật ảnh đại diện trong thẻ hồ sơ phía trên.
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {PERSONAL_FIELDS.map(({ key, label, type }) => (
             <div key={key} className="space-y-2">
               <Label htmlFor={key}>{label}</Label>
@@ -53,7 +58,7 @@ const PersonalInfoForm = ({ userInfo }: Props) => {
                 id={key}
                 type={type ?? "text"}
                 value={userInfo[key] ?? ""}
-                onChange={() => {}}
+                readOnly
                 className="glass-light border-border/30"
               />
             </div>
@@ -66,13 +71,13 @@ const PersonalInfoForm = ({ userInfo }: Props) => {
             id="bio"
             rows={3}
             value={userInfo.bio ?? ""}
-            onChange={() => {}}
-            className="glass-light border-border/30 resize-none"
+            readOnly
+            className="glass-light resize-none border-border/30"
           />
         </div>
 
-        <Button className="w-full md:w-auto bg-gradient-primary hover:opacity-90 transition-opacity">
-          Lưu thay đổi
+        <Button variant="outline" disabled className="w-full md:w-auto">
+          Chỉnh sửa hồ sơ sẽ được hỗ trợ sau
         </Button>
       </CardContent>
     </Card>
