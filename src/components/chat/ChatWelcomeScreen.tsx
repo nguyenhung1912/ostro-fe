@@ -3,14 +3,14 @@ import ChatWindowHeader from "./ChatWindowHeader";
 
 const ChatWelcomeScreen = () => {
   return (
-    <SidebarInset className="flex w-ull h-full bg-transparent">
+    <SidebarInset className="flex h-full w-full bg-transparent">
       <ChatWindowHeader />
-      <div className="flex bg-primary-foreground rounded-2xl flex-1 items-center justify-center">
+      <div className="flex flex-1 items-center justify-center rounded-2xl bg-primary-foreground">
         <div className="text-center">
-          <div className="size-24 mx-auto mb-6 bg-gradient-chat rounded-full flex items-center justify-center shadow-glow pulse-ring">
+          <div className="pulse-ring mx-auto mb-6 flex size-24 items-center justify-center rounded-full bg-gradient-chat shadow-glow">
             <span className="text-3xl">😶‍🌫️</span>
           </div>
-          <h2 className="text-2xl font-bold mb-2 bg-gradient-chat bg-clip-text text-transparent">
+          <h2 className="mb-2 bg-gradient-chat bg-clip-text text-2xl font-bold text-transparent">
             Chào mừng bạn đến với Ostro!
           </h2>
           <p className="text-muted-foreground">
@@ -21,4 +21,5 @@ const ChatWelcomeScreen = () => {
     </SidebarInset>
   );
 };
+
 export default ChatWelcomeScreen;
