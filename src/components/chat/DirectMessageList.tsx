@@ -1,20 +1,31 @@
 import { useChatStore } from "@/stores/useChatStore";
+import ConversationSkeleton from "../skeleton/ConversationSkeleton";
 import DirectMessageCard from "./DirectMessageCard";
 
 const DirectMessageList = () => {
-  const { conversations } = useChatStore();
+  const { conversations, convoLoading } = useChatStore();
 
-  if (!conversations) return;
+  if (!conversations) return null;
+
+  if (convoLoading) {
+    return (
+      <div className="flex-1 space-y-2 overflow-y-auto p-2">
+        <ConversationSkeleton />
+      </div>
+    );
+  }
 
   const directConversations = conversations.filter(
     (convo) => convo.type === "direct",
   );
+
   return (
-    <div className="flex-1 overflow-y-auto p-2 space-y-2">
+    <div className="flex-1 space-y-2 overflow-y-auto p-2">
       {directConversations.map((convo) => (
         <DirectMessageCard convo={convo} key={convo._id} />
       ))}
     </div>
   );
 };
+
 export default DirectMessageList;
