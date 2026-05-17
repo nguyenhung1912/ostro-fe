@@ -1,4 +1,5 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import { useFriendStore } from "@/stores/useFriendStore";
 import {
   Dialog,
   DialogContent,
@@ -6,9 +7,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useFriendStore } from "@/stores/useFriendStore.ts";
-import SentRequests from "./SentRequests";
 import ReceivedRequests from "./ReceivedRequests";
+import SentRequests from "./SentRequests";
 
 interface FriendRequestDialogProps {
   open: boolean;
@@ -20,6 +20,8 @@ const FriendRequestDialog = ({ open, setOpen }: FriendRequestDialogProps) => {
   const { getAllFriendRequest } = useFriendStore();
 
   useEffect(() => {
+    if (!open) return;
+
     const loadRequest = async () => {
       try {
         await getAllFriendRequest();
@@ -29,7 +31,7 @@ const FriendRequestDialog = ({ open, setOpen }: FriendRequestDialogProps) => {
     };
 
     loadRequest();
-  }, []);
+  }, [getAllFriendRequest, open]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -37,6 +39,7 @@ const FriendRequestDialog = ({ open, setOpen }: FriendRequestDialogProps) => {
         <DialogHeader>
           <DialogTitle>Lời mời kết bạn</DialogTitle>
         </DialogHeader>
+
         <Tabs value={tab} onValueChange={setTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="received">Đã nhận</TabsTrigger>
@@ -55,4 +58,5 @@ const FriendRequestDialog = ({ open, setOpen }: FriendRequestDialogProps) => {
     </Dialog>
   );
 };
+
 export default FriendRequestDialog;
