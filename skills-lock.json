@@ -19,18 +19,6 @@
       "skillPath": "skills/frontend-design/SKILL.md",
       "computedHash": "516bd2154eb843a8240e43d5b285229129853114ad7075a5e141e1c08e408c84"
     },
-    "neobrutalism": {
-      "source": "bergside/awesome-design-skills",
-      "sourceType": "github",
-      "skillPath": "skills/neobrutalism/SKILL.md",
-      "computedHash": "09dd3ce8bf67e312785db2252c39521b904817e9d6ef72cd760f13b44d0c9c9c"
-    },
-    "neobrutalist-web-designer": {
-      "source": "erichowens/some_claude_skills",
-      "sourceType": "github",
-      "skillPath": ".claude/skills/neobrutalist-web-designer/SKILL.md",
-      "computedHash": "c798d7c383bc77e024e93edee934add4da865f556d4c65ba42869bd6c2ea2e06"
-    },
     "react:components": {
       "source": "google-labs-code/stitch-skills",
       "sourceType": "github",
