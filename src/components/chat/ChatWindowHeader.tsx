@@ -33,7 +33,7 @@ const ChatWindowHeader = ({ chat }: { chat?: Conversation }) => {
   }
 
   return (
-    <header className="sticky top-0 z-10 px-4 py-2 flex items-center bg-background">
+    <header className="sticky top-0 z-10 px-4 py-3 flex items-center bg-card border-b-[3px] border-black">
       <div className="flex items-center gap-2 w-full">
         <SidebarTrigger className="-ml-1 text-foreground" />
         <Separator

@@ -28,7 +28,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useAuthStore();
 
   return (
-    <Sidebar variant="inset" {...props}>
+    <Sidebar variant="inset" className="border-r-[3px] border-black" {...props}>
       {/* Header */}
       <SidebarHeader>
         <SidebarMenu>
@@ -36,19 +36,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton
               size="lg"
               asChild
-              className="bg-gradient-primary"
+              className="bg-primary border-[3px] border-black shadow-[2px_2px_0px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all rounded-none mb-4"
             >
               <a href="#">
                 <div className="flex w-full items-center px-2 justify-between">
-                  <h1 className="text-xl font-bold text-white">Ostro</h1>
+                  <h1 className="text-xl font-bold uppercase tracking-widest text-black">
+                    Ostro
+                  </h1>
                   <div className="flex items-center gap-2">
-                    <Sun className="size-4 text-white/80" />
+                    <Sun className="size-4 text-black" />
                     <Switch
                       checked={isDark}
                       onCheckedChange={toggleTheme}
-                      className="data-[state=checked]:bg-background/80"
+                      className="border-[2px] border-black shadow-none data-[state=checked]:bg-black data-[state=unchecked]:bg-white"
                     />
-                    <Moon className="size-4 text-white/80" />
+                    <Moon className="size-4 text-black" />
                   </div>
                 </div>
               </a>
@@ -66,8 +68,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
         {/* Group Chat */}
         <SidebarGroup>
-          <div className="flex items-center justify-between">
-            <SidebarGroupLabel className="uppercase">
+          <div className="flex items-center justify-between mt-4">
+            <SidebarGroupLabel className="uppercase font-black text-black tracking-wider text-xs">
               nhóm chat
             </SidebarGroupLabel>
             <NewGroupChatModal />
@@ -79,7 +81,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
         {/* Direct Message */}
         <SidebarGroup>
-          <SidebarGroupLabel className="uppercase">bạn bè</SidebarGroupLabel>
+          <SidebarGroupLabel className="uppercase font-black text-black tracking-wider text-xs mt-4">
+            bạn bè
+          </SidebarGroupLabel>
           <SidebarGroupAction title="Kết Bạn" className="cursor-pointer">
             <AddFriendModal />
           </SidebarGroupAction>

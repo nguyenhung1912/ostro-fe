@@ -33,9 +33,9 @@ const PersonalInfoForm = ({ userInfo }: Props) => {
   if (!userInfo) return null;
 
   return (
-    <Card className="glass-strong border-border/30">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+    <Card className="rounded-none border-[3px] border-black shadow-[4px_4px_0px_0px_var(--shadow-color)]">
+      <CardHeader className="pb-4">
+        <CardTitle className="flex items-center gap-2 font-black uppercase tracking-tight">
           <Heart className="size-5 text-primary" />
           Thông tin cá nhân
         </CardTitle>
@@ -59,7 +59,7 @@ const PersonalInfoForm = ({ userInfo }: Props) => {
                 type={type ?? "text"}
                 value={userInfo[key] ?? ""}
                 readOnly
-                className="glass-light border-border/30"
+                className="bg-muted"
               />
             </div>
           ))}
@@ -72,7 +72,7 @@ const PersonalInfoForm = ({ userInfo }: Props) => {
             rows={3}
             value={userInfo.bio ?? ""}
             readOnly
-            className="glass-light resize-none border-border/30"
+            className="bg-muted resize-none"
           />
         </div>
 

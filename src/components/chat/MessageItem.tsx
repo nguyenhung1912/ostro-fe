@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { cn, formatMessageTime } from "@/lib/utils";
 import type { Conversation, Message, Participant } from "@/types/chat";
 import UserAvatar from "./UserAvatar";
@@ -69,10 +70,8 @@ const MessageItem = ({
         >
           <Card
             className={cn(
-              "p-3",
-              message.isOwn
-                ? "chat-bubble-sent border-0"
-                : "bg-chat-bubble-received",
+              "p-3 rounded-none",
+              message.isOwn ? "chat-bubble-sent" : "chat-bubble-received",
             )}
           >
             <p className="text-sm leading-relaxed break-words">
@@ -85,13 +84,13 @@ const MessageItem = ({
             <Badge
               variant="outline"
               className={cn(
-                "text-xs px-1.5 py-0.5 h-4 border-0",
+                "text-[10px] px-1.5 py-0 h-4 border-[2px] border-black rounded-none shadow-[1px_1px_0px_0px_#000000] font-black uppercase tracking-wider",
                 lastMessageStatus === "seen"
-                  ? "bg-primary/20 text-primary"
-                  : "bg-muted text-muted-foreground",
+                  ? "bg-accent text-black"
+                  : "bg-white text-black",
               )}
             >
-              {lastMessageStatus}
+              {lastMessageStatus === "seen" ? "Đã xem" : "Đã gửi"}
             </Badge>
           )}
         </div>
@@ -99,4 +98,34 @@ const MessageItem = ({
     </>
   );
 };
-export default MessageItem;
+
+export default memo(MessageItem, (prevProps, nextProps) => {
+  // Only re-render if the core message content or ID changed
+  if (prevProps.message._id !== nextProps.message._id) return false;
+  if (prevProps.message.content !== nextProps.message.content) return false;
+
+  // Check if its position in the list changed (unlikely for infinite scroll top append, but safe)
+  if (prevProps.index !== nextProps.index) return false;
+
+  // Check if the previous message (for grouping logic) changed
+  const prevNextMessage = prevProps.messages[prevProps.index + 1];
+  const nextNextMessage = nextProps.messages[nextProps.index + 1];
+  if (prevNextMessage?._id !== nextNextMessage?._id) return false;
+
+  // Track if it's the last message in the conversation.
+  // If it was the last message, or became the last message, we need to check if the status changed.
+  const wasLastMessage =
+    prevProps.message._id === prevProps.selectedConvo.lastMessage?._id;
+  const isLastMessage =
+    nextProps.message._id === nextProps.selectedConvo.lastMessage?._id;
+
+  if (wasLastMessage !== isLastMessage) return false;
+  if (
+    isLastMessage &&
+    prevProps.lastMessageStatus !== nextProps.lastMessageStatus
+  )
+    return false;
+
+  // If nothing above triggered a change, it's safe to skip rendering
+  return true;
+});

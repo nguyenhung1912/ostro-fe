@@ -29,8 +29,8 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
         await sendGroupMessage(selectedConvo._id, currentValue);
       }
     } catch (error) {
-      console.error(error);
-      toast.error("Lỗi xảy ra khi gửi tin nhắn. Bạn hãy thử lại!");
+      console.error("[ChatApp - MessageInput]: Lỗi khi gửi tin nhắn.", error);
+      toast.error("Không thể gửi tin nhắn. Vui lòng thử lại!");
     }
   };
 
@@ -42,13 +42,13 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
   };
 
   return (
-    <div className="flex items-center gap-2 p-3 min-h-[56px] bg-background">
+    <div className="flex items-center gap-2 p-3 min-h-[56px] bg-card border-t-[3px] border-black">
       <Button
         variant="ghost"
         size="icon"
-        className="hover:bg-primary/10 transition-smooth"
+        className="rounded-none border-[3px] border-transparent hover:border-black hover:bg-accent transition-all hover:shadow-neobrutal-sm"
       >
-        <ImagePlus className="size-4" />
+        <ImagePlus className="size-5 text-black" />
       </Button>
 
       <div className="flex-1 relative">
@@ -56,15 +56,15 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
           onKeyPress={handleKeyPress}
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="Soạn tin nhắn..."
-          className="pr-20 h-9 bg-white border-border/50 focus:border-primary/50 transition-smooth resize-none"
-        ></Input>
+          placeholder="Nhập tin nhắn..."
+          className="pr-12 h-12 bg-white border-[3px] border-black shadow-neobrutal-sm focus-visible:ring-0 focus-visible:border-primary rounded-none text-base font-bold transition-all text-black"
+        />
         <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
           <Button
             asChild
             variant="ghost"
             size="icon"
-            className="size-8 hover:bg-primary/10 transition-smooth"
+            className="size-8 rounded-none hover:bg-accent border-[2px] border-transparent hover:border-black transition-all"
           >
             <div>
               <EmojiPicker
@@ -76,10 +76,10 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
       </div>
       <Button
         onClick={sendMessage}
-        className="bg-gradient-chat hover:shadow-glow transition-smooth hover:scale-105"
+        className="h-12 w-12 btn-neobrutal bg-primary text-black disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={!value.trim()}
       >
-        <Send className="size-4 text-white" />
+        <Send className="size-5" />
       </Button>
     </div>
   );

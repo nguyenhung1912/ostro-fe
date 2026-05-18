@@ -1,4 +1,8 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import ChatAppPage from "./pages/ChatAppPage";
@@ -8,6 +12,16 @@ import { useThemeStore } from "./stores/useThemeStore";
 import { useEffect } from "react";
 import { useAuthStore } from "./stores/useAuthStore";
 import { useSocketStore } from "./stores/useSocketStore";
+
+const router = createBrowserRouter([
+  { path: "/signin", element: <SignInPage /> },
+  { path: "/signup", element: <SignUpPage /> },
+  {
+    element: <ProtectedRoute />,
+    children: [{ path: "/", element: <ChatAppPage /> }],
+  },
+  { path: "*", element: <Navigate to="/" replace /> },
+]);
 
 function App() {
   const { isDark, setTheme } = useThemeStore();
@@ -28,19 +42,13 @@ function App() {
 
   return (
     <>
-      <Toaster richColors />
-      <BrowserRouter>
-        <Routes>
-          {/* public routes */}
-          <Route path="/signin" element={<SignInPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          {/* protected routes */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<ChatAppPage />} />
-          </Route>
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
+      <Toaster
+        toastOptions={{
+          className:
+            "border-[3px] border-black shadow-neobrutal rounded-none font-sans font-bold",
+        }}
+      />
+      <RouterProvider router={router} />
     </>
   );
 }

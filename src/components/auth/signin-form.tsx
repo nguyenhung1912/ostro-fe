@@ -34,16 +34,16 @@ export function SignInForm({
     const { username, password } = data;
     const signedIn = await signIn(username, password);
     if (signedIn) {
-      navigate("/");
+      navigate("/", { viewTransition: true });
     }
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card className="overflow-hidden p-0 border-border">
+    <div className={cn("flex flex-col gap-4", className)} {...props}>
+      <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8" onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-6">
+          <form className="p-4 md:p-6" onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-4">
               {/* header - logo*/}
               <div className="flex flex-col items-center text-center gap-2">
                 <Link to="/" className="mx-auto block w-fit text-center">
@@ -57,7 +57,7 @@ export function SignInForm({
               </div>
 
               {/* username */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-1.5">
                 <Label htmlFor="username" className="block text-sm">
                   Tên đăng nhập
                 </Label>
@@ -74,7 +74,7 @@ export function SignInForm({
               </div>
 
               {/* password */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-1.5">
                 <Label htmlFor="password" className="block text-sm">
                   Password
                 </Label>
@@ -96,7 +96,11 @@ export function SignInForm({
 
               <div className="text-center text-sm">
                 Chưa có tài khoản?{" "}
-                <Link to="/signup" className="underline underline-offset-4">
+                <Link
+                  to="/signup"
+                  className="underline underline-offset-4"
+                  viewTransition
+                >
                   Đăng ký
                 </Link>
               </div>

@@ -16,12 +16,12 @@ const ProfileDialog = ({ open, setOpen }: ProfileDialogProps) => {
   const { user } = useAuthStore();
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="overflow-y-auto max-h-[95vh] p-0 bg-transparent border-0 shadow-2xl">
-        <div className="bg-gradient-glass">
-          <div className="max-w-4xl mx-auto p-4">
+      <DialogContent className="overflow-y-auto max-h-[95vh] p-0 bg-background border-[3px] border-black shadow-[8px_8px_0px_0px_var(--shadow-color)] max-w-3xl">
+        <div className="w-full">
+          <div className="mx-auto p-4 sm:p-5">
             {/* heading */}
-            <DialogHeader className="mb-6">
-              <DialogTitle className="text-2xl font-bold text-foreground">
+            <DialogHeader className="mb-4">
+              <DialogTitle className="text-2xl font-black uppercase tracking-tight text-foreground">
                 Profile & Settings
               </DialogTitle>
             </DialogHeader>
@@ -29,22 +29,22 @@ const ProfileDialog = ({ open, setOpen }: ProfileDialogProps) => {
             <ProfileCard user={user} />
 
             <Tabs defaultValue="personal" className="my-4">
-              <TabsList className="grid w-full grid-cols-3 glass-light">
+              <TabsList className="grid w-full grid-cols-3 bg-white dark:bg-card border-[3px] border-black p-1 rounded-none shadow-[2px_2px_0px_0px_var(--shadow-color)] h-12">
                 <TabsTrigger
                   value="personal"
-                  className="data-[state=active]:glass-strong"
+                  className="rounded-none data-[state=active]:bg-primary data-[state=active]:text-black data-[state=active]:border-[2px] data-[state=active]:border-black data-[state=active]:shadow-[2px_2px_0px_0px_var(--shadow-color)] font-bold transition-all border-[2px] border-transparent h-full text-foreground"
                 >
                   Tài Khoản
                 </TabsTrigger>
                 <TabsTrigger
                   value="preferences"
-                  className="data-[state=active]:glass-strong"
+                  className="rounded-none data-[state=active]:bg-primary data-[state=active]:text-black data-[state=active]:border-[2px] data-[state=active]:border-black data-[state=active]:shadow-[2px_2px_0px_0px_var(--shadow-color)] font-bold transition-all border-[2px] border-transparent h-full text-foreground"
                 >
                   Cấu Hình
                 </TabsTrigger>
                 <TabsTrigger
                   value="privacy"
-                  className="data-[state=active]:glass-strong"
+                  className="rounded-none data-[state=active]:bg-primary data-[state=active]:text-black data-[state=active]:border-[2px] data-[state=active]:border-black data-[state=active]:shadow-[2px_2px_0px_0px_var(--shadow-color)] font-bold transition-all border-[2px] border-transparent h-full text-foreground"
                 >
                   Bảo Mật
                 </TabsTrigger>

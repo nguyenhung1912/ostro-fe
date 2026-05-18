@@ -78,9 +78,11 @@ const NewGroupChatModal = () => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-106.25 border-none">
+      <DialogContent className="sm:max-w-106.25 border-[3px] border-black shadow-neobrutal rounded-none bg-card">
         <DialogHeader>
-          <DialogTitle className="capitalize">tạo nhóm chat mới</DialogTitle>
+          <DialogTitle className="font-black text-2xl uppercase tracking-tight text-black">
+            tạo nhóm chat mới
+          </DialogTitle>
         </DialogHeader>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
@@ -91,7 +93,7 @@ const NewGroupChatModal = () => {
             <Input
               id="groupName"
               placeholder="Gõ tên nhóm vào đây"
-              className="glass border-border/50 focus:border-primary/50 transition-smooth"
+              className="bg-white border-[3px] border-black shadow-[2px_2px_0px_0px_#000000] focus-visible:ring-0 focus-visible:border-primary rounded-none font-bold text-black h-12"
               value={groupName}
               onChange={(e) => setGroupName(e.target.value)}
               required
@@ -105,6 +107,7 @@ const NewGroupChatModal = () => {
             <Input
               id="invite"
               placeholder="Tìm theo tên hiển thị..."
+              className="bg-white border-[3px] border-black shadow-[2px_2px_0px_0px_#000000] focus-visible:ring-0 focus-visible:border-primary rounded-none font-bold text-black h-12"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -126,7 +129,7 @@ const NewGroupChatModal = () => {
             <Button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-gradient-chat text-white hover:opacity-90 transition-smooth"
+              className="flex-1 btn-neobrutal bg-primary text-black disabled:opacity-50 disabled:cursor-not-allowed h-12 mt-4"
             >
               {loading ? (
                 <span>Đang tạo...</span>

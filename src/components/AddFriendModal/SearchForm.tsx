@@ -36,12 +36,12 @@ const SearchForm = ({
         </Label>
         <Input
           id="username"
-          placeholder="Gõ tên username vào đây..."
-          className="glass border-border/50 focus:border-primary/50 transition-smooth"
+          placeholder="Nhập tên người dùng cần tìm..."
+          className="bg-white border-[3px] border-black shadow-[2px_2px_0px_0px_#000000] focus-visible:ring-0 focus-visible:border-primary rounded-none font-bold text-black h-12"
           {...register("username", {
             required: "Username không được bỏ trống",
           })}
-        ></Input>
+        />
         {errors.username && (
           <p className="error-message">{errors.username.message}</p>
         )}
@@ -59,17 +59,17 @@ const SearchForm = ({
           <Button
             type="button"
             variant="outline"
-            className="flex-1 glass hover:text-destructive"
+            className="flex-1 rounded-none border-[3px] border-black bg-white text-black hover:bg-accent font-bold shadow-[2px_2px_0px_0px_#000000] transition-all hover:-translate-y-1 hover:shadow-neobrutal h-12"
             onClick={onCancel}
           >
-            Cancel
+            Hủy
           </Button>
         </DialogClose>
 
         <Button
           type="submit"
           disabled={loading || !usernameValue?.trim()}
-          className="flex-1 bg-gradient-chat text-white hover:opacity-90 transition-smooth"
+          className="flex-1 btn-neobrutal bg-primary text-black disabled:opacity-50 disabled:cursor-not-allowed h-12"
         >
           {loading ? (
             <span>Đang tìm...</span>

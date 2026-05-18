@@ -44,16 +44,16 @@ export function SignUpForm({
       lastname,
     );
     if (signedUp) {
-      navigate("/signin");
+      navigate("/signin", { viewTransition: true });
     }
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card className="overflow-hidden p-0 border-border">
+    <div className={cn("flex flex-col gap-4", className)} {...props}>
+      <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8" onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-6">
+          <form className="p-4 md:p-6" onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-4">
               {/* header - logo*/}
               <div className="flex flex-col items-center text-center gap-2">
                 <Link to="/" className="mx-auto block w-fit text-center">
@@ -68,7 +68,7 @@ export function SignUpForm({
 
               {/* name */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   <Label htmlFor="lastname" className="block text-sm">
                     Họ
                   </Label>
@@ -78,7 +78,7 @@ export function SignUpForm({
                     <p className="error-message">{errors.lastname.message}</p>
                   )}
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   <Label htmlFor="firstname" className="block text-sm">
                     Tên
                   </Label>
@@ -95,7 +95,7 @@ export function SignUpForm({
               </div>
 
               {/* username */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-1.5">
                 <Label htmlFor="username" className="block text-sm">
                   Tên đăng nhập
                 </Label>
@@ -112,7 +112,7 @@ export function SignUpForm({
               </div>
 
               {/* email */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-1.5">
                 <Label htmlFor="email" className="block text-sm">
                   Email
                 </Label>
@@ -129,7 +129,7 @@ export function SignUpForm({
               </div>
 
               {/* password */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-1.5">
                 <Label htmlFor="password" className="block text-sm">
                   Password
                 </Label>
@@ -151,7 +151,11 @@ export function SignUpForm({
 
               <div className="text-center text-sm">
                 Đã có tài khoản?{" "}
-                <Link to="/signin" className="underline underline-offset-4">
+                <Link
+                  to="/signin"
+                  className="underline underline-offset-4"
+                  viewTransition
+                >
                   Đăng nhập
                 </Link>
               </div>

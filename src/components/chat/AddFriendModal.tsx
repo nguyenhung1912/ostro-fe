@@ -53,7 +53,10 @@ const AddFriendModal = () => {
         setIsFound(false);
       }
     } catch (error) {
-      console.error(error);
+      console.error(
+        "[ChatApp - AddFriendModal]: Lỗi khi tìm kiếm người dùng",
+        error,
+      );
       setIsFound(false);
     }
   });
@@ -67,7 +70,10 @@ const AddFriendModal = () => {
 
       handleCancel();
     } catch (error) {
-      console.error("Lỗi xảy ra khi gửi request từ form", error);
+      console.error(
+        "[ChatApp - AddFriendModal]: Lỗi khi gửi yêu cầu kết bạn",
+        error,
+      );
     }
   });
 
@@ -86,9 +92,11 @@ const AddFriendModal = () => {
         </div>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-106.25 border-none">
+      <DialogContent className="sm:max-w-106.25 border-[3px] border-black shadow-neobrutal rounded-none bg-card">
         <DialogHeader>
-          <DialogTitle>Kết bạn</DialogTitle>
+          <DialogTitle className="font-black text-2xl uppercase tracking-tight text-black">
+            Kết bạn
+          </DialogTitle>
         </DialogHeader>
 
         {/* form search by username */}

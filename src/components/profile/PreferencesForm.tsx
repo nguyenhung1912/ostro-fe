@@ -18,9 +18,9 @@ const PreferencesForm = () => {
   const [onlineStatus, setOnlineStatus] = useState(false);
 
   return (
-    <Card className="glass-strong border-border/30">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+    <Card className="rounded-none border-[3px] border-black shadow-[4px_4px_0px_0px_var(--shadow-color)]">
+      <CardHeader className="pb-4">
+        <CardTitle className="flex items-center gap-2 font-black uppercase tracking-tight">
           <Sun className="h-5 w-5 text-primary" />
           Tuỳ chỉnh ứng dụng
         </CardTitle>
@@ -29,7 +29,7 @@ const PreferencesForm = () => {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-4">
         {/* Dark Mode */}
         <div className="flex items-center justify-between">
           <div>

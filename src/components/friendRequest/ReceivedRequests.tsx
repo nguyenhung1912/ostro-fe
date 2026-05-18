@@ -9,7 +9,7 @@ const ReceivedRequests = () => {
 
   if (!receivedList || receivedList.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm text-black font-bold uppercase tracking-wider p-4 border-[2px] border-black text-center mt-4 bg-white shadow-[2px_2px_0px_0px_#000000]">
         Bạn chưa có lời mời kết bạn nào
       </p>
     );
@@ -43,20 +43,20 @@ const ReceivedRequests = () => {
             <div className="flex gap-2">
               <Button
                 size="sm"
-                variant="primary"
+                className="btn-neobrutal bg-primary text-black rounded-none border-[2px] border-black shadow-[2px_2px_0px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none h-8 font-bold transition-all disabled:opacity-50"
                 onClick={() => handleAccept(req._id)}
                 disabled={loading}
               >
-                Chấp nhận lời mời kết bạn
+                Chấp nhận
               </Button>
 
               <Button
                 size="sm"
-                variant="destructiveOutline"
+                className="btn-neobrutal bg-white text-black rounded-none border-[2px] border-black shadow-[2px_2px_0px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none h-8 font-bold transition-all disabled:opacity-50"
                 onClick={() => handleDecline(req._id)}
                 disabled={loading}
               >
-                Từ chối lời mời kết bạn
+                Từ chối
               </Button>
             </div>
           }

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useMemo, useCallback } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useChatStore } from "@/stores/useChatStore";
 import ChatWelcomeScreen from "./ChatWelcomeScreen";
@@ -13,13 +13,22 @@ const ChatWindowBody = () => {
   } = useChatStore();
 
   const messages = allMessages[activeConversationId!]?.items ?? [];
-  const reversedMessages = [...messages].reverse();
+  const reversedMessages = useMemo(() => [...messages].reverse(), [messages]);
   const hasMore = allMessages[activeConversationId!]?.hasMore ?? false;
-  const selectedConvo = conversations.find(
-    (conversation) => conversation._id === activeConversationId,
+
+  const selectedConvo = useMemo(
+    () =>
+      conversations.find(
+        (conversation) => conversation._id === activeConversationId,
+      ),
+    [conversations, activeConversationId],
   );
-  const lastMessageStatus =
-    (selectedConvo?.seenBy?.length ?? 0) > 0 ? "seen" : "delivered";
+
+  const lastMessageStatus = useMemo(
+    () => ((selectedConvo?.seenBy?.length ?? 0) > 0 ? "seen" : "delivered"),
+    [selectedConvo?.seenBy?.length],
+  );
+
   const key = `chat-scroll-${activeConversationId}`;
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -34,17 +43,20 @@ const ChatWindowBody = () => {
     });
   }, [activeConversationId]);
 
-  const fetchMoreMessages = async () => {
+  const fetchMoreMessages = useCallback(async () => {
     if (!activeConversationId) return;
 
     try {
       await fetchMessages(activeConversationId);
     } catch (error) {
-      console.error("Lỗi xảy ra khi fetch thêm tin", error);
+      console.error(
+        "[ChatApp - ChatWindowBody]: Lỗi khi tải thêm tin nhắn.",
+        error,
+      );
     }
-  };
+  }, [activeConversationId, fetchMessages]);
 
-  const handleScrollSave = () => {
+  const handleScrollSave = useCallback(() => {
     const container = containerRef.current;
 
     if (!container || !activeConversationId) return;
@@ -55,7 +67,7 @@ const ChatWindowBody = () => {
         scrollTop: container.scrollTop,
       }),
     );
-  };
+  }, [activeConversationId, key]);
 
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -78,14 +90,14 @@ const ChatWindowBody = () => {
 
   if (messages.length === 0) {
     return (
-      <div className="flex h-full items-center justify-center text-muted-foreground">
-        Chưa có tin nhắn nào trong cuộc trò chuyện này.
+      <div className="flex h-full items-center justify-center text-black font-bold uppercase tracking-widest bg-card">
+        Chưa có tin nhắn nào
       </div>
     );
   }
 
   return (
-    <div className="flex h-full flex-col overflow-hidden bg-primary-foreground p-4">
+    <div className="flex h-full flex-col overflow-hidden bg-card p-4">
       <div
         id="scrollableDiv"
         ref={containerRef}

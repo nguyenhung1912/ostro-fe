@@ -45,10 +45,10 @@ const ChatWindowLayout = () => {
   }
 
   return (
-    <SidebarInset className="flex h-full flex-1 flex-col overflow-hidden rounded-sm shadow-md">
+    <SidebarInset className="flex h-full flex-1 flex-col overflow-hidden border-[3px] border-black shadow-neobrutal rounded-none bg-card">
       <ChatWindowHeader chat={selectedConvo} />
 
-      <div className="flex-1 overflow-y-auto bg-primary-foreground">
+      <div className="flex-1 overflow-y-auto bg-card">
         <ChatWindowBody />
       </div>
 

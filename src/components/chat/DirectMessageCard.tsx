@@ -67,10 +67,10 @@ const DirectMessageCard = ({ convo }: { convo: Conversation }) => {
       subtitle={
         <p
           className={cn(
-            "text-sm truncate",
+            "text-sm truncate font-medium",
             unreadCount > 0
-              ? "font-medium text-foreground"
-              : "text-muted-foreground",
+              ? "font-bold text-current"
+              : "text-current opacity-80",
           )}
         >
           {lastMessage}

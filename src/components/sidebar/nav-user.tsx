@@ -36,11 +36,11 @@ export function NavUser({ user }: { user: User }) {
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton
                 size="lg"
-                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                className="data-[state=open]:bg-primary data-[state=open]:text-black border-[3px] border-transparent hover:border-black rounded-none transition-all"
               >
-                <Avatar className="h-8 w-8 rounded-lg">
+                <Avatar className="h-8 w-8 rounded-none border-[2px] border-black">
                   <AvatarImage src={user.avatarUrl} alt={user.displayName} />
-                  <AvatarFallback className="rounded-lg">
+                  <AvatarFallback className="rounded-none bg-accent text-black font-bold">
                     {user.displayName.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
@@ -54,16 +54,16 @@ export function NavUser({ user }: { user: User }) {
               </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+              className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-none border-[3px] border-black shadow-neobrutal p-2"
               side={isMobile ? "bottom" : "right"}
               align="end"
               sideOffset={4}
             >
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                  <Avatar className="h-8 w-8 rounded-lg">
+                  <Avatar className="h-8 w-8 rounded-none border-[2px] border-black">
                     <AvatarImage src={user.avatarUrl} alt={user.username} />
-                    <AvatarFallback className="rounded-lg">
+                    <AvatarFallback className="rounded-none bg-accent text-black font-bold">
                       {user.displayName.charAt(0)}
                     </AvatarFallback>
                   </Avatar>

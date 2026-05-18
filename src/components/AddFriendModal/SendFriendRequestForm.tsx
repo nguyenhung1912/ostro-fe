@@ -25,9 +25,9 @@ const SendFriendRequestForm = ({
   return (
     <form onSubmit={onSubmit}>
       <div className="space-y-4">
-        <span className="success-message">
-          Tìm thấy <span className="font-semibold">@{searchedUsername}</span>
-          rồi nè
+        <span className="text-black bg-accent border-[2px] border-black p-2 font-bold block shadow-[2px_2px_0px_0px_#000000]">
+          Đã tìm thấy{" "}
+          <span className="font-black text-primary">@{searchedUsername}</span>!
         </span>
 
         <div className="space-y-2">
@@ -37,8 +37,8 @@ const SendFriendRequestForm = ({
           <Textarea
             id="message"
             rows={3}
-            placeholder="Chào bạn có thể kết bạn được không?..."
-            className="glass border-border/50 focus:border-primary/50 transition-smooth resize-none"
+            placeholder="Xin chào, mình có thể kết bạn không?..."
+            className="bg-white border-[3px] border-black shadow-[2px_2px_0px_0px_#000000] focus-visible:ring-0 focus-visible:border-primary rounded-none font-bold text-black resize-none"
             {...register("message")}
           />
         </div>
@@ -47,7 +47,7 @@ const SendFriendRequestForm = ({
           <Button
             type="button"
             variant="outline"
-            className="flex-1 glass hover:text-destructive"
+            className="flex-1 rounded-none border-[3px] border-black bg-white text-black hover:bg-accent font-bold shadow-[2px_2px_0px_0px_#000000] transition-all hover:-translate-y-1 hover:shadow-neobrutal h-12"
             onClick={onBack}
           >
             Quay lại
@@ -56,7 +56,7 @@ const SendFriendRequestForm = ({
           <Button
             type="submit"
             disabled={loading}
-            className="flex-1 bg-gradient-chat text-white hover:opacity-90 transition-smooth"
+            className="flex-1 btn-neobrutal bg-primary text-black disabled:opacity-50 disabled:cursor-not-allowed h-12"
           >
             {loading ? (
               <span>Đang gửi...</span>
