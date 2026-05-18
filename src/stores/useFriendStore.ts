@@ -13,7 +13,7 @@ export const useFriendStore = create<FriendState>((set) => ({
       set({ loading: true });
       return await friendService.searchByUsername(username);
     } catch (error) {
-      console.error("Lỗi xảy ra khi tìm user bằng username", error);
+      console.error("[FriendStore] Failed to search user by username:", error);
       return null;
     } finally {
       set({ loading: false });
@@ -25,7 +25,7 @@ export const useFriendStore = create<FriendState>((set) => ({
       set({ loading: true });
       return await friendService.sendFriendRequest(to, message);
     } catch (error) {
-      console.error("Lỗi xảy ra khi addFriend", error);
+      console.error("[FriendStore] Failed to send friend request:", error);
       return "Lỗi xảy ra khi gửi kết bạn. Hãy thử lại!";
     } finally {
       set({ loading: false });
@@ -44,7 +44,7 @@ export const useFriendStore = create<FriendState>((set) => ({
         sentList: result.sent,
       });
     } catch (error) {
-      console.error("Lỗi khi getAllFriendRequests", error);
+      console.error("[FriendStore] Failed to fetch friend requests:", error);
     } finally {
       set({ loading: false });
     }
@@ -61,7 +61,7 @@ export const useFriendStore = create<FriendState>((set) => ({
         ),
       }));
     } catch (error) {
-      console.error("Lỗi khi acceptRequest", error);
+      console.error("[FriendStore] Failed to accept friend request:", error);
     } finally {
       set({ loading: false });
     }
@@ -78,7 +78,7 @@ export const useFriendStore = create<FriendState>((set) => ({
         ),
       }));
     } catch (error) {
-      console.error("Lỗi khi declineRequest", error);
+      console.error("[FriendStore] Failed to decline friend request:", error);
     } finally {
       set({ loading: false });
     }
@@ -90,7 +90,7 @@ export const useFriendStore = create<FriendState>((set) => ({
       const friends = await friendService.getFriendList();
       set({ friends });
     } catch (error) {
-      console.error("Lỗi khi load friends", error);
+      console.error("[FriendStore] Failed to fetch friends list:", error);
       set({ friends: [] });
     } finally {
       set({ loading: false });

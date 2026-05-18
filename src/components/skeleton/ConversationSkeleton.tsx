@@ -4,15 +4,15 @@ const ConversationSkeleton = () => {
       {Array.from({ length: 3 }).map((_, index) => (
         <div
           key={index}
-          className="p-3 bg-white dark:bg-card border-3 border-black shadow-[4px_4px_0px_0px_var(--shadow-color)] mb-3 flex items-center gap-3 animate-pulse"
+          className="p-3 rounded-2xl bg-white/5 dark:bg-white/[0.03] border border-white/10 mb-3 flex items-center gap-3 animate-pulse"
         >
           {/* Avatar skeleton */}
-          <div className="size-10 rounded-none border-2 border-black bg-muted shadow-[2px_2px_0px_0px_var(--shadow-color)]" />
+          <div className="size-10 rounded-full bg-muted/60" />
 
           {/* Info skeleton */}
           <div className="flex-1 space-y-2">
-            <div className="h-4 w-1/2 bg-muted border-2 border-black rounded-none" />
-            <div className="h-3 w-3/4 bg-muted border-2 border-black rounded-none" />
+            <div className="h-3 w-1/2 bg-muted/60 rounded-full" />
+            <div className="h-2.5 w-3/4 bg-muted/40 rounded-full" />
           </div>
         </div>
       ))}

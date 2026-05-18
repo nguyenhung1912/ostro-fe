@@ -2,8 +2,6 @@ import { useSocketStore } from "@/stores/useSocketStore";
 import type { User } from "@/types/user";
 import { cn } from "@/lib/utils";
 import UserAvatar from "../chat/UserAvatar";
-import { Badge } from "../ui/badge";
-import { Card, CardContent } from "../ui/card";
 import AvatarUploader from "./AvatarUploader";
 
 interface ProfileCardProps {
@@ -19,48 +17,48 @@ const ProfileCard = ({ user }: ProfileCardProps) => {
   const isOnline = onlineUsers.includes(user._id);
 
   return (
-    <Card className="h-52 overflow-hidden bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-0">
-      <CardContent className="mt-20 flex flex-col items-center gap-6 pb-8 sm:flex-row sm:items-end">
-        <div className="relative">
+    <div className="relative h-44 overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500">
+      {/* Ambient glow overlay */}
+      <div className="absolute inset-0 bg-black/10" />
+
+      {/* Content */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end gap-4">
+        <div className="relative shrink-0">
           <UserAvatar
             type="profile"
             name={user.displayName}
             avatarUrl={user.avatarUrl ?? undefined}
-            className="ring-4 ring-white shadow-lg"
+            className="ring-2 ring-white/40 shadow-lg"
           />
-
           <AvatarUploader />
         </div>
 
-        <div className="flex-1 text-center sm:text-left">
-          <h1 className="text-2xl font-semibold tracking-tight text-white">
+        <div className="flex-1 min-w-0 pb-1">
+          <h2 className="text-xl font-semibold text-white truncate leading-tight">
             {user.displayName}
-          </h1>
-
-          <p className="mt-2 max-w-lg line-clamp-2 text-sm text-white/70">
-            {bio}
-          </p>
+          </h2>
+          <p className="text-sm text-white/70 truncate mt-0.5">{bio}</p>
         </div>
 
-        <Badge
+        {/* Online status badge */}
+        <div
           className={cn(
-            "flex items-center gap-1 capitalize",
+            "shrink-0 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm",
             isOnline
-              ? "bg-green-100 text-green-700"
-              : "bg-slate-100 text-slate-700",
+              ? "bg-green-500/25 text-green-300 border border-green-400/30"
+              : "bg-slate-500/25 text-slate-300 border border-slate-400/30",
           )}
         >
           <div
             className={cn(
-              "size-2 rounded-full",
-              isOnline ? "bg-green-500 animate-pulse" : "bg-slate-500",
+              "size-1.5 rounded-full",
+              isOnline ? "bg-green-400 animate-pulse" : "bg-slate-400",
             )}
           />
-
-          {isOnline ? "online" : "offline"}
-        </Badge>
-      </CardContent>
-    </Card>
+          {isOnline ? "Online" : "Offline"}
+        </div>
+      </div>
+    </div>
   );
 };
 

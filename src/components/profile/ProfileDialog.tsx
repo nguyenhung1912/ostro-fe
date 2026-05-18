@@ -16,38 +16,23 @@ const ProfileDialog = ({ open, setOpen }: ProfileDialogProps) => {
   const { user } = useAuthStore();
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="overflow-y-auto max-h-[95vh] p-0 bg-background border-[3px] border-black shadow-[8px_8px_0px_0px_var(--shadow-color)] max-w-3xl">
+      <DialogContent className="overflow-y-auto max-h-[90vh] p-0 w-full sm:max-w-2xl">
         <div className="w-full">
-          <div className="mx-auto p-4 sm:p-5">
+          <div className="mx-auto p-5 sm:p-6">
             {/* heading */}
             <DialogHeader className="mb-4">
-              <DialogTitle className="text-2xl font-black uppercase tracking-tight text-foreground">
-                Profile & Settings
+              <DialogTitle className="text-xl font-semibold tracking-tight text-foreground">
+                Profile &amp; Settings
               </DialogTitle>
             </DialogHeader>
 
             <ProfileCard user={user} />
 
-            <Tabs defaultValue="personal" className="my-4">
-              <TabsList className="grid w-full grid-cols-3 bg-white dark:bg-card border-[3px] border-black p-1 rounded-none shadow-[2px_2px_0px_0px_var(--shadow-color)] h-12">
-                <TabsTrigger
-                  value="personal"
-                  className="rounded-none data-[state=active]:bg-primary data-[state=active]:text-black data-[state=active]:border-[2px] data-[state=active]:border-black data-[state=active]:shadow-[2px_2px_0px_0px_var(--shadow-color)] font-bold transition-all border-[2px] border-transparent h-full text-foreground"
-                >
-                  Tài Khoản
-                </TabsTrigger>
-                <TabsTrigger
-                  value="preferences"
-                  className="rounded-none data-[state=active]:bg-primary data-[state=active]:text-black data-[state=active]:border-[2px] data-[state=active]:border-black data-[state=active]:shadow-[2px_2px_0px_0px_var(--shadow-color)] font-bold transition-all border-[2px] border-transparent h-full text-foreground"
-                >
-                  Cấu Hình
-                </TabsTrigger>
-                <TabsTrigger
-                  value="privacy"
-                  className="rounded-none data-[state=active]:bg-primary data-[state=active]:text-black data-[state=active]:border-[2px] data-[state=active]:border-black data-[state=active]:shadow-[2px_2px_0px_0px_var(--shadow-color)] font-bold transition-all border-[2px] border-transparent h-full text-foreground"
-                >
-                  Bảo Mật
-                </TabsTrigger>
+            <Tabs defaultValue="personal" className="my-5">
+              <TabsList className="w-full grid grid-cols-3">
+                <TabsTrigger value="personal">Tài Khoản</TabsTrigger>
+                <TabsTrigger value="preferences">Cấu Hình</TabsTrigger>
+                <TabsTrigger value="privacy">Bảo Mật</TabsTrigger>
               </TabsList>
 
               <TabsContent value="personal">

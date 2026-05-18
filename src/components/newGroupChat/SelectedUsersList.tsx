@@ -18,7 +18,7 @@ const SelectedUsersList = ({
       {invitedUsers.map((user) => (
         <div
           key={user._id}
-          className="flex items-center gap-1 bg-accent text-black font-bold text-sm rounded-none border-[2px] border-black shadow-[2px_2px_0px_0px_#000000] px-3 py-1 mb-2"
+          className="flex items-center gap-1.5 bg-primary/10 text-foreground font-medium text-sm rounded-full border border-primary/20 px-3 py-1 mb-2"
         >
           <UserAvatar
             type="chat"

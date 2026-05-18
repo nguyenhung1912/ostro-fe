@@ -32,7 +32,7 @@ export const useChatStore = create<ChatState>()(
 
           set({ conversations, convoLoading: false });
         } catch (error) {
-          console.error("Lỗi khi fetchConversations:", error);
+          console.error("[ChatStore] Failed to fetch conversations:", error);
           set({ convoLoading: false });
         }
       },
@@ -81,7 +81,7 @@ export const useChatStore = create<ChatState>()(
             };
           });
         } catch (error) {
-          console.error("Lỗi xảy ra khi fetchMessages:", error);
+          console.error("[ChatStore] Failed to fetch messages:", error);
         } finally {
           set({ messageLoading: false });
         }
@@ -103,7 +103,7 @@ export const useChatStore = create<ChatState>()(
             ),
           }));
         } catch (error) {
-          console.error("Lỗi khi sendDirectMessage", error);
+          console.error("[ChatStore] Failed to send direct message:", error);
         }
       },
 
@@ -116,7 +116,7 @@ export const useChatStore = create<ChatState>()(
             ),
           }));
         } catch (error) {
-          console.error("Lỗi khi sendGroupMessage: ", error);
+          console.error("[ChatStore] Failed to send group message:", error);
         }
       },
 
@@ -153,7 +153,7 @@ export const useChatStore = create<ChatState>()(
             };
           });
         } catch (error) {
-          console.error("Lỗi xảy ra khi add message: ", error);
+          console.error("[ChatStore] Failed to add message:", error);
         }
       },
 
@@ -196,7 +196,7 @@ export const useChatStore = create<ChatState>()(
             ),
           }));
         } catch (error) {
-          console.error("Lỗi xảy ra khi gọi markAsSeen trong store", error);
+          console.error("[ChatStore] Failed to mark as seen:", error);
         }
       },
 
@@ -226,11 +226,15 @@ export const useChatStore = create<ChatState>()(
 
           get().addConvo(conversation);
 
+          if (!get().messages[conversation._id]) {
+            await get().fetchMessages(conversation._id);
+          }
+
           useSocketStore
             .getState()
             .socket?.emit("join-conversation", conversation._id);
         } catch (error) {
-          console.error("Lỗi khi gọi createConversation trong store", error);
+          console.error("[ChatStore] Failed to create conversation:", error);
         } finally {
           set({ loading: false });
         }

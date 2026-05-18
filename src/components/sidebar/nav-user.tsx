@@ -36,11 +36,11 @@ export function NavUser({ user }: { user: User }) {
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton
                 size="lg"
-                className="data-[state=open]:bg-primary data-[state=open]:text-black border-[3px] border-transparent hover:border-black rounded-none transition-all"
+                className="data-[state=open]:bg-primary/10 data-[state=open]:text-primary rounded-xl transition-all"
               >
-                <Avatar className="h-8 w-8 rounded-none border-[2px] border-black">
+                <Avatar className="h-8 w-8">
                   <AvatarImage src={user.avatarUrl} alt={user.displayName} />
-                  <AvatarFallback className="rounded-none bg-accent text-black font-bold">
+                  <AvatarFallback className="bg-primary/10 text-primary font-medium">
                     {user.displayName.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
@@ -54,16 +54,16 @@ export function NavUser({ user }: { user: User }) {
               </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-none border-[3px] border-black shadow-neobrutal p-2"
+              className="w-(--radix-dropdown-menu-trigger-width) min-w-56 p-2 rounded-2xl border border-white/15 bg-white/85 dark:bg-[#12121a]/90 backdrop-blur-2xl shadow-[0_16px_48px_rgba(0,0,0,0.25)]"
               side={isMobile ? "bottom" : "right"}
               align="end"
               sideOffset={4}
             >
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                  <Avatar className="h-8 w-8 rounded-none border-[2px] border-black">
+                  <Avatar className="h-8 w-8">
                     <AvatarImage src={user.avatarUrl} alt={user.username} />
-                    <AvatarFallback className="rounded-none bg-accent text-black font-bold">
+                    <AvatarFallback className="bg-primary/10 text-primary font-medium">
                       {user.displayName.charAt(0)}
                     </AvatarFallback>
                   </Avatar>

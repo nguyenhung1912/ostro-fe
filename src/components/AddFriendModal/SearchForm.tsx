@@ -37,7 +37,7 @@ const SearchForm = ({
         <Input
           id="username"
           placeholder="Nhập tên người dùng cần tìm..."
-          className="bg-white border-[3px] border-black shadow-[2px_2px_0px_0px_#000000] focus-visible:ring-0 focus-visible:border-primary rounded-none font-bold text-black h-12"
+          className="h-10"
           {...register("username", {
             required: "Username không được bỏ trống",
           })}
@@ -59,7 +59,7 @@ const SearchForm = ({
           <Button
             type="button"
             variant="outline"
-            className="flex-1 rounded-none border-[3px] border-black bg-white text-black hover:bg-accent font-bold shadow-[2px_2px_0px_0px_#000000] transition-all hover:-translate-y-1 hover:shadow-neobrutal h-12"
+            className="flex-1 rounded-xl border border-border/50 bg-white/5 hover:bg-white/10 font-medium h-10 transition-all"
             onClick={onCancel}
           >
             Hủy
@@ -69,7 +69,7 @@ const SearchForm = ({
         <Button
           type="submit"
           disabled={loading || !usernameValue?.trim()}
-          className="flex-1 btn-neobrutal bg-primary text-black disabled:opacity-50 disabled:cursor-not-allowed h-12"
+          className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed h-10 font-medium"
         >
           {loading ? (
             <span>Đang tìm...</span>

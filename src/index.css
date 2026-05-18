@@ -224,7 +224,7 @@
 
   /* Scrollbar - MacOS smooth */
   .beautiful-scrollbar {
-    @apply scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent rounded-full hover:scrollbar-thumb-gray-400 dark:hover:scrollbar-thumb-gray-600;
+    @apply scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent hover:scrollbar-thumb-gray-400 dark:hover:scrollbar-thumb-gray-600;
   }
 
   /* Animations */

@@ -53,10 +53,7 @@ const AddFriendModal = () => {
         setIsFound(false);
       }
     } catch (error) {
-      console.error(
-        "[ChatApp - AddFriendModal]: Lỗi khi tìm kiếm người dùng",
-        error,
-      );
+      console.error("[AddFriendModal] Failed to handle user search:", error);
       setIsFound(false);
     }
   });
@@ -66,14 +63,11 @@ const AddFriendModal = () => {
 
     try {
       const message = await addFriend(searchUser._id, data.message.trim());
-      toast.success(message);
+      toast.success("Đã gửi lời mời kết bạn thành công!");
 
       handleCancel();
     } catch (error) {
-      console.error(
-        "[ChatApp - AddFriendModal]: Lỗi khi gửi yêu cầu kết bạn",
-        error,
-      );
+      console.error("[AddFriendModal] Failed to send friend request:", error);
     }
   });
 
@@ -92,7 +86,7 @@ const AddFriendModal = () => {
         </div>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-106.25 border-[3px] border-black shadow-neobrutal rounded-none bg-card">
+      <DialogContent className="sm:max-w-[425px] glass border-0 rounded-2xl">
         <DialogHeader>
           <DialogTitle className="font-black text-2xl uppercase tracking-tight text-black">
             Kết bạn

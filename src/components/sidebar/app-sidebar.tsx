@@ -10,12 +10,11 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Moon, Sun } from "lucide-react";
 import { Switch } from "../ui/switch";
-import CreateNewChat from "../chat/CreateNewChat";
+import FriendCarousel from "./FriendCarousel";
 import NewGroupChatModal from "../chat/NewGroupChatModal";
 import GroupChatList from "../chat/GroupChatList";
 import AddFriendModal from "../chat/AddFriendModal";
@@ -28,48 +27,39 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useAuthStore();
 
   return (
-    <Sidebar variant="inset" className="border-r-[3px] border-black" {...props}>
+    <Sidebar variant="inset" className="glass border-r-0 my-2 ml-2 rounded-2xl overflow-hidden" {...props}>
       {/* Header */}
-      <SidebarHeader>
+      <SidebarHeader className="pb-0">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              size="lg"
-              asChild
-              className="bg-primary border-[3px] border-black shadow-[2px_2px_0px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all rounded-none mb-4"
-            >
-              <a href="#">
-                <div className="flex w-full items-center px-2 justify-between">
-                  <h1 className="text-xl font-bold uppercase tracking-widest text-black">
-                    Ostro
-                  </h1>
-                  <div className="flex items-center gap-2">
-                    <Sun className="size-4 text-black" />
-                    <Switch
-                      checked={isDark}
-                      onCheckedChange={toggleTheme}
-                      className="border-[2px] border-black shadow-none data-[state=checked]:bg-black data-[state=unchecked]:bg-white"
-                    />
-                    <Moon className="size-4 text-black" />
-                  </div>
-                </div>
-              </a>
-            </SidebarMenuButton>
+            <div className="flex w-full items-center justify-between px-3 py-2.5 mb-2">
+              <h1 className="text-lg font-bold tracking-wide bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
+                Ostro
+              </h1>
+              <div className="flex items-center gap-2">
+                <Sun className="size-3.5 text-muted-foreground" />
+                <Switch
+                  checked={isDark}
+                  onCheckedChange={toggleTheme}
+                />
+                <Moon className="size-3.5 text-muted-foreground" />
+              </div>
+            </div>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       {/* Content */}
-      <SidebarContent className="beautiful-scrollbar">
-        {/* New Chat */}
-        <SidebarGroup>
+      <SidebarContent className="beautiful-scrollbar pt-2">
+        {/* Friends Carousel */}
+        <SidebarGroup className="pt-0 pb-2">
           <SidebarGroupContent>
-            <CreateNewChat />
+            <FriendCarousel />
           </SidebarGroupContent>
         </SidebarGroup>
         {/* Group Chat */}
         <SidebarGroup>
           <div className="flex items-center justify-between mt-4">
-            <SidebarGroupLabel className="uppercase font-black text-black tracking-wider text-xs">
+            <SidebarGroupLabel className="uppercase font-semibold text-muted-foreground tracking-wider text-xs">
               nhóm chat
             </SidebarGroupLabel>
             <NewGroupChatModal />
@@ -81,7 +71,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
         {/* Direct Message */}
         <SidebarGroup>
-          <SidebarGroupLabel className="uppercase font-black text-black tracking-wider text-xs mt-4">
+          <SidebarGroupLabel className="uppercase font-semibold text-muted-foreground tracking-wider text-xs mt-4">
             bạn bè
           </SidebarGroupLabel>
           <SidebarGroupAction title="Kết Bạn" className="cursor-pointer">

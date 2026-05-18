@@ -48,7 +48,7 @@ const NewGroupChatModal = () => {
     try {
       e.preventDefault();
       if (invitedUsers.length === 0) {
-        toast.warning("Bạn phải mời ít nhất 1 thành viên vào nhóm");
+        toast.warning("Vui lòng chọn ít nhất một thành viên để tạo nhóm.");
         return;
       }
 
@@ -61,7 +61,7 @@ const NewGroupChatModal = () => {
       setSearch("");
       setInvitedUsers([]);
     } catch (error) {
-      console.error("Lỗi khi handleSubmit trong NewGroupChatModal", error);
+      console.error("[NewGroupChatModal] Failed to create group:", error);
     }
   };
 
@@ -78,9 +78,9 @@ const NewGroupChatModal = () => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-106.25 border-[3px] border-black shadow-neobrutal rounded-none bg-card">
+      <DialogContent className="sm:max-w-lg glass border-0 rounded-2xl">
         <DialogHeader>
-          <DialogTitle className="font-black text-2xl uppercase tracking-tight text-black">
+          <DialogTitle className="font-semibold text-xl tracking-tight text-foreground">
             tạo nhóm chat mới
           </DialogTitle>
         </DialogHeader>
@@ -93,7 +93,7 @@ const NewGroupChatModal = () => {
             <Input
               id="groupName"
               placeholder="Gõ tên nhóm vào đây"
-              className="bg-white border-[3px] border-black shadow-[2px_2px_0px_0px_#000000] focus-visible:ring-0 focus-visible:border-primary rounded-none font-bold text-black h-12"
+              className="h-10"
               value={groupName}
               onChange={(e) => setGroupName(e.target.value)}
               required
@@ -107,7 +107,7 @@ const NewGroupChatModal = () => {
             <Input
               id="invite"
               placeholder="Tìm theo tên hiển thị..."
-              className="bg-white border-[3px] border-black shadow-[2px_2px_0px_0px_#000000] focus-visible:ring-0 focus-visible:border-primary rounded-none font-bold text-black h-12"
+              className="h-10"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -129,7 +129,7 @@ const NewGroupChatModal = () => {
             <Button
               type="submit"
               disabled={loading}
-              className="flex-1 btn-neobrutal bg-primary text-black disabled:opacity-50 disabled:cursor-not-allowed h-12 mt-4"
+              className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed h-10 mt-4 font-medium"
             >
               {loading ? (
                 <span>Đang tạo...</span>

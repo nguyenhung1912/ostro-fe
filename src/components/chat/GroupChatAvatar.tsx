@@ -23,16 +23,16 @@ const GroupChatAvatar = ({ participants, type }: GroupChatAvatarProps) => {
     );
   }
   return (
-    <div className="relative flex -space-x-2 *:data-[slot=avatar]:ring-[2px] *:data-[slot=avatar]:ring-black">
+    <div className="relative flex -space-x-2 *:data-[slot=avatar]:ring-[2px] *:data-[slot=avatar]:ring-background">
       {avatars}
 
       {/* > 4 avatar thì render ... */}
       {participants.length > limit && (
         <div
           className="flex items-center z-10 justify-center size-8 
-          rounded-none bg-accent border-[2px] border-black shadow-[2px_2px_0px_0px_#000000] text-black font-bold"
+          rounded-full bg-primary/20 border border-primary/30 text-primary font-semibold text-xs"
         >
-          <Ellipsis className="size-4 text-black" />
+          <Ellipsis className="size-4" />
         </div>
       )}
     </div>

@@ -2,7 +2,6 @@ import { memo } from "react";
 import { cn, formatMessageTime } from "@/lib/utils";
 import type { Conversation, Message, Participant } from "@/types/chat";
 import UserAvatar from "./UserAvatar";
-import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
 
 interface MessageItemProps {
@@ -64,30 +63,28 @@ const MessageItem = ({
         {/* message */}
         <div
           className={cn(
-            "max-w-xs lg:max-w-md space-y-1 flex flex-col",
+            "max-w-[280px] sm:max-w-sm lg:max-w-md space-y-1 flex flex-col",
             message.isOwn ? "items-end" : "items-start",
           )}
         >
-          <Card
+          <div
             className={cn(
-              "p-3 rounded-none",
+              "text-sm leading-relaxed break-words",
               message.isOwn ? "chat-bubble-sent" : "chat-bubble-received",
             )}
           >
-            <p className="text-sm leading-relaxed break-words">
-              {message.content}
-            </p>
-          </Card>
+            {message.content}
+          </div>
 
           {/* seen or delivered */}
           {message.isOwn && message._id === selectedConvo.lastMessage?._id && (
             <Badge
               variant="outline"
               className={cn(
-                "text-[10px] px-1.5 py-0 h-4 border-[2px] border-black rounded-none shadow-[1px_1px_0px_0px_#000000] font-black uppercase tracking-wider",
+                "text-[10px] px-2 py-0.5 h-auto border-none font-medium bg-transparent shadow-none",
                 lastMessageStatus === "seen"
-                  ? "bg-accent text-black"
-                  : "bg-white text-black",
+                  ? "text-primary"
+                  : "text-muted-foreground",
               )}
             >
               {lastMessageStatus === "seen" ? "Đã xem" : "Đã gửi"}

@@ -40,7 +40,7 @@ export function SignInForm({
 
   return (
     <div className={cn("flex flex-col gap-4", className)} {...props}>
-      <Card className="overflow-hidden p-0">
+      <Card className="overflow-hidden p-0 glass border-0">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-4 md:p-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-4">
@@ -106,7 +106,7 @@ export function SignInForm({
               </div>
             </div>
           </form>
-          <div className="relative hidden bg-muted md:block">
+          <div className="relative hidden bg-transparent md:block mix-blend-overlay">
             <img
               src="/placeholder.png"
               alt="Image"

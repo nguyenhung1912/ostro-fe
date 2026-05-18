@@ -43,9 +43,20 @@ function App() {
   return (
     <>
       <Toaster
+        position="bottom-right"
+        expand={false}
+        richColors={false}
         toastOptions={{
           className:
-            "border-[3px] border-black shadow-neobrutal rounded-none font-sans font-bold",
+            "!rounded-2xl !border !border-white/15 !bg-white/80 dark:!bg-[#18181f]/90 !backdrop-blur-2xl !shadow-[0_8px_32px_rgba(0,0,0,0.18)] !text-foreground !font-medium !text-sm",
+          style: {
+            background: "rgba(255,255,255,0.80)",
+            backdropFilter: "blur(24px)",
+            WebkitBackdropFilter: "blur(24px)",
+            border: "1px solid rgba(255,255,255,0.20)",
+            borderRadius: "16px",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.6)",
+          },
         }}
       />
       <RouterProvider router={router} />

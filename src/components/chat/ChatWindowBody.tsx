@@ -49,10 +49,7 @@ const ChatWindowBody = () => {
     try {
       await fetchMessages(activeConversationId);
     } catch (error) {
-      console.error(
-        "[ChatApp - ChatWindowBody]: Lỗi khi tải thêm tin nhắn.",
-        error,
-      );
+      console.error("[ChatWindowBody] Failed to load more messages:", error);
     }
   }, [activeConversationId, fetchMessages]);
 
@@ -90,46 +87,48 @@ const ChatWindowBody = () => {
 
   if (messages.length === 0) {
     return (
-      <div className="flex h-full items-center justify-center text-black font-bold uppercase tracking-widest bg-card">
+      <div className="flex h-full items-center justify-center text-muted-foreground font-medium text-sm bg-transparent">
         Chưa có tin nhắn nào
       </div>
     );
   }
 
   return (
-    <div className="flex h-full flex-col overflow-hidden bg-card p-4">
-      <div
-        id="scrollableDiv"
-        ref={containerRef}
-        onScroll={handleScrollSave}
-        className="beautiful-scrollbar flex flex-col-reverse overflow-x-hidden overflow-y-auto"
+    <div
+      id="scrollableDiv"
+      ref={containerRef}
+      onScroll={handleScrollSave}
+      className="flex-1 h-0 flex flex-col-reverse overflow-x-hidden overflow-y-auto beautiful-scrollbar pl-4 pr-8 py-4"
+    >
+      <div ref={messagesEndRef} />
+      <InfiniteScroll
+        dataLength={messages.length}
+        next={fetchMoreMessages}
+        hasMore={hasMore}
+        scrollableTarget="scrollableDiv"
+        loader={
+          <p className="text-center text-xs text-muted-foreground py-2">
+            Đang tải thêm...
+          </p>
+        }
+        inverse
+        style={{
+          display: "flex",
+          flexDirection: "column-reverse",
+          overflow: "visible",
+        }}
       >
-        <div ref={messagesEndRef} />
-        <InfiniteScroll
-          dataLength={messages.length}
-          next={fetchMoreMessages}
-          hasMore={hasMore}
-          scrollableTarget="scrollableDiv"
-          loader={<p>Đang tải...</p>}
-          inverse
-          style={{
-            display: "flex",
-            flexDirection: "column-reverse",
-            overflow: "visible",
-          }}
-        >
-          {reversedMessages.map((message, index) => (
-            <MessageItem
-              key={message._id ?? index}
-              message={message}
-              index={index}
-              messages={reversedMessages}
-              selectedConvo={selectedConvo}
-              lastMessageStatus={lastMessageStatus}
-            />
-          ))}
-        </InfiniteScroll>
-      </div>
+        {reversedMessages.map((message, index) => (
+          <MessageItem
+            key={message._id ?? index}
+            message={message}
+            index={index}
+            messages={reversedMessages}
+            selectedConvo={selectedConvo}
+            lastMessageStatus={lastMessageStatus}
+          />
+        ))}
+      </InfiniteScroll>
     </div>
   );
 };
