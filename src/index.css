@@ -6,189 +6,253 @@
 
 @layer base {
   :root {
-    /* Neobrutalist Base Colors */
-    --background: 60 17% 95%; /* Beige #F4F4F0 */
-    --foreground: 0 0% 0%; /* Pure Black */
-    --shadow-color: #000000; /* Pure Black Shadows */
+    /* MacOS Light Mode Colors */
+    --background: 240 5% 96%; /* #f5f5f7 */
+    --foreground: 240 10% 10%; /* #1c1c1e */
 
-    /* Card/Popover/Main Containers */
-    --card: 0 0% 100%; /* Pure White */
-    --card-foreground: 0 0% 0%;
+    /* Card/Popover - Solid fallback or slight glass */
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
+    --popover-foreground: 240 10% 10%;
 
-    /* Primary Actions */
-    --primary: 14 100% 57%; /* Orange #FF5722 */
-    --primary-foreground: 0 0% 0%;
-    --primary-glow: 14 100% 57%;
+    /* Primary Actions - Ostro Purple */
+    --primary: 258 90% 66%; /* #8B5CF6 */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 258 90% 66%;
 
     /* Secondary */
-    --secondary: 100 100% 91%; /* Light Mint */
-    --secondary-foreground: 0 0% 0%;
+    --secondary: 240 5% 84%; /* Light gray */
+    --secondary-foreground: 240 10% 10%;
 
     /* Muted */
-    --muted: 60 10% 90%;
-    --muted-foreground: 0 0% 40%;
+    --muted: 240 5% 90%;
+    --muted-foreground: 240 5% 40%; /* #8e8e93 */
 
     /* Accent */
-    --accent: 49 100% 50%; /* Bright Yellow */
-    --accent-foreground: 0 0% 0%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
 
     /* Chat specifics */
-    --chat-bubble-sent: 49 100% 50%;
-    --chat-bubble-sent-foreground: 0 0% 0%;
-    --chat-bubble-received: 100 100% 91%; /* Light Mint */
-    --chat-bubble-received-foreground: 0 0% 0%;
+    --chat-bubble-sent: 258 90% 66%;
+    --chat-bubble-sent-foreground: 0 0% 100%;
+    --chat-bubble-received: 0 0% 100%;
+    --chat-bubble-received-foreground: 240 10% 10%;
 
     /* Status colors */
-    --online: 120 100% 40%;
-    --offline: 0 0% 50%;
+    --online: 142 71% 45%;
+    --offline: 240 5% 65%;
 
     /* State colors */
-    --warning: 49 100% 50%;
-    --warning-foreground: 0 0% 0%;
-    --info: 200 100% 50%;
-    --info-foreground: 0 0% 0%;
-    --destructive: 0 100% 50%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 240 10% 10%;
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     /* Borders & Inputs */
-    --border: 0 0% 0%;
-    --input: 0 0% 100%;
-    --ring: 0 0% 0%;
+    --border: 240 5% 85%;
+    --input: 240 5% 90%;
+    --ring: 217 91% 60%;
 
-    /* Sharp corners */
-    --radius: 0px;
+    /* Radius */
+    --radius: 12px;
 
     /* Sidebar specifics */
-    --sidebar-background: 60 17% 95%; /* Beige */
-    --sidebar-foreground: 0 0% 0%;
-    --sidebar-primary: 14 100% 57%; /* Orange */
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 49 100% 50%; /* Yellow for hover states */
-    --sidebar-accent-foreground: 0 0% 0%;
-    --sidebar-border: 0 0% 0%;
-    --sidebar-ring: 0 0% 0%;
+    --sidebar-background: 260 30% 97%;
+    --sidebar-foreground: 240 10% 10%;
+    --sidebar-primary: 258 90% 66%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 258 30% 94%;
+    --sidebar-accent-foreground: 240 10% 10%;
+    --sidebar-border: 258 20% 88%;
+    --sidebar-ring: 258 90% 66%;
+
+    /* Glassmorphism Variables */
+    --glass-bg: rgba(255, 255, 255, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.7);
+    --glass-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.8),
+      0 8px 32px rgba(139, 92, 246, 0.08);
   }
 
   .dark {
-    /* Cyberbrutalism Dark Mode */
-    --background: 222 47% 7%; /* Deep Charcoal #0B0F19 */
-    --foreground: 60 17% 95%; /* Off-white #F4F4F0 */
-    --shadow-color: #ff00ff; /* Neon Hot Pink Shadows */
+    /* MacOS Dark Mode Colors */
+    --background: 240 10% 6%; /* #0e0e11 */
+    --foreground: 0 0% 98%;
 
-    --card: 222 47% 11%;
-    --card-foreground: 60 17% 95%;
-    --popover: 222 47% 11%;
-    --popover-foreground: 60 17% 95%;
+    --card: 240 10% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 12%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 14 100% 57%; /* Neon Orange */
-    --primary-foreground: 0 0% 0%;
-    --primary-glow: 14 100% 57%;
+    --primary: 258 90% 66%; /* #8B5CF6 */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 258 90% 66%;
 
-    --secondary: 100 100% 91%;
-    --secondary-foreground: 0 0% 0%;
+    --secondary: 240 5% 20%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 222 47% 15%;
-    --muted-foreground: 222 10% 70%;
+    --muted: 240 10% 16%;
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 180 100% 50%; /* Cyan accent for contrast */
-    --accent-foreground: 0 0% 0%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
 
-    --chat-bubble-sent: 49 100% 50%;
-    --chat-bubble-sent-foreground: 0 0% 0%;
-    --chat-bubble-received: 222 47% 15%;
-    --chat-bubble-received-foreground: 60 17% 95%;
+    --chat-bubble-sent: 258 90% 66%;
+    --chat-bubble-sent-foreground: 0 0% 100%;
+    --chat-bubble-received: 240 10% 14%;
+    --chat-bubble-received-foreground: 0 0% 98%;
 
-    --border: 0 0% 90%; /* Solid White/Light Gray Borders */
-    --input: 222 47% 11%;
-    --ring: 300 100% 50%; /* Magenta Ring */
+    --border: 240 10% 20%;
+    --input: 240 10% 16%;
+    --ring: 217 91% 60%;
 
-    --sidebar-background: 222 47% 7%;
-    --sidebar-foreground: 60 17% 95%;
-    --sidebar-primary: 14 100% 57%;
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 180 100% 50%;
-    --sidebar-accent-foreground: 0 0% 0%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 300 100% 50%;
+    --sidebar-background: 240 10% 8%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 10% 16%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 10% 16%;
+    --sidebar-ring: 217 91% 60%;
+
+    /* Glassmorphism Variables */
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 8px 32px rgba(0, 0, 0, 0.35);
   }
 
   body {
-    @apply text-foreground bg-background font-sans;
+    @apply text-foreground font-sans;
+    background-color: #f0f0f5;
+    background-image:
+      radial-gradient(
+        circle at top right,
+        rgba(139, 92, 246, 0.25),
+        transparent 35%
+      ),
+      radial-gradient(
+        circle at bottom left,
+        rgba(59, 130, 246, 0.18),
+        transparent 35%
+      ),
+      linear-gradient(135deg, #f5f5f7, #e8e8f0);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  .dark body {
+    background-color: #07070a;
+    background-image:
+      radial-gradient(
+        circle at top right,
+        rgba(139, 92, 246, 0.18),
+        transparent 30%
+      ),
+      radial-gradient(
+        circle at bottom left,
+        rgba(59, 130, 246, 0.12),
+        transparent 30%
+      ),
+      linear-gradient(135deg, #07070a, #0f0f17);
+    background-attachment: fixed;
+    min-height: 100vh;
   }
 }
 
-/* Chat App Utility Classes - Neobrutalist Edition */
 @layer components {
-  /* Remove old glassmorphism completely, make it raw */
+  /* Glassmorphism Utility */
   .glass {
-    @apply bg-card border-[3px] border-border;
-  }
-  .glass-strong {
-    @apply bg-card border-[3px] border-border shadow-neobrutal;
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: var(--glass-shadow);
   }
 
-  /* Chat bubble variants */
+  .glass-panel {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: var(--glass-shadow);
+    @apply rounded-2xl;
+  }
+
+  /* Chat bubble variants - MacOS style */
   .chat-bubble-sent {
-    @apply bg-primary text-black border-[3px] border-black shadow-[4px_4px_0px_0px_var(--shadow-color)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--shadow-color)] font-medium rounded-none;
+    background: #8b5cf6;
+    color: #ffffff;
+    @apply font-normal rounded-[20px] rounded-tr-[6px] px-4 py-2.5 shadow-sm;
+    transition: opacity 0.15s ease;
+  }
+  .chat-bubble-sent:hover {
+    opacity: 0.92;
   }
 
   .chat-bubble-received {
-    @apply bg-white dark:bg-card text-foreground border-[3px] border-border shadow-[4px_4px_0px_0px_var(--shadow-color)] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_var(--shadow-color)] font-medium rounded-none;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    @apply text-foreground font-normal rounded-[20px] rounded-tl-[6px] px-4 py-2.5;
+  }
+
+  .dark .chat-bubble-received {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .error-message {
-    @apply text-sm font-bold text-destructive bg-destructive/10 border-[3px] border-destructive p-2 rounded-none;
+    @apply text-sm font-medium text-destructive bg-destructive/10 border border-destructive/20 p-3 rounded-lg;
   }
 
   .success-message {
-    @apply text-sm font-bold text-emerald-600 bg-emerald-100 border-[3px] border-emerald-600 p-2 rounded-none;
+    @apply text-sm font-medium text-emerald-600 bg-emerald-500/10 border border-emerald-500/20 p-3 rounded-lg;
   }
 
   /* Status indicators */
   .status-online {
-    @apply bg-[hsl(var(--online))] border-[2px] border-border rounded-none;
+    @apply bg-[hsl(var(--online))] border-[2px] border-background rounded-full;
   }
   .status-offline {
-    @apply bg-[hsl(var(--offline))] border-[2px] border-border rounded-none;
+    @apply bg-[hsl(var(--offline))] border-[2px] border-background rounded-full;
   }
 
-  /* Scrollbar - Neobrutal */
+  /* Scrollbar - MacOS smooth */
   .beautiful-scrollbar {
-    @apply scrollbar-thin scrollbar-thumb-black scrollbar-track-transparent dark:scrollbar-thumb-white;
+    @apply scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent rounded-full hover:scrollbar-thumb-gray-400 dark:hover:scrollbar-thumb-gray-600;
   }
 
   /* Animations */
   .transition-bounce {
-    transition: all 0.15s ease-out;
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
   .transition-smooth {
-    transition: all 0.15s ease-out;
+    transition: all 0.25s ease;
   }
 
-  /* Neobrutal Buttons & Interactive Elements */
-  .btn-neobrutal {
-    @apply border-[3px] border-border shadow-neobrutal transition-transform active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_var(--shadow-color)] font-bold uppercase tracking-wider rounded-none;
-  }
-
-  /* Removed pulse ring for a more static raw look */
-  .pulse-ring {
-    @apply relative;
+  /* Smooth Buttons & Interactive Elements */
+  .btn-smooth {
+    @apply transition-all active:scale-95 font-medium rounded-lg;
   }
 
   .message-bounce {
-    animation: messageSlideIn 0.2s ease-out forwards;
+    animation: messageSlideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1)
+      forwards;
   }
 
   @keyframes messageSlideIn {
     0% {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(12px) scale(0.98);
     }
     100% {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
   }
 }
@@ -230,47 +294,44 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
 }
 
 /* ========================================================
-   CYBERBRUTALIST VIEW TRANSITIONS
+   MAC OS SMOOTH VIEW TRANSITIONS
    ======================================================== */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 0.15s;
-  animation-timing-function: cubic-bezier(0.1, 1, 0, 1); /* Sharp snap */
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   animation-fill-mode: both;
 }
 
 ::view-transition-old(root) {
-  animation-name: brutal-slide-out;
+  animation-name: fade-out-scale;
 }
 
 ::view-transition-new(root) {
-  animation-name: brutal-slide-in;
+  animation-name: fade-in-scale;
 }
 
-@keyframes brutal-slide-out {
+@keyframes fade-out-scale {
   from {
-    transform: translateX(0);
+    transform: scale(1);
     opacity: 1;
   }
   to {
-    transform: translateX(-5vw);
+    transform: scale(0.98);
     opacity: 0;
   }
 }
 
-@keyframes brutal-slide-in {
+@keyframes fade-in-scale {
   from {
-    transform: translateX(5vw);
+    transform: scale(1.02);
     opacity: 0;
   }
   to {
-    transform: translateX(0);
+    transform: scale(1);
     opacity: 1;
   }
 }
