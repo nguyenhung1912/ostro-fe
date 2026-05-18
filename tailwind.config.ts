@@ -84,13 +84,18 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        heading: ["Inter", "system-ui", "sans-serif"],
+        sans: ["Space Grotesk", "system-ui", "sans-serif"],
+        heading: ["Space Grotesk", "system-ui", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        neobrutal: "4px 4px 0px 0px var(--shadow-color)",
+        "neobrutal-sm": "2px 2px 0px 0px var(--shadow-color)",
+        "neobrutal-lg": "8px 8px 0px 0px var(--shadow-color)",
       },
       keyframes: {
         "accordion-down": {
