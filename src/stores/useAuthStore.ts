@@ -2,10 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { authService } from "@/services/authService";
 import type { AuthState, FetchMeOptions, RefreshOptions } from "@/types/store";
-import {
-  authToast,
-  explicitSignOut,
-} from "@/lib/authUtils";
+import { authToast, explicitSignOut } from "@/lib/authUtils";
 import {
   clearChatScrollSessionState,
   clearPersistedSessionState,
@@ -54,9 +51,11 @@ export const useAuthStore = create<AuthState>()(
             firstName,
             lastName,
           );
-          authToast.success("Đăng ký thành công. Bạn có thể đăng nhập ngay bây giờ.");
+          authToast.success(
+            "Đăng ký thành công. Bạn có thể đăng nhập ngay bây giờ.",
+          );
           return true;
-        } catch (error) {
+        } catch {
           authToast.error("Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.");
           return false;
         } finally {
@@ -86,9 +85,11 @@ export const useAuthStore = create<AuthState>()(
 
           authToast.success("Chào mừng trở lại Ostro! 👋");
           return true;
-        } catch (error) {
+        } catch {
           get().clearState();
-          authToast.error("Đăng nhập thất bại. Sai tên đăng nhập hoặc mật khẩu.");
+          authToast.error(
+            "Đăng nhập thất bại. Sai tên đăng nhập hoặc mật khẩu.",
+          );
           return false;
         } finally {
           set({ loading: false });
@@ -101,7 +102,7 @@ export const useAuthStore = create<AuthState>()(
         try {
           await authService.signOut();
           authToast.success("Đã đăng xuất thành công.");
-        } catch (error) {
+        } catch {
           authToast.error("Đăng xuất thất bại. Vui lòng thử lại.");
         } finally {
           explicitSignOut.mark();
@@ -119,7 +120,9 @@ export const useAuthStore = create<AuthState>()(
           set({ user: null, accessToken: null, authChecked: true });
 
           if (showErrorToast) {
-            authToast.error("Không thể tải thông tin tài khoản. Vui lòng thử lại.");
+            authToast.error(
+              "Không thể tải thông tin tài khoản. Vui lòng thử lại.",
+            );
           }
 
           return false;
@@ -147,7 +150,9 @@ export const useAuthStore = create<AuthState>()(
           return true;
         } catch {
           if (showErrorToast) {
-            authToast.error("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+            authToast.error(
+              "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+            );
           }
 
           get().clearState();
