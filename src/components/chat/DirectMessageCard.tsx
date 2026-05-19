@@ -36,12 +36,7 @@ const DirectMessageCard = ({ convo }: { convo: Conversation }) => {
   return (
     <ChatCard
       convoId={convo._id}
-      name={otherUser.displayName ?? ""}
-      timestamp={
-        convo.lastMessage?.createdAt
-          ? new Date(convo.lastMessage.createdAt)
-          : undefined
-      }
+      name={otherUser.nickname ?? otherUser.displayName ?? ""}
       isActive={activeConversationId === convo._id}
       onSelect={handleSelectConversation}
       unreadCount={unreadCount}
