@@ -27,13 +27,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useAuthStore();
 
   return (
-    <Sidebar variant="inset" className="glass border-r-0 my-2 ml-2 rounded-2xl overflow-hidden" {...props}>
+    <Sidebar variant="inset" className="overflow-hidden border-r border-border bg-sidebar" {...props}>
       {/* Header */}
       <SidebarHeader className="pb-0">
         <SidebarMenu>
           <SidebarMenuItem>
             <div className="flex w-full items-center justify-between px-3 py-2.5 mb-2">
-              <h1 className="text-lg font-bold tracking-wide bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
+              <h1 className="text-xl font-semibold tracking-tight text-foreground">
                 Ostro
               </h1>
               <div className="flex items-center gap-2">

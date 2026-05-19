@@ -78,10 +78,10 @@ const NewGroupChatModal = () => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-lg glass border-0 rounded-2xl">
+      <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="font-semibold text-xl tracking-tight text-foreground">
-            tạo nhóm chat mới
+          <DialogTitle className="font-semibold text-xl text-foreground">
+            Tạo nhóm chat mới
           </DialogTitle>
         </DialogHeader>
 

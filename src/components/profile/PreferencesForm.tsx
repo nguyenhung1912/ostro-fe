@@ -18,7 +18,7 @@ const PreferencesForm = () => {
   const [onlineStatus, setOnlineStatus] = useState(false);
 
   return (
-    <Card className="rounded-2xl border border-border/50">
+    <Card className="rounded-2xl glass">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 font-black uppercase tracking-tight">
           <Sun className="h-5 w-5 text-primary" />

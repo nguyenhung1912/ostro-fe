@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 const PrivacySettings = () => (
-  <Card className="rounded-2xl border border-border/50">
+  <Card className="rounded-2xl glass">
     <CardHeader className="pb-4">
       <CardTitle className="flex items-center gap-2 font-black uppercase tracking-tight">
         <Shield className="h-5 w-5 text-primary" />
@@ -24,7 +24,7 @@ const PrivacySettings = () => (
       <div className="space-y-3">
         <Button
           variant="outline"
-          className="w-full justify-start hover:text-warning"
+          className="w-full justify-start bg-black/20 border-white/10 dark:bg-white/5 dark:border-white/20 hover:bg-white/10 transition-colors hover:text-warning"
         >
           <Shield className="h-4 w-4 mr-2" />
           Đổi mật khẩu
@@ -32,7 +32,7 @@ const PrivacySettings = () => (
 
         <Button
           variant="outline"
-          className="w-full justify-start hover:text-info"
+          className="w-full justify-start bg-black/20 border-white/10 dark:bg-white/5 dark:border-white/20 hover:bg-white/10 transition-colors hover:text-info"
         >
           <Bell className="h-4 w-4 mr-2" />
           Cài đặt thông báo
@@ -40,7 +40,7 @@ const PrivacySettings = () => (
 
         <Button
           variant="outline"
-          className="w-full justify-start hover:text-destructive"
+          className="w-full justify-start bg-black/20 border-white/10 dark:bg-white/5 dark:border-white/20 hover:bg-white/10 transition-colors hover:text-destructive"
         >
           <ShieldBan className="size-4 mr-2" />
           Chặn & Báo cáo

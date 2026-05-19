@@ -40,7 +40,7 @@ export function SignInForm({
 
   return (
     <div className={cn("flex flex-col gap-4", className)} {...props}>
-      <Card className="overflow-hidden p-0 glass border-0">
+      <Card className="overflow-hidden p-0 border-border bg-card shadow-sm">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-4 md:p-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-4">
@@ -64,7 +64,7 @@ export function SignInForm({
                 <Input
                   type="text"
                   id="username"
-                  placeholder="ostro"
+                  placeholder="john_doe"
                   {...register("username")}
                 />
                 {/* error message */}
@@ -81,6 +81,7 @@ export function SignInForm({
                 <Input
                   type="password"
                   id="password"
+                  placeholder="••••••••"
                   {...register("password")}
                 />
                 {/* error message */}

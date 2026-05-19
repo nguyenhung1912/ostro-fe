@@ -45,7 +45,7 @@ const GroupChatCard = ({ convo }: { convo: Conversation }) => {
         </>
       }
       subtitle={
-        <p className="text-sm truncate font-medium opacity-80 text-current">
+        <p className="text-sm truncate text-muted-foreground">
           {convo.participants.length} thành viên
         </p>
       }

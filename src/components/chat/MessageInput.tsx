@@ -1,7 +1,7 @@
 import { useAuthStore } from "@/stores/useAuthStore";
 import type { Conversation } from "@/types/chat";
 import React, { useState } from "react";
-import { ImagePlus, Send, Smile } from "lucide-react";
+import { ImagePlus, Send } from "lucide-react";
 import EmojiPicker from "./EmojiPicker";
 import { useChatStore } from "@/stores/useChatStore";
 import { toast } from "sonner";
@@ -41,11 +41,11 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
 
   return (
     <div className="p-3 pb-4">
-      <div className="flex items-center gap-2 px-3 py-2 rounded-2xl glass border-0 shadow-none">
+      <div className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-secondary border border-transparent shadow-none">
         {/* Attach button */}
         <button
           type="button"
-          className="shrink-0 flex items-center justify-center size-8 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-all text-muted-foreground hover:text-foreground"
+          className="shrink-0 flex items-center justify-center size-8 rounded-full hover:bg-background transition-colors text-muted-foreground hover:text-foreground"
         >
           <ImagePlus className="size-4" />
         </button>
@@ -61,7 +61,7 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
         />
 
         {/* Emoji picker */}
-        <div className="shrink-0 flex items-center justify-center size-8 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-all text-muted-foreground hover:text-foreground cursor-pointer">
+        <div className="shrink-0 flex items-center justify-center size-8 rounded-full hover:bg-background transition-colors text-muted-foreground hover:text-foreground cursor-pointer">
           <EmojiPicker onChange={(emoji: string) => setValue(`${value}${emoji}`)} />
         </div>
 

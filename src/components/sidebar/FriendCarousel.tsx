@@ -96,7 +96,7 @@ const FriendCarousel = () => {
 
   if (!friends || friends.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center p-4 text-muted-foreground border border-dashed rounded-2xl glass mb-2">
+      <div className="flex flex-col items-center justify-center p-4 text-muted-foreground border border-dashed border-border bg-background rounded-2xl mb-2">
         <Users className="size-6 mb-2 opacity-50" />
         <span className="text-xs">Chưa có bạn bè</span>
       </div>
@@ -104,7 +104,7 @@ const FriendCarousel = () => {
   }
 
   return (
-    <div className="relative w-full mb-2 overflow-hidden rounded-2xl glass p-2 border border-primary/10">
+    <div className="relative w-full mb-2 overflow-hidden rounded-2xl bg-background p-2 border border-border">
       <div
         ref={scrollRef}
         className="flex gap-4 overflow-x-auto beautiful-scrollbar no-scrollbar select-none py-2 px-1 cursor-grab active:cursor-grabbing"
@@ -124,8 +124,8 @@ const FriendCarousel = () => {
             className="flex flex-col items-center gap-1 min-w-[60px] group flex-shrink-0 transition-transform active:scale-95"
             draggable={false}
           >
-            <div className="relative p-[2px] rounded-full bg-gradient-to-tr from-primary to-purple-500 group-hover:scale-105 transition-all duration-300">
-              <div className="bg-background rounded-full p-[2px]">
+            <div className="relative p-[2px] rounded-full border border-border bg-transparent group-hover:border-primary/50 group-hover:scale-105 transition-all duration-300">
+              <div className="bg-transparent rounded-full p-[2px]">
                 <UserAvatar
                   type="sidebar"
                   name={friend.displayName}
@@ -141,8 +141,8 @@ const FriendCarousel = () => {
         ))}
       </div>
       {/* Gradient fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-background/90 to-transparent pointer-events-none rounded-l-2xl"></div>
-      <div className="absolute right-0 top-0 bottom-0 w-4 bg-gradient-to-l from-background/90 to-transparent pointer-events-none rounded-r-2xl"></div>
+      <div className="absolute left-0 top-0 bottom-0 w-4 pointer-events-none rounded-l-2xl"></div>
+      <div className="absolute right-0 top-0 bottom-0 w-4 pointer-events-none rounded-r-2xl"></div>
     </div>
   );
 };

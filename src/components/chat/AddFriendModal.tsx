@@ -62,7 +62,7 @@ const AddFriendModal = () => {
     if (!searchUser) return;
 
     try {
-      const message = await addFriend(searchUser._id, data.message.trim());
+      await addFriend(searchUser._id, data.message.trim());
       toast.success("Đã gửi lời mời kết bạn thành công!");
 
       handleCancel();
@@ -86,9 +86,9 @@ const AddFriendModal = () => {
         </div>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[425px] glass border-0 rounded-2xl">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="font-black text-2xl uppercase tracking-tight text-black">
+          <DialogTitle className="font-semibold text-xl text-foreground">
             Kết bạn
           </DialogTitle>
         </DialogHeader>

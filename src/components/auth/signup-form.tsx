@@ -50,7 +50,7 @@ export function SignUpForm({
 
   return (
     <div className={cn("flex flex-col gap-4", className)} {...props}>
-      <Card className="overflow-hidden p-0 glass border-0">
+      <Card className="overflow-hidden p-0 border-border bg-card shadow-sm">
         <CardContent className="grid p-0 md:grid-cols-2">
           <form className="p-4 md:p-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-4">
@@ -72,7 +72,7 @@ export function SignUpForm({
                   <Label htmlFor="lastname" className="block text-sm">
                     Họ
                   </Label>
-                  <Input type="text" id="lastname" {...register("lastname")} />
+                  <Input type="text" id="lastname" placeholder="Doe" {...register("lastname")} />
                   {/* error message */}
                   {errors.lastname && (
                     <p className="error-message">{errors.lastname.message}</p>
@@ -85,6 +85,7 @@ export function SignUpForm({
                   <Input
                     type="text"
                     id="firstname"
+                    placeholder="John"
                     {...register("firstname")}
                   />
                   {/* error message */}
@@ -102,7 +103,7 @@ export function SignUpForm({
                 <Input
                   type="text"
                   id="username"
-                  placeholder="ostro"
+                  placeholder="john_doe"
                   {...register("username")}
                 />
                 {/* error message */}
@@ -119,7 +120,7 @@ export function SignUpForm({
                 <Input
                   type="email"
                   id="email"
-                  placeholder="o@gmail.com"
+                  placeholder="name@example.com"
                   {...register("email")}
                 />
                 {/* error message */}
@@ -136,6 +137,7 @@ export function SignUpForm({
                 <Input
                   type="password"
                   id="password"
+                  placeholder="••••••••"
                   {...register("password")}
                 />
                 {/* error message */}

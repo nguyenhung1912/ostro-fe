@@ -5,7 +5,6 @@ import type { AuthState, FetchMeOptions, RefreshOptions } from "@/types/store";
 import {
   authToast,
   explicitSignOut,
-  getAuthErrorMessage,
 } from "@/lib/authUtils";
 import {
   clearChatScrollSessionState,

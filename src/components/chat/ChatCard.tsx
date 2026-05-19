@@ -27,9 +27,9 @@ const ChatCard = ({
     <Card
       key={convoId}
       className={cn(
-        "border border-transparent p-3 cursor-pointer transition-all rounded-2xl hover:bg-white/5 dark:hover:bg-white/[0.04] hover:border-white/10",
+        "border border-transparent p-3 cursor-pointer transition-colors rounded-xl hover:bg-accent hover:text-accent-foreground group",
         isActive &&
-          "bg-primary/10 border-primary/20 text-foreground",
+          "bg-secondary text-secondary-foreground",
       )}
       onClick={() => onSelect(convoId)}
     >
@@ -39,13 +39,13 @@ const ChatCard = ({
           <div className="flex items-center justify-between mb-1">
             <h3
               className={cn(
-                "font-bold text-sm truncate uppercase tracking-tight",
-                unreadCount && unreadCount > 0 ? "text-current" : "opacity-90",
+                "font-medium text-sm truncate",
+                unreadCount && unreadCount > 0 ? "font-semibold text-foreground" : "text-foreground",
               )}
             >
               {name}
             </h3>
-            <span className="text-xs font-bold opacity-70">
+            <span className="text-xs text-muted-foreground">
               {timestamp ? formatOnlineTime(timestamp) : ""}
             </span>
           </div>
