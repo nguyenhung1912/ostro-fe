@@ -63,17 +63,19 @@ export const useSocketStore = create<SocketState>((set, get) => ({
     });
 
     // read message
-    socket.on("read-message", ({ conversation, lastMessage }) => {
-      const updated = {
-        _id: conversation._id,
-        lastMessage,
-        lastMessageAt: conversation.lastMessageAt,
-        unreadCounts: conversation.unreadCounts,
-        seenBy: conversation.seenBy,
-      } as Conversation;
+    socket.on(
+      "read-message",
+      ({ conversationId, lastMessage, seenBy, unreadCounts }) => {
+        const updated = {
+          _id: conversationId,
+          lastMessage,
+          unreadCounts,
+          seenBy,
+        } as Conversation;
 
-      useChatStore.getState().updateConversation(updated);
-    });
+        useChatStore.getState().updateConversation(updated);
+      },
+    );
 
     socket.on(
       "message-recalled",
