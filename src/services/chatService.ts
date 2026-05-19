@@ -82,4 +82,16 @@ export const chatService = {
     const res = await api.post("/conversations", { type, name, memberIds });
     return res.data.conversation;
   },
+
+  async deleteConversation(conversationId: string) {
+    const res = await api.delete(`/conversations/${conversationId}`);
+    return res.data;
+  },
+
+  async renameConversation(conversationId: string, name: string) {
+    const res = await api.patch(`/conversations/${conversationId}/rename`, {
+      name,
+    });
+    return res.data.conversation;
+  },
 };
