@@ -75,6 +75,15 @@ export const useSocketStore = create<SocketState>((set, get) => ({
       useChatStore.getState().updateConversation(updated);
     });
 
+    socket.on(
+      "message-recalled",
+      ({ messageId, conversationId, lastMessage }) => {
+        useChatStore
+          .getState()
+          .markMessageRecalled(messageId, conversationId, lastMessage);
+      },
+    );
+
     // new group chat
     socket.on("new-group", (conversation) => {
       useChatStore.getState().addConvo(conversation);
