@@ -1,4 +1,5 @@
 import api from "@/lib/axios";
+import type { AxiosProgressEvent } from "axios";
 import type { ConversationResponse, Message } from "@/types/chat";
 
 interface FetchMessageProps {
@@ -37,6 +38,18 @@ export const chatService = {
     return res.data.message;
   },
 
+  async uploadMessageImage(
+    formData: FormData,
+    onUploadProgress?: (progressEvent: AxiosProgressEvent) => void,
+  ): Promise<{ imgUrl: string; imageId?: string }> {
+    const res = await api.post("/messages/upload-image", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+      onUploadProgress,
+    });
+
+    return res.data;
+  },
+
   async sendGroupMessage(
     conversationId: string,
     content: string = "",
@@ -54,6 +67,11 @@ export const chatService = {
   async markAsSeen(conversationId: string) {
     const res = await api.patch(`/conversations/${conversationId}/seen`);
     return res.data;
+  },
+
+  async recallMessage(messageId: string): Promise<Message> {
+    const res = await api.patch(`/messages/${messageId}/recall`);
+    return res.data.message;
   },
 
   async createConversation(
