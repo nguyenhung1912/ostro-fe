@@ -47,8 +47,8 @@ const NewGroupChatModal = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
-      if (invitedUsers.length === 0) {
-        toast.warning("Vui lòng chọn ít nhất một thành viên để tạo nhóm.");
+      if (invitedUsers.length < 2) {
+        toast.warning("Vui lòng chọn ít nhất hai thành viên để tạo nhóm.");
         return;
       }
 
@@ -140,7 +140,7 @@ const NewGroupChatModal = () => {
           <DialogFooter className="mt-6 pt-4 border-t border-border/30">
             <Button
               type="submit"
-              disabled={loading || invitedUsers.length === 0}
+              disabled={loading || invitedUsers.length < 2}
               className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed h-10 font-medium transition-all"
             >
               {loading ? (
