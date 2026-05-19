@@ -30,31 +30,43 @@ const SearchForm = ({
 }: SearchFormProps) => {
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="username" className="text-sm font-semibold">
-          Tìm bằng username
-        </Label>
-        <Input
-          id="username"
-          placeholder="Nhập tên người dùng cần tìm..."
-          className="h-10"
-          {...register("username", {
-            required: "Username không được bỏ trống",
-          })}
-        />
-        {errors.username && (
-          <p className="error-message">{errors.username.message}</p>
-        )}
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label
+            htmlFor="username"
+            className="text-sm font-semibold text-foreground/90"
+          >
+            Tên người dùng
+          </Label>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Input
+              id="username"
+              placeholder="Nhập tên người dùng..."
+              className="h-10 pl-9 bg-white/5 border-border/50 focus-visible:ring-1"
+              {...register("username", {
+                required: "Username không được bỏ trống",
+              })}
+            />
+          </div>
+          {errors.username && (
+            <p className="text-xs font-medium text-red-500 mt-1">
+              {errors.username.message}
+            </p>
+          )}
+        </div>
 
         {isFound === false && (
-          <span className="error-message">
-            Không tìm thấy
-            <span className="font-semibold">@{searchedUsername}</span>
-          </span>
+          <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm font-medium">
+            <span>
+              Không tìm thấy{" "}
+              <span className="font-bold">@{searchedUsername}</span>
+            </span>
+          </div>
         )}
       </div>
 
-      <DialogFooter>
+      <DialogFooter className="mt-6 pt-4 border-t border-border/30">
         <DialogClose asChild>
           <Button
             type="button"
