@@ -76,6 +76,12 @@ export interface ChatState {
     content: string,
     imgUrl?: string,
   ) => Promise<void>;
+  recallMessage: (messageId: string, conversationId: string) => Promise<void>;
+  markMessageRecalled: (
+    messageId: string,
+    conversationId: string,
+    lastMessage?: Conversation["lastMessage"],
+  ) => void;
   // add message
   addMessage: (message: Message) => Promise<void>;
   // update conversation
@@ -113,4 +119,15 @@ export interface FriendState {
 
 export interface UserState {
   updateAvatarUrl: (formData: FormData) => Promise<void>;
+  updateCoverUrl: (formData: FormData) => Promise<void>;
+  updateProfile: (payload: {
+    displayName: string;
+    bio?: string;
+    phone?: string;
+  }) => Promise<void>;
+  changePassword: (payload: {
+    currentPassword: string;
+    newPassword: string;
+  }) => Promise<void>;
+  deleteAccount: (password: string) => Promise<void>;
 }
