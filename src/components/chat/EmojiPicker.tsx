@@ -6,19 +6,20 @@ import data from "@emoji-mart/data";
 
 interface EmojiPickerProps {
   onChange: (value: string) => void;
+  children?: React.ReactNode;
 }
 
 interface EmojiSelection {
   native?: string;
 }
 
-const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
+const EmojiPicker = ({ onChange, children }: EmojiPickerProps) => {
   const { isDark } = useThemeStore();
 
   return (
     <Popover>
-      <PopoverTrigger className="cursor-pointer">
-        <Smile className="size-4" />
+      <PopoverTrigger asChild={!!children} className="cursor-pointer">
+        {children || <Smile className="size-4" />}
       </PopoverTrigger>
 
       <PopoverContent
