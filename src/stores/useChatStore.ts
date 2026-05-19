@@ -104,6 +104,7 @@ export const useChatStore = create<ChatState>()(
           }));
         } catch (error) {
           console.error("[ChatStore] Failed to send direct message:", error);
+          throw error;
         }
       },
 
@@ -117,7 +118,58 @@ export const useChatStore = create<ChatState>()(
           }));
         } catch (error) {
           console.error("[ChatStore] Failed to send group message:", error);
+          throw error;
         }
+      },
+
+      recallMessage: async (messageId, conversationId) => {
+        try {
+          const recalled = await chatService.recallMessage(messageId);
+          get().markMessageRecalled(
+            recalled._id,
+            recalled.conversationId ?? conversationId,
+            undefined,
+          );
+        } catch (error) {
+          console.error("[ChatStore] Failed to recall message:", error);
+          throw error;
+        }
+      },
+
+      markMessageRecalled: (messageId, conversationId, lastMessage) => {
+        set((state) => ({
+          messages: {
+            ...state.messages,
+            [conversationId]: {
+              ...(state.messages[conversationId] ?? {
+                items: [],
+                hasMore: false,
+                nextCursor: null,
+              }),
+              items: (state.messages[conversationId]?.items ?? []).map((m) =>
+                m._id === messageId
+                  ? {
+                      ...m,
+                      isDeleted: true,
+                      content: null,
+                      imgUrl: null,
+                    }
+                  : m,
+              ),
+            },
+          },
+          conversations: state.conversations.map((c) =>
+            c._id === conversationId && c.lastMessage?._id === messageId
+              ? {
+                  ...c,
+                  lastMessage: lastMessage ?? {
+                    ...c.lastMessage,
+                    content: "Tin nhắn đã bị thu hồi",
+                  },
+                }
+              : c,
+          ),
+        }));
       },
 
       addMessage: async (message) => {
