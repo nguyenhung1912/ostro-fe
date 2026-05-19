@@ -11,6 +11,7 @@ interface SendFriendRequestProps {
   register: UseFormRegister<IFormValues>;
   loading: boolean;
   searchedUsername: string;
+  error?: string;
   onSubmit?: SubmitEventHandler<HTMLFormElement>;
   onBack: () => void;
 }
@@ -19,6 +20,7 @@ const SendFriendRequestForm = ({
   register,
   loading,
   searchedUsername,
+  error,
   onSubmit,
   onBack,
 }: SendFriendRequestProps) => {
@@ -41,6 +43,7 @@ const SendFriendRequestForm = ({
             className="h-20 resize-none"
             {...register("message")}
           />
+          {error && <p className="error-message">{error}</p>}
         </div>
 
         <DialogFooter>
