@@ -12,30 +12,18 @@ export const friendService = {
   },
 
   async getAllFriendRequest() {
-    try {
-      const res = await api.get("/friends/requests");
-      const { sent, received } = res.data;
-      return { sent, received };
-    } catch (error) {
-      console.error("[FriendService] Failed to fetch friend requests:", error);
-    }
+    const res = await api.get("/friends/requests");
+    const { sent, received } = res.data;
+    return { sent, received };
   },
 
   async acceptRequest(requestId: string) {
-    try {
-      const res = await api.post(`/friends/requests/${requestId}/accept`);
-      return res.data.requestAcceptedBy;
-    } catch (error) {
-      console.error("[FriendService] Failed to accept friend request:", error);
-    }
+    const res = await api.post(`/friends/requests/${requestId}/accept`);
+    return res.data.requestAcceptedBy;
   },
 
   async declineRequest(requestId: string) {
-    try {
-      await api.post(`/friends/requests/${requestId}/decline`);
-    } catch (error) {
-      console.error("[FriendService] Failed to decline friend request:", error);
-    }
+    await api.post(`/friends/requests/${requestId}/decline`);
   },
 
   async getFriendList() {
