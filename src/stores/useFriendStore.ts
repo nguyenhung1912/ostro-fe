@@ -1,6 +1,22 @@
 import { create } from "zustand";
 import { friendService } from "@/services/friendService";
 import type { FriendState } from "@/types/store";
+import { isAxiosError } from "axios";
+
+const getFriendErrorMessage = (error: unknown) => {
+  if (isAxiosError<{ message?: string }>(error)) {
+    return (
+      error.response?.data?.message ??
+      "Lỗi xảy ra khi xử lý lời mời kết bạn. Hãy thử lại!"
+    );
+  }
+
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+
+  return "Lỗi xảy ra khi xử lý lời mời kết bạn. Hãy thử lại!";
+};
 
 export const useFriendStore = create<FriendState>((set) => ({
   friends: [],
@@ -26,7 +42,7 @@ export const useFriendStore = create<FriendState>((set) => ({
       return await friendService.sendFriendRequest(to, message);
     } catch (error) {
       console.error("[FriendStore] Failed to send friend request:", error);
-      return "Lỗi xảy ra khi gửi kết bạn. Hãy thử lại!";
+      throw new Error(getFriendErrorMessage(error), { cause: error });
     } finally {
       set({ loading: false });
     }
@@ -45,6 +61,7 @@ export const useFriendStore = create<FriendState>((set) => ({
       });
     } catch (error) {
       console.error("[FriendStore] Failed to fetch friend requests:", error);
+      throw new Error(getFriendErrorMessage(error), { cause: error });
     } finally {
       set({ loading: false });
     }
@@ -62,6 +79,7 @@ export const useFriendStore = create<FriendState>((set) => ({
       }));
     } catch (error) {
       console.error("[FriendStore] Failed to accept friend request:", error);
+      throw new Error(getFriendErrorMessage(error), { cause: error });
     } finally {
       set({ loading: false });
     }
@@ -79,6 +97,7 @@ export const useFriendStore = create<FriendState>((set) => ({
       }));
     } catch (error) {
       console.error("[FriendStore] Failed to decline friend request:", error);
+      throw new Error(getFriendErrorMessage(error), { cause: error });
     } finally {
       set({ loading: false });
     }
