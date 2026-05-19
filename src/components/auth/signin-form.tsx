@@ -40,80 +40,93 @@ export function SignInForm({
 
   return (
     <div className={cn("flex flex-col gap-4", className)} {...props}>
-      <Card className="overflow-hidden p-0 border-border bg-card shadow-sm">
-        <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-4 md:p-6" onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-4">
-              {/* header - logo*/}
-              <div className="flex flex-col items-center text-center gap-2">
-                <Link to="/" className="mx-auto block w-fit text-center">
-                  <img src="/logo.svg" alt="logo" />
-                </Link>
-
-                <h1 className="text-2xl font-bold">Chào mừng quay lại</h1>
-                <p className="text-muted-foreground text-balance">
+      <Card className="overflow-hidden p-0 border-border/50 bg-card/50 backdrop-blur-xl shadow-xl rounded-2xl">
+        <CardContent className="p-0">
+          <form
+            className="p-6 md:p-8 flex flex-col gap-6"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            {/* header - logo*/}
+            <div className="flex flex-col items-center text-center gap-3 mb-2">
+              <Link
+                to="/"
+                className="mx-auto block w-fit text-center transition-transform hover:scale-105 active:scale-95"
+              >
+                <img
+                  src="/logo.svg"
+                  alt="logo"
+                  className="h-12 w-auto drop-shadow-md"
+                />
+              </Link>
+              <div className="space-y-1">
+                <h1 className="text-2xl font-bold tracking-tight">
+                  Chào mừng quay lại
+                </h1>
+                <p className="text-muted-foreground/80 text-sm">
                   Đăng nhập vào tài khoản Ostro của bạn
                 </p>
               </div>
+            </div>
 
+            <div className="flex flex-col gap-4">
               {/* username */}
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="username" className="block text-sm">
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="username" className="text-sm font-medium">
                   Tên đăng nhập
                 </Label>
                 <Input
                   type="text"
                   id="username"
                   placeholder="john_doe"
+                  className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
                   {...register("username")}
                 />
-                {/* error message */}
                 {errors.username && (
-                  <p className="error-message">{errors.username.message}</p>
+                  <p className="text-[13px] font-medium text-destructive">
+                    {errors.username.message}
+                  </p>
                 )}
               </div>
 
               {/* password */}
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="password" className="block text-sm">
-                  Password
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="password" className="text-sm font-medium">
+                  Mật khẩu
                 </Label>
                 <Input
                   type="password"
                   id="password"
                   placeholder="••••••••"
+                  className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
                   {...register("password")}
                 />
-                {/* error message */}
                 {errors.password && (
-                  <p className="error-message">{errors.password.message}</p>
+                  <p className="text-[13px] font-medium text-destructive">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
+            </div>
 
-              {/* sign in button */}
-              <Button className="w-full" type="submit" disabled={isSubmitting}>
-                Đăng nhập
-              </Button>
+            <Button
+              className="w-full h-11 text-base font-semibold shadow-md transition-all hover:bg-primary/90 active:scale-[0.98] rounded-xl"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
+            </Button>
 
-              <div className="text-center text-sm">
-                Chưa có tài khoản?{" "}
-                <Link
-                  to="/signup"
-                  className="underline underline-offset-4"
-                  viewTransition
-                >
-                  Đăng ký
-                </Link>
-              </div>
+            <div className="text-center text-sm font-medium text-muted-foreground">
+              Chưa có tài khoản?{" "}
+              <Link
+                to="/signup"
+                className="text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
+                viewTransition
+              >
+                Đăng ký ngay
+              </Link>
             </div>
           </form>
-          <div className="relative hidden bg-transparent md:block mix-blend-overlay">
-            <img
-              src="/placeholder.png"
-              alt="Image"
-              className="absolute top-1/2 -translate-y-1/2 object-cover"
-            />
-          </div>
         </CardContent>
       </Card>
       <div className="text-xs text-balance px-6 text-center *:[a]:hover:text-primary text-muted-foreground *:[a]:underline *:[a]:underline-offset-4">
