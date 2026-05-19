@@ -291,6 +291,28 @@ export const useChatStore = create<ChatState>()(
           set({ loading: false });
         }
       },
+
+      deleteConversation: async (conversationId) => {
+        try {
+          await chatService.deleteConversation(conversationId);
+          get().removeConversation(conversationId);
+        } catch (error) {
+          console.error("[ChatStore] Failed to delete conversation:", error);
+          throw error;
+        }
+      },
+
+      removeConversation: (conversationId) => {
+        set((state) => ({
+          conversations: state.conversations.filter(
+            (c) => c._id !== conversationId,
+          ),
+          activeConversationId:
+            state.activeConversationId === conversationId
+              ? null
+              : state.activeConversationId,
+        }));
+      },
     }),
     {
       name: "chat-storage",
