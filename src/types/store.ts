@@ -114,6 +114,7 @@ export interface FriendState {
   getAllFriendRequest: () => Promise<void>;
   acceptRequest: (requestId: string) => Promise<void>;
   declineRequest: (requestId: string) => Promise<void>;
+  cancelRequest: (requestId: string) => Promise<void>;
   getFriends: () => Promise<void>;
 }
 
