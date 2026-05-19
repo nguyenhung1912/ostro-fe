@@ -12,19 +12,26 @@ const InviteSuggestionList = ({
 }: InviteSuggestionListProps) => {
   if (filteredFriends.length === 0) return;
   return (
-    <div className="border rounded-lg mt-2 max-h-45 overflow-y-auto divide-y">
+    <div className="border border-border/50 bg-white/[0.02] rounded-xl mt-2 max-h-40 overflow-y-auto divide-y divide-border/30 shadow-sm [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       {filteredFriends.map((friend) => (
         <div
           key={friend._id}
-          className="flex items-center gap-3 p-2 cursor-pointer hover:bg-muted transition"
+          className="flex items-center gap-3 p-2.5 cursor-pointer hover:bg-white/5 transition-colors"
           onClick={() => onSelect(friend)}
         >
           <UserAvatar
-            type="chat"
+            type="sidebar"
             name={friend.displayName}
             avatarUrl={friend.avatarUrl}
           />
-          <span className="font-medium">{friend.displayName}</span>
+          <div className="flex flex-col">
+            <span className="font-semibold text-sm text-foreground">
+              {friend.displayName}
+            </span>
+            <span className="text-xs text-muted-foreground">
+              @{friend.username}
+            </span>
+          </div>
         </div>
       ))}
     </div>
