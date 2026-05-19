@@ -1,8 +1,18 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { cn, formatMessageTime } from "@/lib/utils";
 import type { Conversation, Message, Participant } from "@/types/chat";
 import UserAvatar from "./UserAvatar";
-import { Badge } from "../ui/badge";
+import { Reply, SmilePlus, MoreHorizontal } from "lucide-react";
+import EmojiPicker from "./EmojiPicker";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { useChatStore } from "@/stores/useChatStore";
+import { toast } from "sonner";
 
 interface MessageItemProps {
   message: Message;
@@ -19,37 +29,67 @@ const MessageItem = ({
   selectedConvo,
   lastMessageStatus,
 }: MessageItemProps) => {
-  const prev = index + 1 < messages.length ? messages[index + 1] : undefined;
+  const { recallMessage } = useChatStore();
+  const isDeleted = message.isDeleted || false;
+  const [reactions, setReactions] = useState<
+    { emoji: string; count: number }[]
+  >(message.reactions || []);
 
-  const isShowTime =
-    index === 0 ||
+  const olderMsg =
+    index + 1 < messages.length ? messages[index + 1] : undefined;
+  const newerMsg = index > 0 ? messages[index - 1] : undefined;
+
+  const isGroupBreak =
+    !olderMsg ||
+    message.senderId !== olderMsg.senderId ||
     new Date(message.createdAt).getTime() -
-      new Date(prev?.createdAt || 0).getTime() >
-      300000; // 5 min
+      new Date(olderMsg.createdAt).getTime() >
+      300000;
 
-  const isGroupBreak = isShowTime || message.senderId !== prev?.senderId;
+  const isLastInGroup =
+    !newerMsg ||
+    newerMsg.senderId !== message.senderId ||
+    new Date(newerMsg.createdAt).getTime() -
+      new Date(message.createdAt).getTime() >
+      300000;
 
   const participant = selectedConvo.participants.find(
     (p: Participant) => p._id.toString() === message.senderId.toString(),
   );
+
+  const handleAddReaction = (emoji: string) => {
+    setReactions((prev) => {
+      const existing = prev.find((r) => r.emoji === emoji);
+      if (existing) {
+        return prev.map((r) =>
+          r.emoji === emoji ? { ...r, count: r.count + 1 } : r,
+        );
+      }
+      return [...prev, { emoji, count: 1 }];
+    });
+  };
+
+  const handleRecallMessage = async () => {
+    try {
+      await recallMessage(message._id, message.conversationId);
+    } catch (error) {
+      console.error("[MessageItem] Failed to recall message:", error);
+      toast.error("Thu hồi tin nhắn thất bại. Vui lòng thử lại.");
+    }
+  };
+
   return (
     <>
-      {/* time */}
-      {isShowTime && (
-        <span className="text-xs text-muted-foreground px-1">
-          {formatMessageTime(new Date(message.createdAt))}
-        </span>
-      )}
-
       <div
         className={cn(
-          "flex gap-2 message-bounce mt-1",
+          "flex gap-2 message-bounce w-full group",
+          isLastInGroup ? "mb-4" : "mb-1",
           message.isOwn ? "justify-end" : "justify-start",
         )}
       >
         {/* avatar */}
         {!message.isOwn && (
-          <div className="w-8">
+          <div className="w-8 shrink-0">
             {isGroupBreak && (
               <UserAvatar
                 type="chat"
@@ -60,35 +100,143 @@ const MessageItem = ({
           </div>
         )}
 
-        {/* message */}
-        <div
-          className={cn(
-            "max-w-[280px] sm:max-w-sm lg:max-w-md space-y-1 flex flex-col",
-            message.isOwn ? "items-end" : "items-start",
+        {/* message & actions wrapper */}
+        <div className="flex flex-col gap-1 max-w-[calc(100%-3rem)]">
+          {isDeleted ? (
+            <div
+              className={cn(
+                "text-sm italic text-muted-foreground/70 bg-transparent border border-dashed border-border px-4 py-2.5 rounded-2xl w-fit",
+                message.isOwn ? "self-end" : "self-start",
+              )}
+            >
+              Tin nhắn đã bị thu hồi
+            </div>
+          ) : (
+            <div
+              className={cn(
+                "flex items-center gap-2",
+                message.isOwn ? "flex-row-reverse" : "flex-row",
+              )}
+            >
+              <div className="relative">
+                <div
+                  className={cn(
+                    "text-sm leading-relaxed break-words relative",
+                    message.isOwn ? "chat-bubble-sent" : "chat-bubble-received",
+                  )}
+                >
+                  {message.imgUrl && (
+                    <img
+                      src={message.imgUrl}
+                      alt="Ảnh trong tin nhắn"
+                      loading="lazy"
+                      className={cn(
+                        "max-h-80 w-full max-w-72 rounded-xl object-cover",
+                        message.content ? "mb-2" : "",
+                      )}
+                    />
+                  )}
+                  {message.content && <span>{message.content}</span>}
+                  {isLastInGroup && (
+                    <div
+                      className={cn(
+                        "text-[10px] mt-1 block",
+                        message.isOwn
+                          ? "text-right text-[hsl(var(--chat-bubble-sent-foreground))]/75"
+                          : "text-left text-[hsl(var(--chat-bubble-received-foreground))]/65",
+                      )}
+                    >
+                      {formatMessageTime(new Date(message.createdAt))}
+                    </div>
+                  )}
+                </div>
+
+                {/* reactions display */}
+                {reactions.length > 0 && (
+                  <div
+                    className={cn(
+                      "absolute -bottom-3 flex -space-x-1 z-10",
+                      message.isOwn ? "right-2" : "left-2",
+                    )}
+                  >
+                    {reactions.slice(0, 3).map((r) => (
+                      <div
+                        key={r.emoji}
+                        className="flex items-center justify-center size-5 rounded-full bg-background ring-2 ring-background text-[10px] shadow-sm"
+                      >
+                        <span>{r.emoji}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* hover menu */}
+              <div
+                className={cn(
+                  "opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1",
+                  message.isOwn ? "flex-row-reverse" : "flex-row",
+                )}
+              >
+                <button
+                  title="Trả lời"
+                  className="p-1.5 rounded-md hover:bg-black/5 dark:hover:bg-white/5 text-muted-foreground transition-colors shadow-sm bg-background border border-border"
+                >
+                  <Reply className="size-3.5" />
+                </button>
+                <EmojiPicker onChange={handleAddReaction}>
+                  <button
+                    title="Thả cảm xúc"
+                    className="p-1.5 rounded-md hover:bg-black/5 dark:hover:bg-white/5 text-muted-foreground transition-colors shadow-sm bg-background border border-border"
+                  >
+                    <SmilePlus className="size-3.5" />
+                  </button>
+                </EmojiPicker>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button
+                      title="Thêm"
+                      className="p-1.5 rounded-md hover:bg-black/5 dark:hover:bg-white/5 text-muted-foreground transition-colors shadow-sm bg-background border border-border"
+                    >
+                      <MoreHorizontal className="size-3.5" />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align={message.isOwn ? "end" : "start"}
+                    className="w-48 bg-background border-border shadow-md"
+                  >
+                    <DropdownMenuItem>Copy tin nhắn</DropdownMenuItem>
+                    <DropdownMenuItem>Ghim tin nhắn</DropdownMenuItem>
+                    <DropdownMenuItem>Đánh dấu tin nhắn</DropdownMenuItem>
+                    <DropdownMenuItem>Chọn nhiều tin nhắn</DropdownMenuItem>
+                    <DropdownMenuItem>Xem chi tiết</DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-border" />
+                    {message.isOwn && (
+                      <DropdownMenuItem
+                        onClick={handleRecallMessage}
+                        className="text-red-500/80 focus:bg-red-500/10 focus:text-red-500/90 font-medium"
+                      >
+                        Thu hồi
+                      </DropdownMenuItem>
+                    )}
+                    {message.isOwn && (
+                      <DropdownMenuItem className="text-muted-foreground">
+                        Delete for me Only
+                      </DropdownMenuItem>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
           )}
-        >
-          <div
-            className={cn(
-              "text-sm leading-relaxed break-words",
-              message.isOwn ? "chat-bubble-sent" : "chat-bubble-received",
-            )}
-          >
-            {message.content}
-          </div>
 
           {/* seen or delivered */}
           {message.isOwn && message._id === selectedConvo.lastMessage?._id && (
-            <Badge
-              variant="outline"
-              className={cn(
-                "text-[10px] px-2 py-0.5 h-auto border-none font-medium bg-transparent shadow-none",
-                lastMessageStatus === "seen"
-                  ? "text-primary"
-                  : "text-muted-foreground",
-              )}
-            >
-              {lastMessageStatus === "seen" ? "Đã xem" : "Đã gửi"}
-            </Badge>
+            <div className="w-full flex justify-end mt-1">
+              <span className="text-[10px] text-muted-foreground/70">
+                {lastMessageStatus === "seen" ? "Đã xem" : "Đã gửi"}
+              </span>
+            </div>
           )}
         </div>
       </div>
@@ -100,6 +248,7 @@ export default memo(MessageItem, (prevProps, nextProps) => {
   // Only re-render if the core message content or ID changed
   if (prevProps.message._id !== nextProps.message._id) return false;
   if (prevProps.message.content !== nextProps.message.content) return false;
+  if (prevProps.message.imgUrl !== nextProps.message.imgUrl) return false;
 
   // Check if its position in the list changed (unlikely for infinite scroll top append, but safe)
   if (prevProps.index !== nextProps.index) return false;
