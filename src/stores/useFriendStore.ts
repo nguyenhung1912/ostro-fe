@@ -103,6 +103,22 @@ export const useFriendStore = create<FriendState>((set) => ({
     }
   },
 
+  cancelRequest: async (requestId) => {
+    try {
+      set({ loading: true });
+      await friendService.cancelRequest(requestId);
+
+      set((state) => ({
+        sentList: state.sentList.filter((request) => request._id !== requestId),
+      }));
+    } catch (error) {
+      console.error("[FriendStore] Failed to cancel friend request:", error);
+      throw new Error(getFriendErrorMessage(error), { cause: error });
+    } finally {
+      set({ loading: false });
+    }
+  },
+
   getFriends: async () => {
     try {
       set({ loading: true });
