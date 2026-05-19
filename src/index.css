@@ -6,34 +6,34 @@
 
 @layer base {
   :root {
-    /* Minimalist Light Mode */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 10%;
+    /* Minimalist Light Mode - Paper & Ink Editorial */
+    --background: 45 14% 97%; /* #FAF9F6 Ivory Paper */
+    --foreground: 60 4% 16%; /* #2B2B28 Charcoal */
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
+    --card: 45 14% 97%;
+    --card-foreground: 60 4% 16%;
+    --popover: 45 14% 97%;
+    --popover-foreground: 60 4% 16%;
 
-    /* Subtle Primary - Sharp contrast */
-    --primary: 0 0% 0%;
-    --primary-foreground: 0 0% 100%;
+    /* Organic Accent - Fountain Pen Ink */
+    --primary: 212 50% 25%; /* #1F3C5E Deep Navy */
+    --primary-foreground: 45 14% 97%; /* Ivory text on navy */
 
-    /* Light grays for separation without borders */
-    --secondary: 0 0% 97%;
-    --secondary-foreground: 0 0% 15%;
+    /* Soft warm grays for separation */
+    --secondary: 45 10% 93%;
+    --secondary-foreground: 60 4% 16%;
 
-    --muted: 0 0% 97%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 45 10% 93%;
+    --muted-foreground: 60 4% 40%;
 
-    --accent: 0 0% 95%;
-    --accent-foreground: 0 0% 10%;
+    --accent: 45 10% 93%;
+    --accent-foreground: 60 4% 16%;
 
     /* Chat specifics */
-    --chat-bubble-sent: 0 0% 0%;
-    --chat-bubble-sent-foreground: 0 0% 100%;
-    --chat-bubble-received: 220 14% 96%;
-    --chat-bubble-received-foreground: 0 0% 10%;
+    --chat-bubble-sent: 212 50% 25%;
+    --chat-bubble-sent-foreground: 45 14% 97%;
+    --chat-bubble-received: 45 10% 93%;
+    --chat-bubble-received-foreground: 60 4% 16%;
 
     /* Status colors */
     --online: 142 71% 45%;
@@ -48,65 +48,65 @@
     --destructive-foreground: 0 0% 100%;
 
     /* Borders & Inputs - ultra-light */
-    --border: 0 0% 93%;
-    --input: 0 0% 93%;
-    --ring: 0 0% 0%;
+    --border: 45 10% 88%;
+    --input: 45 10% 88%;
+    --ring: 212 50% 25%;
 
     /* Smooth radius */
     --radius: 12px;
 
     /* Sidebar specifics */
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 0 0% 15%;
-    --sidebar-primary: 220 15% 40%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 15%;
-    --sidebar-border: 0 0% 93%;
-    --sidebar-ring: 0 0% 0%;
+    --sidebar-background: 45 14% 97%;
+    --sidebar-foreground: 60 4% 16%;
+    --sidebar-primary: 212 50% 25%;
+    --sidebar-primary-foreground: 45 14% 97%;
+    --sidebar-accent: 45 10% 93%;
+    --sidebar-accent-foreground: 60 4% 16%;
+    --sidebar-border: 45 10% 88%;
+    --sidebar-ring: 212 50% 25%;
   }
 
   .dark {
-    /* Minimalist Dark Mode */
-    --background: 0 0% 10%;
-    --foreground: 0 0% 95%;
+    /* Minimalist Dark Mode - Espresso/Slate */
+    --background: 60 7% 9%; /* #181815 Dark espresso */
+    --foreground: 47 16% 89%; /* #E8E6DF Cream off-white */
 
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 95%;
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 95%;
+    --card: 60 7% 9%;
+    --card-foreground: 47 16% 89%;
+    --popover: 60 5% 12%;
+    --popover-foreground: 47 16% 89%;
 
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 212 50% 25%; /* #1F3C5E Deep Navy */
+    --primary-foreground: 47 16% 89%; /* Cream text on navy */
 
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 60 5% 14%;
+    --secondary-foreground: 47 16% 89%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 60 5% 14%;
+    --muted-foreground: 47 10% 60%;
 
-    --accent: 0 0% 18%;
-    --accent-foreground: 0 0% 95%;
+    --accent: 60 5% 14%;
+    --accent-foreground: 47 16% 89%;
 
-    --chat-bubble-sent: 0 0% 100%;
-    --chat-bubble-sent-foreground: 0 0% 0%;
-    --chat-bubble-received: 240 5% 16%;
-    --chat-bubble-received-foreground: 0 0% 95%;
+    --chat-bubble-sent: 212 50% 25%;
+    --chat-bubble-sent-foreground: 47 16% 89%;
+    --chat-bubble-received: 60 5% 14%;
+    --chat-bubble-received-foreground: 47 16% 89%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 0 0% 100%;
-    
+    --border: 60 5% 18%;
+    --input: 60 5% 18%;
+    --ring: 212 50% 25%;
+
     --offline: 0 0% 30%;
 
-    --sidebar-background: 0 0% 10%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 220 15% 60%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 15%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 0 0% 100%;
+    --sidebar-background: 60 7% 9%;
+    --sidebar-foreground: 47 16% 89%;
+    --sidebar-primary: 212 50% 25%;
+    --sidebar-primary-foreground: 47 16% 89%;
+    --sidebar-accent: 60 5% 14%;
+    --sidebar-accent-foreground: 47 16% 89%;
+    --sidebar-border: 60 5% 18%;
+    --sidebar-ring: 212 50% 25%;
   }
 
   body {
@@ -118,7 +118,8 @@
 
 @layer components {
   /* Legacy Glass Utilities - to be removed from components */
-  .glass, .glass-panel {
+  .glass,
+  .glass-panel {
     @apply bg-background border border-border rounded-[var(--radius)] shadow-none;
   }
 
