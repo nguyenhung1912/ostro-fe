@@ -1,6 +1,5 @@
-"use client";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,9 +15,10 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useSidebar } from "@/components/ui/sidebar-context";
+import { useFriendStore } from "@/stores/useFriendStore";
 import type { User } from "@/types/user";
-import { useState } from "react";
 import { Bell, ChevronsUpDownIcon, SparklesIcon, UserIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 import Logout from "../auth/Logout";
 import FriendRequestDialog from "../friendRequest/FriendRequestDialog";
 import ProfileDialog from "../profile/ProfileDialog";
@@ -27,6 +27,22 @@ export function NavUser({ user }: { user: User }) {
   const { isMobile } = useSidebar();
   const [friendRequestOpen, setFriendRequestOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const { getAllFriendRequest, receivedList } = useFriendStore();
+  const friendRequestCount = receivedList.length;
+  const friendRequestBadge =
+    friendRequestCount > 5 ? "5+" : friendRequestCount.toString();
+
+  useEffect(() => {
+    const loadFriendRequests = async () => {
+      try {
+        await getAllFriendRequest();
+      } catch (error) {
+        console.error("[NavUser] Failed to load friend request count:", error);
+      }
+    };
+
+    loadFriendRequests();
+  }, [getAllFriendRequest, user._id]);
 
   return (
     <>
@@ -90,7 +106,12 @@ export function NavUser({ user }: { user: User }) {
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setFriendRequestOpen(true)}>
                   <Bell className="text-muted-foreground dark:group-focus:!text-accent-foreground" />
-                  Thông Báo
+                  <span className="min-w-0 flex-1 truncate">Thông Báo</span>
+                  {friendRequestCount > 0 && (
+                    <Badge className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[10px] font-semibold">
+                      {friendRequestBadge}
+                    </Badge>
+                  )}
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
