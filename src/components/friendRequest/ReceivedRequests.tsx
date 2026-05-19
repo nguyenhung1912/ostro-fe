@@ -34,7 +34,7 @@ const ReceivedRequests = () => {
   };
 
   return (
-    <div className="space-y-3 mt-4">
+    <div className="space-y-3 mt-4 max-h-[224px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       {receivedList.map((req) => (
         <FriendRequestItem
           key={req._id}
