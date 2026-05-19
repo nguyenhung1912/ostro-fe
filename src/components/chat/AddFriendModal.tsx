@@ -13,6 +13,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import SearchForm from "../addFriendModal/SearchForm";
 import SendFriendRequestForm from "../addFriendModal/SendFriendRequestForm";
+import { UserSearch } from "lucide-react";
 
 export interface IFormValues {
   username: string;
@@ -99,9 +100,10 @@ const AddFriendModal = () => {
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle className="font-semibold text-xl text-foreground">
-            Kết bạn
+        <DialogHeader className="mb-2">
+          <DialogTitle className="flex items-center gap-2 font-semibold text-xl text-foreground">
+            <UserSearch className="w-5 h-5 text-muted-foreground" />
+            Thêm bạn bè
           </DialogTitle>
         </DialogHeader>
 
@@ -127,7 +129,7 @@ const AddFriendModal = () => {
             <SendFriendRequestForm
               register={register}
               loading={loading}
-              searchedUsername={searchedUsername}
+              foundUser={searchUser!}
               error={sendError}
               onSubmit={handleSend}
               onBack={() => {
