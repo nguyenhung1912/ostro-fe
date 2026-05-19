@@ -20,6 +20,7 @@ interface MessageItemProps {
   messages: Message[];
   selectedConvo: Conversation;
   lastMessageStatus: "delivered" | "seen";
+  searchKeyword?: string;
 }
 
 const MessageItem = ({
@@ -28,6 +29,7 @@ const MessageItem = ({
   messages,
   selectedConvo,
   lastMessageStatus,
+  searchKeyword = "",
 }: MessageItemProps) => {
   const { recallMessage } = useChatStore();
   const isDeleted = message.isDeleted || false;
@@ -76,6 +78,28 @@ const MessageItem = ({
       console.error("[MessageItem] Failed to recall message:", error);
       toast.error("Thu hồi tin nhắn thất bại. Vui lòng thử lại.");
     }
+  };
+
+  const renderContent = (content: string, keyword: string) => {
+    if (!keyword.trim()) return <span>{content}</span>;
+    const regex = new RegExp(`(${keyword})`, "gi");
+    const parts = content.split(regex);
+    return (
+      <span>
+        {parts.map((part, i) =>
+          regex.test(part) ? (
+            <mark
+              key={i}
+              className="bg-yellow-400/90 text-black font-semibold rounded-[3px] px-1 shadow-sm mx-[1px]"
+            >
+              {part}
+            </mark>
+          ) : (
+            <span key={i}>{part}</span>
+          ),
+        )}
+      </span>
+    );
   };
 
   return (
@@ -136,7 +160,8 @@ const MessageItem = ({
                       )}
                     />
                   )}
-                  {message.content && <span>{message.content}</span>}
+                  {message.content &&
+                    renderContent(message.content, searchKeyword)}
                   {isLastInGroup && (
                     <div
                       className={cn(
@@ -245,21 +270,16 @@ const MessageItem = ({
 };
 
 export default memo(MessageItem, (prevProps, nextProps) => {
-  // Only re-render if the core message content or ID changed
   if (prevProps.message._id !== nextProps.message._id) return false;
   if (prevProps.message.content !== nextProps.message.content) return false;
   if (prevProps.message.imgUrl !== nextProps.message.imgUrl) return false;
 
-  // Check if its position in the list changed (unlikely for infinite scroll top append, but safe)
   if (prevProps.index !== nextProps.index) return false;
 
-  // Check if the previous message (for grouping logic) changed
   const prevNextMessage = prevProps.messages[prevProps.index + 1];
   const nextNextMessage = nextProps.messages[nextProps.index + 1];
   if (prevNextMessage?._id !== nextNextMessage?._id) return false;
 
-  // Track if it's the last message in the conversation.
-  // If it was the last message, or became the last message, we need to check if the status changed.
   const wasLastMessage =
     prevProps.message._id === prevProps.selectedConvo.lastMessage?._id;
   const isLastMessage =
@@ -272,6 +292,7 @@ export default memo(MessageItem, (prevProps, nextProps) => {
   )
     return false;
 
-  // If nothing above triggered a change, it's safe to skip rendering
+  if (prevProps.searchKeyword !== nextProps.searchKeyword) return false;
+
   return true;
 });
