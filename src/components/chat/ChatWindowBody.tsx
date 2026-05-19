@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useMemo, useCallback } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useChatStore } from "@/stores/useChatStore";
+import { useAuthStore } from "@/stores/useAuthStore";
 import ChatWelcomeScreen from "./ChatWelcomeScreen";
 import MessageItem from "./MessageItem";
 
@@ -12,7 +13,8 @@ const ChatWindowBody = () => {
     messages: allMessages,
   } = useChatStore();
 
-  const messages = allMessages[activeConversationId!]?.items ?? [];
+  const items = allMessages[activeConversationId!]?.items;
+  const messages = useMemo(() => items ?? [], [items]);
   const reversedMessages = useMemo(() => [...messages].reverse(), [messages]);
   const hasMore = allMessages[activeConversationId!]?.hasMore ?? false;
 
@@ -24,10 +26,12 @@ const ChatWindowBody = () => {
     [conversations, activeConversationId],
   );
 
-  const lastMessageStatus = useMemo(
-    () => ((selectedConvo?.seenBy?.length ?? 0) > 0 ? "seen" : "delivered"),
-    [selectedConvo?.seenBy?.length],
-  );
+  const { user } = useAuthStore();
+
+  const lastMessageStatus = useMemo(() => {
+    const otherSeen = selectedConvo?.seenBy?.filter((u) => u._id !== user?._id);
+    return (otherSeen?.length ?? 0) > 0 ? "seen" : "delivered";
+  }, [selectedConvo?.seenBy, user?._id]);
 
   const key = `chat-scroll-${activeConversationId}`;
 
