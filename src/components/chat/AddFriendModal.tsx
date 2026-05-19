@@ -23,6 +23,7 @@ const AddFriendModal = () => {
   const [isFound, setIsFound] = useState<boolean | null>(null);
   const [searchUser, setSearchUser] = useState<User>();
   const [searchedUsername, setSearchedUsername] = useState("");
+  const [sendError, setSendError] = useState("");
   const { loading, searchByUsername, addFriend } = useFriendStore();
 
   const {
@@ -43,6 +44,7 @@ const AddFriendModal = () => {
 
     setIsFound(null);
     setSearchedUsername(username);
+    setSendError("");
 
     try {
       const foundUser = await searchByUsername(username);
@@ -62,12 +64,20 @@ const AddFriendModal = () => {
     if (!searchUser) return;
 
     try {
+      setSendError("");
       await addFriend(searchUser._id, data.message.trim());
       toast.success("Đã gửi lời mời kết bạn thành công!");
 
       handleCancel();
     } catch (error) {
       console.error("[AddFriendModal] Failed to send friend request:", error);
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Gửi lời mời kết bạn thất bại. Vui lòng thử lại.";
+
+      setSendError(message);
+      toast.error(message);
     }
   });
 
@@ -75,6 +85,8 @@ const AddFriendModal = () => {
     reset();
     setSearchedUsername("");
     setIsFound(null);
+    setSearchUser(undefined);
+    setSendError("");
   };
 
   return (
@@ -116,8 +128,12 @@ const AddFriendModal = () => {
               register={register}
               loading={loading}
               searchedUsername={searchedUsername}
+              error={sendError}
               onSubmit={handleSend}
-              onBack={() => setIsFound(null)}
+              onBack={() => {
+                setIsFound(null);
+                setSendError("");
+              }}
             />
           </>
         )}
