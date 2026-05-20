@@ -38,13 +38,13 @@ export function SignInForm({
     const { username, password } = data;
     const signedIn = await signIn(username, password);
     if (signedIn) {
-      navigate("/", { viewTransition: true });
+      navigate("/chat", { viewTransition: true });
     }
   };
 
   return (
     <div className={cn("flex flex-col gap-4", className)} {...props}>
-      <Card className="overflow-hidden p-0 border-border/50 bg-card/50 backdrop-blur-xl shadow-xl rounded-2xl">
+      <Card className="overflow-hidden p-0 border-border/50 bg-card/90 backdrop-blur-xl shadow-xl rounded-2xl">
         <CardContent className="p-0">
           <form
             className="p-6 md:p-8 flex flex-col gap-6"
@@ -141,7 +141,7 @@ export function SignInForm({
                       credentialResponse.credential,
                     );
                     if (success) {
-                      navigate("/", { viewTransition: true });
+                      navigate("/chat", { viewTransition: true });
                     }
                   }
                 }}

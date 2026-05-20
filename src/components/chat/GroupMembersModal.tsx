@@ -1,4 +1,3 @@
-import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Users, Crown } from "lucide-react";
 import type { Participant } from "@/types/chat";
