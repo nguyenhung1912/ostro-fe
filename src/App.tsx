@@ -3,6 +3,7 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import ChatAppPage from "./pages/ChatAppPage";
@@ -15,11 +16,12 @@ import { useSocketStore } from "./stores/useSocketStore";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const router = createBrowserRouter([
+  { path: "/", element: <LandingPage /> },
   { path: "/signin", element: <SignInPage /> },
   { path: "/signup", element: <SignUpPage /> },
   {
     element: <ProtectedRoute />,
-    children: [{ path: "/", element: <ChatAppPage /> }],
+    children: [{ path: "/chat", element: <ChatAppPage /> }],
   },
   { path: "*", element: <Navigate to="/" replace /> },
 ]);
