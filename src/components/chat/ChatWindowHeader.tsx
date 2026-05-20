@@ -16,7 +16,11 @@ import {
   MoreVertical,
   Trash2,
   Edit2,
+  UserPlus,
+  Users,
 } from "lucide-react";
+import AddGroupMemberModal from "./AddGroupMemberModal";
+import GroupMembersModal from "./GroupMembersModal";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -51,6 +55,8 @@ const ChatWindowHeader = ({ chat }: { chat?: Conversation }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isAddMemberOpen, setIsAddMemberOpen] = useState(false);
+  const [isMembersOpen, setIsMembersOpen] = useState(false);
 
   let otherUser;
 
@@ -243,6 +249,24 @@ const ChatWindowHeader = ({ chat }: { chat?: Conversation }) => {
             align="end"
             className="w-48 bg-background border-border/50 shadow-xl"
           >
+            {currentChat.type === "group" && (
+              <>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onSelect={() => setIsMembersOpen(true)}
+                >
+                  <Users className="size-4 mr-2" />
+                  Thành viên nhóm
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onSelect={() => setIsAddMemberOpen(true)}
+                >
+                  <UserPlus className="size-4 mr-2" />
+                  Thêm thành viên
+                </DropdownMenuItem>
+              </>
+            )}
             <DropdownMenuItem
               className="text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer"
               onSelect={() => setIsDeleteDialogOpen(true)}
@@ -281,6 +305,25 @@ const ChatWindowHeader = ({ chat }: { chat?: Conversation }) => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {currentChat.type === "group" && (
+        <>
+          <AddGroupMemberModal
+            key={`${currentChat._id}-${isAddMemberOpen}`}
+            isOpen={isAddMemberOpen}
+            onClose={() => setIsAddMemberOpen(false)}
+            conversationId={currentChat._id}
+            existingParticipants={currentChat.participants}
+          />
+          <GroupMembersModal
+            isOpen={isMembersOpen}
+            onClose={() => setIsMembersOpen(false)}
+            participants={currentChat.participants}
+            createdBy={currentChat.group?.createdBy}
+            currentUserId={user?._id ?? ""}
+          />
+        </>
+      )}
     </header>
   );
 };
