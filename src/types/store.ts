@@ -35,6 +35,7 @@ export interface AuthState {
     lastName: string,
   ) => Promise<boolean>;
   signIn: (username: string, password: string) => Promise<boolean>;
+  signInWithGoogle: (credential: string) => Promise<boolean>;
   signOut: () => Promise<void>;
   fetchMe: (options?: FetchMeOptions) => Promise<boolean>;
   refresh: (options?: RefreshOptions) => Promise<boolean>;
