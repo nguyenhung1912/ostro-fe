@@ -24,8 +24,11 @@ const ChatWindowLayout = () => {
     ? (messages[selectedConvo._id]?.items ?? [])
     : [];
 
+  const selectedConvoId = selectedConvo?._id;
+  const lastMessageId = selectedConvo?.lastMessage?._id;
+
   useEffect(() => {
-    if (!selectedConvo) return;
+    if (!selectedConvoId) return;
 
     const markSeen = async () => {
       try {
@@ -39,7 +42,7 @@ const ChatWindowLayout = () => {
     };
 
     markSeen();
-  }, [markAsSeen, selectedConvo]);
+  }, [markAsSeen, selectedConvoId, lastMessageId]);
 
   if (!selectedConvo) return <ChatWelcomeScreen />;
 
