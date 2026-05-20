@@ -8,6 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "../ui/label";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { Link, useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import { authToast } from "@/lib/authUtils";
 
 const signUpSchema = z.object({
   firstname: z.string().min(1, "Tên bắt buộc phải có"),
@@ -24,7 +26,9 @@ export function SignUpForm({
   ...props
 }: React.ComponentProps<"div">) {
   const signUp = useAuthStore((s) => s.signUp);
+  const signInWithGoogle = useAuthStore((s) => s.signInWithGoogle);
   const navigate = useNavigate();
+  const loading = useAuthStore((s) => s.loading);
   const {
     register,
     handleSubmit,
@@ -178,10 +182,46 @@ export function SignUpForm({
             <Button
               className="w-full h-11 text-base font-semibold shadow-md transition-all hover:bg-primary/90 active:scale-[0.98] rounded-xl"
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || loading}
             >
               {isSubmitting ? "Đang tạo tài khoản..." : "Tạo tài khoản"}
             </Button>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-border/50" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  Hoặc
+                </span>
+              </div>
+            </div>
+
+            <div className="flex justify-center w-full">
+              <GoogleLogin
+                onSuccess={async (credentialResponse) => {
+                  if (credentialResponse.credential) {
+                    const success = await signInWithGoogle(
+                      credentialResponse.credential,
+                    );
+                    if (success) {
+                      navigate("/", { viewTransition: true });
+                    }
+                  }
+                }}
+                onError={() => {
+                  authToast.error(
+                    "Đăng ký bằng Google thất bại. Vui lòng thử lại.",
+                  );
+                }}
+                useOneTap
+                theme="outline"
+                shape="rectangular"
+                size="large"
+                text="continue_with"
+              />
+            </div>
 
             <div className="text-center text-sm font-medium text-muted-foreground">
               Đã có tài khoản?{" "}
