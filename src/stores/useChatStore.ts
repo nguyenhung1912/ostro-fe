@@ -1,9 +1,20 @@
 import { chatService } from "@/services/chatService";
 import type { ChatState } from "@/types/store";
+import type { Conversation } from "@/types/chat";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { useAuthStore } from "./useAuthStore";
 import { useSocketStore } from "./useSocketStore";
+
+const sortConversations = (conversations: Conversation[]) => {
+  return [...conversations].sort((a, b) => {
+    const timeA =
+      a.lastMessage?.createdAt || a.lastMessageAt || a.updatedAt || a.createdAt;
+    const timeB =
+      b.lastMessage?.createdAt || b.lastMessageAt || b.updatedAt || b.createdAt;
+    return new Date(timeB).getTime() - new Date(timeA).getTime();
+  });
+};
 
 export const useChatStore = create<ChatState>()(
   persist(
@@ -30,7 +41,10 @@ export const useChatStore = create<ChatState>()(
           set({ convoLoading: true });
           const { conversations } = await chatService.fetchConversations();
 
-          set({ conversations, convoLoading: false });
+          set({
+            conversations: sortConversations(conversations),
+            convoLoading: false,
+          });
         } catch (error) {
           console.error("[ChatStore] Failed to fetch conversations:", error);
           set({ convoLoading: false });
@@ -210,11 +224,19 @@ export const useChatStore = create<ChatState>()(
       },
 
       updateConversation: (conversation) => {
-        set((state) => ({
-          conversations: state.conversations.map((c) =>
-            c._id === conversation._id ? { ...c, ...conversation } : c,
-          ),
-        }));
+        set((state) => {
+          const exists = state.conversations.some(
+            (c) => c._id === conversation._id,
+          );
+          const newConvs = exists
+            ? state.conversations.map((c) =>
+                c._id === conversation._id ? { ...c, ...conversation } : c,
+              )
+            : [conversation as Conversation, ...state.conversations];
+          return {
+            conversations: sortConversations(newConvs),
+          };
+        });
       },
 
       markAsSeen: async () => {
@@ -257,11 +279,12 @@ export const useChatStore = create<ChatState>()(
           const exists = state.conversations.some(
             (c) => c._id.toString() === convo._id.toString(),
           );
+          const newConvs = exists
+            ? state.conversations
+            : [convo, ...state.conversations];
 
           return {
-            conversations: exists
-              ? state.conversations
-              : [convo, ...state.conversations],
+            conversations: sortConversations(newConvs),
             activeConversationId: convo._id,
           };
         });

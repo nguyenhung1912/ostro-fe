@@ -36,14 +36,36 @@ export const useSocketStore = create<SocketState>((set, get) => ({
     socket.on("new-message", ({ message, conversation, unreadCounts }) => {
       useChatStore.getState().addMessage(message);
 
+      const senderId = conversation.lastMessage.senderId;
+      const currentUser = useAuthStore.getState().user;
+      const existingConvo = useChatStore
+        .getState()
+        .conversations.find((c) => c._id === message.conversationId);
+
+      let displayName = "";
+      let avatarUrl = null;
+
+      if (senderId === currentUser?._id) {
+        displayName = currentUser.displayName;
+        avatarUrl = currentUser.avatarUrl ?? null;
+      } else {
+        const participant = existingConvo?.participants.find(
+          (p) => p._id === senderId,
+        );
+        if (participant) {
+          displayName = participant.displayName;
+          avatarUrl = participant.avatarUrl ?? null;
+        }
+      }
+
       const lastMessage = {
         _id: conversation.lastMessage._id,
         content: conversation.lastMessage.content,
         createdAt: conversation.lastMessage.createdAt,
-        sender: {
-          _id: conversation.lastMessage.senderId,
-          displayName: "",
-          avatarUrl: null,
+        senderId: {
+          _id: senderId,
+          displayName: displayName,
+          avatarUrl: avatarUrl,
         },
       };
 
