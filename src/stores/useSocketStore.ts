@@ -45,7 +45,7 @@ export const useSocketStore = create<SocketState>((set, get) => ({
       let displayName = "";
       let avatarUrl = null;
 
-      if (senderId === currentUser?._id) {
+      if (currentUser && senderId === currentUser._id) {
         displayName = currentUser.displayName;
         avatarUrl = currentUser.avatarUrl ?? null;
       } else {
