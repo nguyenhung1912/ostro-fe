@@ -17,15 +17,17 @@ export interface Group {
   createdBy: string;
 }
 
+export interface LastMessageSender {
+  _id: string;
+  displayName: string;
+  avatarUrl?: string | null;
+}
+
 export interface LastMessage {
   _id: string;
   content: string;
   createdAt: string;
-  sender: {
-    _id: string;
-    displayName: string;
-    avatarUrl?: string | null;
-  };
+  senderId?: string | LastMessageSender;
 }
 
 export interface Conversation {
