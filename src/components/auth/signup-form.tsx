@@ -94,6 +94,7 @@ export function SignUpForm({
                     id="lastname"
                     placeholder="Nguyễn"
                     className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
+                    disabled={isSubmitting || loading}
                     {...register("lastname")}
                   />
                   {errors.lastname && (
@@ -111,6 +112,7 @@ export function SignUpForm({
                     id="firstname"
                     placeholder="Văn A"
                     className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
+                    disabled={isSubmitting || loading}
                     {...register("firstname")}
                   />
                   {errors.firstname && (
@@ -131,6 +133,7 @@ export function SignUpForm({
                   id="username"
                   placeholder="nguyenvana123"
                   className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
+                  disabled={isSubmitting || loading}
                   {...register("username")}
                 />
                 {errors.username && (
@@ -150,6 +153,7 @@ export function SignUpForm({
                   id="email"
                   placeholder="name@example.com"
                   className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
+                  disabled={isSubmitting || loading}
                   {...register("email")}
                 />
                 {errors.email && (
@@ -169,6 +173,7 @@ export function SignUpForm({
                   id="password"
                   placeholder="••••••••"
                   className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
+                  disabled={isSubmitting || loading}
                   {...register("password")}
                 />
                 {errors.password && (

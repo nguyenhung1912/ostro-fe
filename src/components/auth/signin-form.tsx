@@ -83,6 +83,7 @@ export function SignInForm({
                   id="username"
                   placeholder="john_doe"
                   className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
+                  disabled={isSubmitting || loading}
                   {...register("username")}
                 />
                 {errors.username && (
@@ -102,6 +103,7 @@ export function SignInForm({
                   id="password"
                   placeholder="••••••••"
                   className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
+                  disabled={isSubmitting || loading}
                   {...register("password")}
                 />
                 {errors.password && (
