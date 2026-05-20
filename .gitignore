@@ -49,3 +49,6 @@ lerna-debug.log*
 coverage/
 .vercel/
 .npm
+
+# Ignore AI agent skills dependencies
+.agents/

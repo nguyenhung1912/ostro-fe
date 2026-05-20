@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { Button } from "../ui/button";
-import { UserPlus, Users } from "lucide-react";
+import { Users, MessageSquarePlus, Search } from "lucide-react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import type { Friend } from "@/types/user";
@@ -47,8 +47,8 @@ const NewGroupChatModal = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
-      if (invitedUsers.length === 0) {
-        toast.warning("Bạn phải mời ít nhất 1 thành viên vào nhóm");
+      if (invitedUsers.length < 2) {
+        toast.warning("Vui lòng chọn ít nhất hai thành viên để tạo nhóm.");
         return;
       }
 
@@ -61,7 +61,7 @@ const NewGroupChatModal = () => {
       setSearch("");
       setInvitedUsers([]);
     } catch (error) {
-      console.error("Lỗi khi handleSubmit trong NewGroupChatModal", error);
+      console.error("[NewGroupChatModal] Failed to create group:", error);
     }
   };
 
@@ -78,36 +78,51 @@ const NewGroupChatModal = () => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-106.25 border-none">
-        <DialogHeader>
-          <DialogTitle className="capitalize">tạo nhóm chat mới</DialogTitle>
+      <DialogContent className="sm:max-w-md w-full">
+        <DialogHeader className="mb-2">
+          <DialogTitle className="flex items-center gap-2 font-semibold text-xl text-foreground">
+            <MessageSquarePlus className="w-5 h-5 text-muted-foreground" />
+            Tạo nhóm mới
+          </DialogTitle>
         </DialogHeader>
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-5" onSubmit={handleSubmit}>
           <div className="space-y-2">
-            <Label htmlFor="groupName" className="text-sm font-semibold">
+            <Label
+              htmlFor="groupName"
+              className="text-sm font-semibold text-foreground/90"
+            >
               Tên nhóm
             </Label>
             <Input
               id="groupName"
-              placeholder="Gõ tên nhóm vào đây"
-              className="glass border-border/50 focus:border-primary/50 transition-smooth"
+              placeholder="Nhập tên nhóm..."
+              className="h-10 bg-white/5 border-border/50 focus-visible:ring-1"
               value={groupName}
               onChange={(e) => setGroupName(e.target.value)}
               required
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="invite" className="text-sm font-semibold">
-              Mời thành viên
-            </Label>
-            <Input
-              id="invite"
-              placeholder="Tìm theo tên hiển thị..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+          <div className="space-y-3">
+            <div className="space-y-2">
+              <Label
+                htmlFor="invite"
+                className="text-sm font-semibold text-foreground/90"
+              >
+                Thêm thành viên
+              </Label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                <Input
+                  id="invite"
+                  placeholder="Tìm bạn bè..."
+                  className="h-10 pl-9 bg-white/5 border-border/50 focus-visible:ring-1"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+            </div>
 
             {search && filteredFriends.length > 0 && (
               <InviteSuggestionList
@@ -122,17 +137,17 @@ const NewGroupChatModal = () => {
             />
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="mt-6 pt-4 border-t border-border/30">
             <Button
               type="submit"
-              disabled={loading}
-              className="flex-1 bg-gradient-chat text-white hover:opacity-90 transition-smooth"
+              disabled={loading || invitedUsers.length < 2}
+              className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed h-10 font-medium transition-all"
             >
               {loading ? (
                 <span>Đang tạo...</span>
               ) : (
                 <>
-                  <UserPlus className="size-4 mr-2" />
+                  <Users className="size-4 mr-2" />
                   Tạo nhóm
                 </>
               )}

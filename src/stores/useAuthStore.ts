@@ -1,13 +1,12 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { authService } from "@/services/authService";
 import type { AuthState, FetchMeOptions, RefreshOptions } from "@/types/store";
+import { authToast, explicitSignOut } from "@/lib/authUtils";
 import {
-  authToast,
-  explicitSignOut,
-  getAuthErrorMessage,
-} from "@/lib/authUtils";
-import { clearPersistedSessionState } from "@/lib/sessionState";
-import { persist } from "zustand/middleware";
+  clearChatScrollSessionState,
+  clearPersistedSessionState,
+} from "@/lib/sessionState";
 import { useChatStore } from "./useChatStore";
 
 let authInitializationPromise: Promise<void> | null = null;
@@ -35,10 +34,10 @@ export const useAuthStore = create<AuthState>()(
           loading: false,
           authChecked: true,
         });
+
         useChatStore.getState().reset();
-        localStorage.clear();
-        sessionStorage.clear();
         clearPersistedSessionState();
+        clearChatScrollSessionState();
       },
 
       signUp: async (username, password, email, firstName, lastName) => {
@@ -52,18 +51,12 @@ export const useAuthStore = create<AuthState>()(
             firstName,
             lastName,
           );
-
           authToast.success(
-            "Đăng ký thành công! Bạn sẽ được chuyển sang trang đăng nhập.",
+            "Đăng ký thành công. Bạn có thể đăng nhập ngay bây giờ.",
           );
           return true;
-        } catch (error) {
-          authToast.error(
-            getAuthErrorMessage(error, "Đăng ký thất bại!", {
-              400: "Thông tin đăng ký không hợp lệ. Hãy kiểm tra lại!",
-              409: "Tên đăng nhập hoặc email đã được sử dụng.",
-            }),
-          );
+        } catch {
+          authToast.error("Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.");
           return false;
         } finally {
           set({ loading: false });
@@ -83,25 +76,51 @@ export const useAuthStore = create<AuthState>()(
 
           const fetchedUser = await get().fetchMe({ showErrorToast: false });
           if (!fetchedUser) {
-            authToast.error(
-              "Lỗi xảy ra khi lấy dữ liệu người dùng. Hãy thử lại!",
-            );
+            authToast.error("Xác minh thất bại. Vui lòng thử lại.");
             return false;
           }
 
           explicitSignOut.clear();
           useChatStore.getState().fetchConversations();
 
-          authToast.success("Chào mừng bạn quay lại với Ostro");
+          authToast.success("Chào mừng trở lại Ostro! 👋");
           return true;
-        } catch (error) {
+        } catch {
           get().clearState();
           authToast.error(
-            getAuthErrorMessage(error, "Đăng nhập thất bại!", {
-              401: "Tên đăng nhập hoặc mật khẩu không đúng.",
-              403: "Tên đăng nhập hoặc mật khẩu không đúng.",
-            }),
+            "Đăng nhập thất bại. Sai tên đăng nhập hoặc mật khẩu.",
           );
+          return false;
+        } finally {
+          set({ loading: false });
+        }
+      },
+
+      signInWithGoogle: async (credential) => {
+        try {
+          get().clearState();
+          set({ loading: true });
+
+          clearPersistedSessionState();
+          useChatStore.getState().reset();
+
+          const { accessToken } = await authService.googleSignIn(credential);
+          get().setAccessToken(accessToken);
+
+          const fetchedUser = await get().fetchMe({ showErrorToast: false });
+          if (!fetchedUser) {
+            authToast.error("Xác minh thất bại. Vui lòng thử lại.");
+            return false;
+          }
+
+          explicitSignOut.clear();
+          useChatStore.getState().fetchConversations();
+
+          authToast.success("Chào mừng bạn! 👋");
+          return true;
+        } catch {
+          get().clearState();
+          authToast.error("Đăng nhập Google thất bại. Vui lòng thử lại.");
           return false;
         } finally {
           set({ loading: false });
@@ -110,13 +129,12 @@ export const useAuthStore = create<AuthState>()(
 
       signOut: async () => {
         set({ loading: true });
+
         try {
           await authService.signOut();
-          authToast.success("Đăng xuất thành công");
-        } catch (error) {
-          authToast.error(
-            getAuthErrorMessage(error, "Lỗi xảy ra khi đăng xuất. Hãy thử lại"),
-          );
+          authToast.success("Đã đăng xuất thành công.");
+        } catch {
+          authToast.error("Đăng xuất thất bại. Vui lòng thử lại.");
         } finally {
           explicitSignOut.mark();
           get().clearState();
@@ -131,11 +149,13 @@ export const useAuthStore = create<AuthState>()(
           return true;
         } catch {
           set({ user: null, accessToken: null, authChecked: true });
+
           if (showErrorToast) {
             authToast.error(
-              "Lỗi xảy ra khi lấy dữ liệu người dùng. Hãy thử lại!",
+              "Không thể tải thông tin tài khoản. Vui lòng thử lại.",
             );
           }
+
           return false;
         } finally {
           set({ loading: false });
@@ -162,9 +182,10 @@ export const useAuthStore = create<AuthState>()(
         } catch {
           if (showErrorToast) {
             authToast.error(
-              "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!",
+              "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
             );
           }
+
           get().clearState();
           return false;
         } finally {

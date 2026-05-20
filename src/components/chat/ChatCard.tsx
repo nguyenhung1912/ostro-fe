@@ -1,11 +1,9 @@
-import { MoreHorizontal } from "lucide-react";
 import { Card } from "../ui/card";
-import { formatOnlineTime, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface ChatCardProps {
   convoId: string;
   name: string;
-  timestamp?: Date;
   isActive: boolean;
   onSelect: (id: string) => void;
   unreadCount?: number;
@@ -16,7 +14,6 @@ interface ChatCardProps {
 const ChatCard = ({
   convoId,
   name,
-  timestamp,
   isActive,
   onSelect,
   unreadCount,
@@ -27,9 +24,8 @@ const ChatCard = ({
     <Card
       key={convoId}
       className={cn(
-        "border-none p-3 cursor-pointer transition-smooth glass hover:bg-muted/30",
-        isActive &&
-          "ring-2 ring-primary/50 bg-gradient-to-tr from-primary-glow/10 to-primary-foreground",
+        "border border-transparent p-3 cursor-pointer transition-colors rounded-xl hover:bg-accent hover:text-accent-foreground group",
+        isActive && "bg-secondary text-secondary-foreground",
       )}
       onClick={() => onSelect(convoId)}
     >
@@ -39,22 +35,20 @@ const ChatCard = ({
           <div className="flex items-center justify-between mb-1">
             <h3
               className={cn(
-                "font-semibold text-sm truncate",
-                unreadCount && unreadCount > 0 && "text-foreground",
+                "font-medium text-sm truncate",
+                unreadCount && unreadCount > 0
+                  ? "font-semibold text-foreground"
+                  : "text-foreground",
               )}
             >
               {name}
             </h3>
-            <span className="text-xs text-muted-foreground">
-              {timestamp ? formatOnlineTime(timestamp) : ""}
-            </span>
           </div>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1 flex-1 min-w-0">
               {subtitle}
             </div>
-            <MoreHorizontal className="size-4 text-muted-foreground opacity-0 group-hover:opacity-100 hover:size-5 transition-smooth" />
           </div>
         </div>
       </div>

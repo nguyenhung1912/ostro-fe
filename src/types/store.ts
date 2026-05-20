@@ -35,6 +35,7 @@ export interface AuthState {
     lastName: string,
   ) => Promise<boolean>;
   signIn: (username: string, password: string) => Promise<boolean>;
+  signInWithGoogle: (credential: string) => Promise<boolean>;
   signOut: () => Promise<void>;
   fetchMe: (options?: FetchMeOptions) => Promise<boolean>;
   refresh: (options?: RefreshOptions) => Promise<boolean>;
@@ -74,8 +75,14 @@ export interface ChatState {
   sendGroupMessage: (
     conversationId: string,
     content: string,
-    imgUrl: string,
+    imgUrl?: string,
   ) => Promise<void>;
+  recallMessage: (messageId: string, conversationId: string) => Promise<void>;
+  markMessageRecalled: (
+    messageId: string,
+    conversationId: string,
+    lastMessage?: Conversation["lastMessage"],
+  ) => void;
   // add message
   addMessage: (message: Message) => Promise<void>;
   // update conversation
@@ -89,6 +96,8 @@ export interface ChatState {
     name: string,
     memberIds: string[],
   ) => Promise<void>;
+  deleteConversation: (conversationId: string) => Promise<void>;
+  removeConversation: (conversationId: string) => void;
 }
 
 export interface SocketState {
@@ -108,9 +117,21 @@ export interface FriendState {
   getAllFriendRequest: () => Promise<void>;
   acceptRequest: (requestId: string) => Promise<void>;
   declineRequest: (requestId: string) => Promise<void>;
+  cancelRequest: (requestId: string) => Promise<void>;
   getFriends: () => Promise<void>;
 }
 
 export interface UserState {
   updateAvatarUrl: (formData: FormData) => Promise<void>;
+  updateCoverUrl: (formData: FormData) => Promise<void>;
+  updateProfile: (payload: {
+    displayName: string;
+    bio?: string;
+    phone?: string;
+  }) => Promise<void>;
+  changePassword: (payload: {
+    currentPassword: string;
+    newPassword: string;
+  }) => Promise<void>;
+  deleteAccount: (password: string) => Promise<void>;
 }

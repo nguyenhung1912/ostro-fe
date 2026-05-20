@@ -9,7 +9,7 @@ const ReceivedRequests = () => {
 
   if (!receivedList || receivedList.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">
+      <p className="text-sm text-muted-foreground text-center mt-6 py-4">
         Bạn chưa có lời mời kết bạn nào
       </p>
     );
@@ -18,23 +18,23 @@ const ReceivedRequests = () => {
   const handleAccept = async (requestId: string) => {
     try {
       await acceptRequest(requestId);
-      toast.success("Đã đồng ý kết bạn thành công");
+      toast.success("Đã chấp nhận lời mời kết bạn.");
     } catch (error) {
-      console.error(error);
+      console.error("[ReceivedRequests] Accept failed:", error);
     }
   };
 
   const handleDecline = async (requestId: string) => {
     try {
       await declineRequest(requestId);
-      toast.info("Đã từ chối kết bạn");
+      toast.info("Đã từ chối lời mời kết bạn.");
     } catch (error) {
-      console.error(error);
+      console.error("[ReceivedRequests] Decline failed:", error);
     }
   };
 
   return (
-    <div className="space-y-3 mt-4">
+    <div className="space-y-3 mt-4 max-h-[224px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       {receivedList.map((req) => (
         <FriendRequestItem
           key={req._id}
@@ -43,20 +43,20 @@ const ReceivedRequests = () => {
             <div className="flex gap-2">
               <Button
                 size="sm"
-                variant="primary"
+                className="bg-primary/90 hover:bg-primary text-white rounded-xl h-8 font-medium transition-all text-xs px-3 disabled:opacity-50"
                 onClick={() => handleAccept(req._id)}
                 disabled={loading}
               >
-                Chấp nhận lời mời kết bạn
+                Chấp nhận
               </Button>
 
               <Button
                 size="sm"
-                variant="destructiveOutline"
+                className="bg-white/10 hover:bg-white/20 dark:bg-white/5 dark:hover:bg-white/10 text-foreground rounded-xl h-8 font-medium transition-all text-xs px-3 border border-white/10 disabled:opacity-50"
                 onClick={() => handleDecline(req._id)}
                 disabled={loading}
               >
-                Từ chối lời mời kết bạn
+                Từ chối
               </Button>
             </div>
           }

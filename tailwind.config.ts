@@ -92,6 +92,11 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      boxShadow: {
+        glass: "0 8px 32px 0 rgba(0, 0, 0, 0.05)",
+        "glass-dark": "0 8px 32px 0 rgba(0, 0, 0, 0.4)",
+        soft: "0 4px 20px -2px rgba(0, 0, 0, 0.05)",
+      },
       keyframes: {
         "accordion-down": {
           from: {

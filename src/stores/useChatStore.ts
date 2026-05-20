@@ -32,7 +32,7 @@ export const useChatStore = create<ChatState>()(
 
           set({ conversations, convoLoading: false });
         } catch (error) {
-          console.error("Lỗi khi fetchConversations:", error);
+          console.error("[ChatStore] Failed to fetch conversations:", error);
           set({ convoLoading: false });
         }
       },
@@ -81,7 +81,7 @@ export const useChatStore = create<ChatState>()(
             };
           });
         } catch (error) {
-          console.error("Lỗi xảy ra khi fetchMessages:", error);
+          console.error("[ChatStore] Failed to fetch messages:", error);
         } finally {
           set({ messageLoading: false });
         }
@@ -103,7 +103,8 @@ export const useChatStore = create<ChatState>()(
             ),
           }));
         } catch (error) {
-          console.error("Lỗi khi sendDirectMessage", error);
+          console.error("[ChatStore] Failed to send direct message:", error);
+          throw error;
         }
       },
 
@@ -116,8 +117,59 @@ export const useChatStore = create<ChatState>()(
             ),
           }));
         } catch (error) {
-          console.error("Lỗi khi sendGroupMessage: ", error);
+          console.error("[ChatStore] Failed to send group message:", error);
+          throw error;
         }
+      },
+
+      recallMessage: async (messageId, conversationId) => {
+        try {
+          const recalled = await chatService.recallMessage(messageId);
+          get().markMessageRecalled(
+            recalled._id,
+            recalled.conversationId ?? conversationId,
+            undefined,
+          );
+        } catch (error) {
+          console.error("[ChatStore] Failed to recall message:", error);
+          throw error;
+        }
+      },
+
+      markMessageRecalled: (messageId, conversationId, lastMessage) => {
+        set((state) => ({
+          messages: {
+            ...state.messages,
+            [conversationId]: {
+              ...(state.messages[conversationId] ?? {
+                items: [],
+                hasMore: false,
+                nextCursor: null,
+              }),
+              items: (state.messages[conversationId]?.items ?? []).map((m) =>
+                m._id === messageId
+                  ? {
+                      ...m,
+                      isDeleted: true,
+                      content: null,
+                      imgUrl: null,
+                    }
+                  : m,
+              ),
+            },
+          },
+          conversations: state.conversations.map((c) =>
+            c._id === conversationId && c.lastMessage?._id === messageId
+              ? {
+                  ...c,
+                  lastMessage: lastMessage ?? {
+                    ...c.lastMessage,
+                    content: "Tin nhắn đã bị thu hồi",
+                  },
+                }
+              : c,
+          ),
+        }));
       },
 
       addMessage: async (message) => {
@@ -153,7 +205,7 @@ export const useChatStore = create<ChatState>()(
             };
           });
         } catch (error) {
-          console.error("Lỗi xảy ra khi add message: ", error);
+          console.error("[ChatStore] Failed to add message:", error);
         }
       },
 
@@ -196,7 +248,7 @@ export const useChatStore = create<ChatState>()(
             ),
           }));
         } catch (error) {
-          console.error("Lỗi xảy ra khi gọi markAsSeen trong store", error);
+          console.error("[ChatStore] Failed to mark as seen:", error);
         }
       },
 
@@ -226,14 +278,40 @@ export const useChatStore = create<ChatState>()(
 
           get().addConvo(conversation);
 
+          if (!get().messages[conversation._id]) {
+            await get().fetchMessages(conversation._id);
+          }
+
           useSocketStore
             .getState()
             .socket?.emit("join-conversation", conversation._id);
         } catch (error) {
-          console.error("Lỗi khi gọi createConversation trong store", error);
+          console.error("[ChatStore] Failed to create conversation:", error);
         } finally {
           set({ loading: false });
         }
+      },
+
+      deleteConversation: async (conversationId) => {
+        try {
+          await chatService.deleteConversation(conversationId);
+          get().removeConversation(conversationId);
+        } catch (error) {
+          console.error("[ChatStore] Failed to delete conversation:", error);
+          throw error;
+        }
+      },
+
+      removeConversation: (conversationId) => {
+        set((state) => ({
+          conversations: state.conversations.filter(
+            (c) => c._id !== conversationId,
+          ),
+          activeConversationId:
+            state.activeConversationId === conversationId
+              ? null
+              : state.activeConversationId,
+        }));
       },
     }),
     {

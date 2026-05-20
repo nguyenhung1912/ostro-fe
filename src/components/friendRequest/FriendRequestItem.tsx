@@ -20,14 +20,17 @@ const FriendRequestItem = ({
   if (!info) return;
 
   return (
-    <div className="flex items-center justify-between rounded-lg shadow-md border border-primary-foreground p-3">
+    <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 dark:bg-white/[0.03] p-3 hover:bg-white/10 transition-all gap-4">
       <div className="flex items-center gap-3">
-        <UserAvatar type="sidebar" name={info.displayName} />
-      </div>
-
-      <div>
-        <p className="font-medium">{info.displayName}</p>
-        <p className="text-sm text-muted-foreground">@{info.username}</p>
+        <UserAvatar
+          type="sidebar"
+          name={info.displayName}
+          avatarUrl={info.avatarUrl ?? undefined}
+        />
+        <div>
+          <p className="font-semibold text-foreground">{info.displayName}</p>
+          <p className="text-sm text-muted-foreground">@{info.username}</p>
+        </div>
       </div>
       {actions}
     </div>

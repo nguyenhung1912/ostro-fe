@@ -1,4 +1,5 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import { useFriendStore } from "@/stores/useFriendStore";
 import {
   Dialog,
   DialogContent,
@@ -6,9 +7,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useFriendStore } from "@/stores/useFriendStore.ts";
-import SentRequests from "./SentRequests";
 import ReceivedRequests from "./ReceivedRequests";
+import SentRequests from "./SentRequests";
 
 interface FriendRequestDialogProps {
   open: boolean;
@@ -20,25 +20,30 @@ const FriendRequestDialog = ({ open, setOpen }: FriendRequestDialogProps) => {
   const { getAllFriendRequest } = useFriendStore();
 
   useEffect(() => {
+    if (!open) return;
+
     const loadRequest = async () => {
       try {
         await getAllFriendRequest();
       } catch (error) {
-        console.error("Lỗi khi load requests", error);
+        console.error("[FriendRequestDialog] Failed to load requests:", error);
       }
     };
 
     loadRequest();
-  }, []);
+  }, [getAllFriendRequest, open]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-md w-full">
         <DialogHeader>
-          <DialogTitle>Lời mời kết bạn</DialogTitle>
+          <DialogTitle className="font-semibold text-xl tracking-tight text-foreground">
+            Lời mời kết bạn
+          </DialogTitle>
         </DialogHeader>
+
         <Tabs value={tab} onValueChange={setTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="w-full grid grid-cols-2">
             <TabsTrigger value="received">Đã nhận</TabsTrigger>
             <TabsTrigger value="sent">Đã gửi</TabsTrigger>
           </TabsList>
@@ -55,4 +60,5 @@ const FriendRequestDialog = ({ open, setOpen }: FriendRequestDialogProps) => {
     </Dialog>
   );
 };
+
 export default FriendRequestDialog;

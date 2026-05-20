@@ -30,46 +30,58 @@ const SearchForm = ({
 }: SearchFormProps) => {
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="username" className="text-sm font-semibold">
-          Tìm bằng username
-        </Label>
-        <Input
-          id="username"
-          placeholder="Gõ tên username vào đây..."
-          className="glass border-border/50 focus:border-primary/50 transition-smooth"
-          {...register("username", {
-            required: "Username không được bỏ trống",
-          })}
-        ></Input>
-        {errors.username && (
-          <p className="error-message">{errors.username.message}</p>
-        )}
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label
+            htmlFor="username"
+            className="text-sm font-semibold text-foreground/90"
+          >
+            Tên người dùng
+          </Label>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Input
+              id="username"
+              placeholder="Nhập tên người dùng..."
+              className="h-10 pl-9 bg-white/5 border-border/50 focus-visible:ring-1"
+              {...register("username", {
+                required: "Username không được bỏ trống",
+              })}
+            />
+          </div>
+          {errors.username && (
+            <p className="text-xs font-medium text-red-500 mt-1">
+              {errors.username.message}
+            </p>
+          )}
+        </div>
 
         {isFound === false && (
-          <span className="error-message">
-            Không tìm thấy
-            <span className="font-semibold">@{searchedUsername}</span>
-          </span>
+          <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm font-medium">
+            <span>
+              Không tìm thấy{" "}
+              <span className="font-bold">@{searchedUsername}</span>
+            </span>
+          </div>
         )}
       </div>
 
-      <DialogFooter>
+      <DialogFooter className="mt-6 pt-4 border-t border-border/30">
         <DialogClose asChild>
           <Button
             type="button"
             variant="outline"
-            className="flex-1 glass hover:text-destructive"
+            className="flex-1 rounded-xl border border-border/50 bg-white/5 hover:bg-white/10 font-medium h-10 transition-all"
             onClick={onCancel}
           >
-            Cancel
+            Hủy
           </Button>
         </DialogClose>
 
         <Button
           type="submit"
           disabled={loading || !usernameValue?.trim()}
-          className="flex-1 bg-gradient-chat text-white hover:opacity-90 transition-smooth"
+          className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed h-10 font-medium"
         >
           {loading ? (
             <span>Đang tìm...</span>

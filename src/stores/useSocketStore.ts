@@ -24,7 +24,7 @@ export const useSocketStore = create<SocketState>((set, get) => ({
     set({ socket });
 
     socket.on("connect", () => {
-      console.log("Đã kết nối với socket");
+      console.log("[SocketStore] Successfully established connection.");
     });
 
     // online users
@@ -63,22 +63,44 @@ export const useSocketStore = create<SocketState>((set, get) => ({
     });
 
     // read message
-    socket.on("read-message", ({ conversation, lastMessage }) => {
-      const updated = {
-        _id: conversation._id,
-        lastMessage,
-        lastMessageAt: conversation.lastMessageAt,
-        unreadCounts: conversation.unreadCounts,
-        seenBy: conversation.seenBy,
-      } as Conversation;
+    socket.on(
+      "read-message",
+      ({ conversationId, lastMessage, seenBy, unreadCounts }) => {
+        const updated = {
+          _id: conversationId,
+          lastMessage,
+          unreadCounts,
+          seenBy,
+        } as Conversation;
 
-      useChatStore.getState().updateConversation(updated);
-    });
+        useChatStore.getState().updateConversation(updated);
+      },
+    );
+
+    socket.on(
+      "message-recalled",
+      ({ messageId, conversationId, lastMessage }) => {
+        useChatStore
+          .getState()
+          .markMessageRecalled(messageId, conversationId, lastMessage);
+      },
+    );
 
     // new group chat
     socket.on("new-group", (conversation) => {
       useChatStore.getState().addConvo(conversation);
       socket.emit("join-conversation", conversation._id);
+    });
+
+    socket.on("delete-conversation", ({ conversationId }) => {
+      useChatStore
+        .getState()
+        .deleteConversation(conversationId)
+        .catch(() => {});
+    });
+
+    socket.on("rename-conversation", ({ conversation }) => {
+      useChatStore.getState().updateConversation(conversation);
     });
   },
 

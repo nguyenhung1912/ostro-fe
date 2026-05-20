@@ -14,23 +14,26 @@ const SelectedUsersList = ({
   if (invitedUsers.length === 0) return;
 
   return (
-    <div className="flex flex-wrap gap-2 pt-2">
+    <div className="flex flex-wrap gap-2 pt-1 max-h-32 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       {invitedUsers.map((user) => (
         <div
           key={user._id}
-          className="flex items-center gap-1 bg-muted text-sm rounded-full px-3 py-1"
+          className="flex items-center gap-2 bg-primary/10 text-primary font-medium text-xs rounded-full border border-primary/20 pl-1 pr-2 py-1 transition-all hover:bg-primary/15"
         >
           <UserAvatar
-            type="chat"
+            type="sidebar"
             name={user.displayName}
             avatarUrl={user.avatarUrl}
           />
-          <span>{user.displayName}</span>
+          <span className="max-w-[100px] truncate">{user.displayName}</span>
 
-          <X
-            className="size-3 cursor-pointer hover:text-destructive"
+          <button
+            type="button"
+            className="rounded-full p-0.5 hover:bg-primary/20 hover:text-red-400 transition-colors"
             onClick={() => onRemove(user)}
-          />
+          >
+            <X className="size-3.5" />
+          </button>
         </div>
       ))}
     </div>

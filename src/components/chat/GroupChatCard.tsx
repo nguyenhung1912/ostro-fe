@@ -29,11 +29,6 @@ const GroupChatCard = ({ convo }: { convo: Conversation }) => {
     <ChatCard
       convoId={convo._id}
       name={name}
-      timestamp={
-        convo.lastMessage?.createdAt
-          ? new Date(convo.lastMessage.createdAt)
-          : undefined
-      }
       isActive={activeConversationId === convo._id}
       onSelect={handleSelectConversation}
       unreadCount={unreadCount}

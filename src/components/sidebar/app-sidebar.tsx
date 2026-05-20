@@ -10,12 +10,11 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Moon, Sun } from "lucide-react";
 import { Switch } from "../ui/switch";
-import CreateNewChat from "../chat/CreateNewChat";
+import FriendCarousel from "./FriendCarousel";
 import NewGroupChatModal from "../chat/NewGroupChatModal";
 import GroupChatList from "../chat/GroupChatList";
 import AddFriendModal from "../chat/AddFriendModal";
@@ -28,46 +27,39 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useAuthStore();
 
   return (
-    <Sidebar variant="inset" {...props}>
+    <Sidebar variant="inset" className="overflow-hidden border-r border-border bg-sidebar" {...props}>
       {/* Header */}
-      <SidebarHeader>
+      <SidebarHeader className="pb-0">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              size="lg"
-              asChild
-              className="bg-gradient-primary"
-            >
-              <a href="#">
-                <div className="flex w-full items-center px-2 justify-between">
-                  <h1 className="text-xl font-bold text-white">Ostro</h1>
-                  <div className="flex items-center gap-2">
-                    <Sun className="size-4 text-white/80" />
-                    <Switch
-                      checked={isDark}
-                      onCheckedChange={toggleTheme}
-                      className="data-[state=checked]:bg-background/80"
-                    />
-                    <Moon className="size-4 text-white/80" />
-                  </div>
-                </div>
-              </a>
-            </SidebarMenuButton>
+            <div className="flex w-full items-center justify-between px-3 py-2.5 mb-2">
+              <h1 className="text-xl font-semibold tracking-tight text-foreground">
+                Ostro
+              </h1>
+              <div className="flex items-center gap-2">
+                <Sun className="size-3.5 text-muted-foreground" />
+                <Switch
+                  checked={isDark}
+                  onCheckedChange={toggleTheme}
+                />
+                <Moon className="size-3.5 text-muted-foreground" />
+              </div>
+            </div>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       {/* Content */}
-      <SidebarContent className="beautiful-scrollbar">
-        {/* New Chat */}
-        <SidebarGroup>
+      <SidebarContent className="beautiful-scrollbar pt-2">
+        {/* Friends Carousel */}
+        <SidebarGroup className="pt-0 pb-2">
           <SidebarGroupContent>
-            <CreateNewChat />
+            <FriendCarousel />
           </SidebarGroupContent>
         </SidebarGroup>
         {/* Group Chat */}
         <SidebarGroup>
-          <div className="flex items-center justify-between">
-            <SidebarGroupLabel className="uppercase">
+          <div className="flex items-center justify-between mt-4">
+            <SidebarGroupLabel className="uppercase font-semibold text-muted-foreground tracking-wider text-xs">
               nhóm chat
             </SidebarGroupLabel>
             <NewGroupChatModal />
@@ -79,7 +71,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
         {/* Direct Message */}
         <SidebarGroup>
-          <SidebarGroupLabel className="uppercase">bạn bè</SidebarGroupLabel>
+          <SidebarGroupLabel className="uppercase font-semibold text-muted-foreground tracking-wider text-xs mt-4">
+            bạn bè
+          </SidebarGroupLabel>
           <SidebarGroupAction title="Kết Bạn" className="cursor-pointer">
             <AddFriendModal />
           </SidebarGroupAction>

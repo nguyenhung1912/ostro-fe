@@ -8,3 +8,21 @@ export const clearPersistedSessionState = () => {
     /* ignore */
   }
 };
+
+export const clearChatScrollSessionState = () => {
+  try {
+    const keysToRemove: string[] = [];
+
+    for (let index = 0; index < sessionStorage.length; index += 1) {
+      const key = sessionStorage.key(index);
+
+      if (key?.startsWith("chat-scroll-")) {
+        keysToRemove.push(key);
+      }
+    }
+
+    keysToRemove.forEach((key) => sessionStorage.removeItem(key));
+  } catch {
+    /* ignore */
+  }
+};

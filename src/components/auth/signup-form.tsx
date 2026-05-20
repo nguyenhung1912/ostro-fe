@@ -8,6 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "../ui/label";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { Link, useNavigate } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
+import { authToast } from "@/lib/authUtils";
 
 const signUpSchema = z.object({
   firstname: z.string().min(1, "Tên bắt buộc phải có"),
@@ -24,7 +26,9 @@ export function SignUpForm({
   ...props
 }: React.ComponentProps<"div">) {
   const signUp = useAuthStore((s) => s.signUp);
+  const signInWithGoogle = useAuthStore((s) => s.signInWithGoogle);
   const navigate = useNavigate();
+  const loading = useAuthStore((s) => s.loading);
   const {
     register,
     handleSubmit,
@@ -44,126 +48,192 @@ export function SignUpForm({
       lastname,
     );
     if (signedUp) {
-      navigate("/signin");
+      navigate("/signin", { viewTransition: true });
     }
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card className="overflow-hidden p-0 border-border">
-        <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8" onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col gap-6">
-              {/* header - logo*/}
-              <div className="flex flex-col items-center text-center gap-2">
-                <Link to="/" className="mx-auto block w-fit text-center">
-                  <img src="/logo.svg" alt="logo" />
-                </Link>
-
-                <h1 className="text-2xl font-bold">Tạo tài khoản Ostro</h1>
-                <p className="text-muted-foreground text-balance">
-                  Chào mừng bạn! Hãy đăng ký để bắt đầu!
+    <div className={cn("flex flex-col gap-4", className)} {...props}>
+      <Card className="overflow-hidden p-0 border-border/50 bg-card/50 backdrop-blur-xl shadow-xl rounded-2xl">
+        <CardContent className="p-0">
+          <form
+            className="p-6 md:p-8 flex flex-col gap-6"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            {/* header - logo*/}
+            <div className="flex flex-col items-center text-center gap-3 mb-2">
+              <Link
+                to="/"
+                className="mx-auto block w-fit text-center transition-transform hover:scale-105 active:scale-95"
+              >
+                <img
+                  src="/logo.svg"
+                  alt="logo"
+                  className="h-12 w-auto drop-shadow-md"
+                />
+              </Link>
+              <div className="space-y-1">
+                <h1 className="text-2xl font-bold tracking-tight">
+                  Tạo tài khoản Ostro
+                </h1>
+                <p className="text-muted-foreground/80 text-sm">
+                  Chào mừng bạn! Hãy đăng ký để bắt đầu
                 </p>
               </div>
+            </div>
 
+            <div className="flex flex-col gap-4">
               {/* name */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="lastname" className="block text-sm">
+                  <Label htmlFor="lastname" className="text-sm font-medium">
                     Họ
                   </Label>
-                  <Input type="text" id="lastname" {...register("lastname")} />
-                  {/* error message */}
+                  <Input
+                    type="text"
+                    id="lastname"
+                    placeholder="Nguyễn"
+                    className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
+                    {...register("lastname")}
+                  />
                   {errors.lastname && (
-                    <p className="error-message">{errors.lastname.message}</p>
+                    <p className="text-[13px] font-medium text-destructive">
+                      {errors.lastname.message}
+                    </p>
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="firstname" className="block text-sm">
+                  <Label htmlFor="firstname" className="text-sm font-medium">
                     Tên
                   </Label>
                   <Input
                     type="text"
                     id="firstname"
+                    placeholder="Văn A"
+                    className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
                     {...register("firstname")}
                   />
-                  {/* error message */}
                   {errors.firstname && (
-                    <p className="error-message">{errors.firstname.message}</p>
+                    <p className="text-[13px] font-medium text-destructive">
+                      {errors.firstname.message}
+                    </p>
                   )}
                 </div>
               </div>
 
               {/* username */}
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="username" className="block text-sm">
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="username" className="text-sm font-medium">
                   Tên đăng nhập
                 </Label>
                 <Input
                   type="text"
                   id="username"
-                  placeholder="ostro"
+                  placeholder="nguyenvana123"
+                  className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
                   {...register("username")}
                 />
-                {/* error message */}
                 {errors.username && (
-                  <p className="error-message">{errors.username.message}</p>
+                  <p className="text-[13px] font-medium text-destructive">
+                    {errors.username.message}
+                  </p>
                 )}
               </div>
 
               {/* email */}
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="email" className="block text-sm">
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="email" className="text-sm font-medium">
                   Email
                 </Label>
                 <Input
                   type="email"
                   id="email"
-                  placeholder="o@gmail.com"
+                  placeholder="name@example.com"
+                  className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
                   {...register("email")}
                 />
-                {/* error message */}
                 {errors.email && (
-                  <p className="error-message">{errors.email.message}</p>
+                  <p className="text-[13px] font-medium text-destructive">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
 
               {/* password */}
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="password" className="block text-sm">
-                  Password
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="password" className="text-sm font-medium">
+                  Mật khẩu
                 </Label>
                 <Input
                   type="password"
                   id="password"
+                  placeholder="••••••••"
+                  className="h-11 bg-white/5 border-border/50 focus-visible:bg-white/10 focus-visible:ring-1 focus-visible:ring-primary/50 transition-all rounded-xl"
                   {...register("password")}
                 />
-                {/* error message */}
                 {errors.password && (
-                  <p className="error-message">{errors.password.message}</p>
+                  <p className="text-[13px] font-medium text-destructive">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
+            </div>
 
-              {/* sign up button */}
-              <Button className="w-full" type="submit" disabled={isSubmitting}>
-                Tạo tài khoản
-              </Button>
+            <Button
+              className="w-full h-11 text-base font-semibold shadow-md transition-all hover:bg-primary/90 active:scale-[0.98] rounded-xl"
+              type="submit"
+              disabled={isSubmitting || loading}
+            >
+              {isSubmitting ? "Đang tạo tài khoản..." : "Tạo tài khoản"}
+            </Button>
 
-              <div className="text-center text-sm">
-                Đã có tài khoản?{" "}
-                <Link to="/signin" className="underline underline-offset-4">
-                  Đăng nhập
-                </Link>
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-border/50" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  Hoặc
+                </span>
               </div>
             </div>
+
+            <div className="flex justify-center w-full">
+              <GoogleLogin
+                onSuccess={async (credentialResponse) => {
+                  if (credentialResponse.credential) {
+                    const success = await signInWithGoogle(
+                      credentialResponse.credential,
+                    );
+                    if (success) {
+                      navigate("/", { viewTransition: true });
+                    }
+                  }
+                }}
+                onError={() => {
+                  authToast.error(
+                    "Đăng ký bằng Google thất bại. Vui lòng thử lại.",
+                  );
+                }}
+                useOneTap
+                theme="outline"
+                shape="rectangular"
+                size="large"
+                text="continue_with"
+              />
+            </div>
+
+            <div className="text-center text-sm font-medium text-muted-foreground">
+              Đã có tài khoản?{" "}
+              <Link
+                to="/signin"
+                className="text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
+                viewTransition
+              >
+                Đăng nhập
+              </Link>
+            </div>
           </form>
-          <div className="relative hidden bg-muted md:block">
-            <img
-              src="/placeholderSignUp.png"
-              alt="Image"
-              className="absolute top-1/2 -translate-y-1/2 object-cover"
-            />
-          </div>
         </CardContent>
       </Card>
       <div className="text-xs text-balance px-6 text-center *:[a]:hover:text-primary text-muted-foreground *:[a]:underline *:[a]:underline-offset-4">
