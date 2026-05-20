@@ -5,11 +5,11 @@ import { persist } from "zustand/middleware";
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set, get) => ({
-      isDark: true,
+      isDark: false,
 
       toggleTheme: () => {
         const newValue = !get().isDark;
-        set({isDark: newValue})
+        set({ isDark: newValue });
 
         if (newValue) document.documentElement.classList.add("dark");
         else document.documentElement.classList.remove("dark");
