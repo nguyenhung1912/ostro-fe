@@ -12,6 +12,7 @@ import { useThemeStore } from "./stores/useThemeStore";
 import { useEffect } from "react";
 import { useAuthStore } from "./stores/useAuthStore";
 import { useSocketStore } from "./stores/useSocketStore";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const router = createBrowserRouter([
   { path: "/signin", element: <SignInPage /> },
@@ -54,7 +55,11 @@ function App() {
           },
         }}
       />
-      <RouterProvider router={router} />
+      <GoogleOAuthProvider
+        clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || ""}
+      >
+        <RouterProvider router={router} />
+      </GoogleOAuthProvider>
     </>
   );
 }
