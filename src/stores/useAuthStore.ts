@@ -96,6 +96,37 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
+      signInWithGoogle: async (credential) => {
+        try {
+          get().clearState();
+          set({ loading: true });
+
+          clearPersistedSessionState();
+          useChatStore.getState().reset();
+
+          const { accessToken } = await authService.googleSignIn(credential);
+          get().setAccessToken(accessToken);
+
+          const fetchedUser = await get().fetchMe({ showErrorToast: false });
+          if (!fetchedUser) {
+            authToast.error("Xác minh thất bại. Vui lòng thử lại.");
+            return false;
+          }
+
+          explicitSignOut.clear();
+          useChatStore.getState().fetchConversations();
+
+          authToast.success("Chào mừng bạn! 👋");
+          return true;
+        } catch {
+          get().clearState();
+          authToast.error("Đăng nhập Google thất bại. Vui lòng thử lại.");
+          return false;
+        } finally {
+          set({ loading: false });
+        }
+      },
+
       signOut: async () => {
         set({ loading: true });
 
