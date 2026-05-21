@@ -116,7 +116,7 @@ export const useAuthStore = create<AuthState>()(
           explicitSignOut.clear();
           useChatStore.getState().fetchConversations();
 
-          authToast.success("Chào mừng bạn! 👋");
+          authToast.success("Chào mừng bạn!");
           return true;
         } catch {
           get().clearState();

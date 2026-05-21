@@ -1,7 +1,7 @@
 import { useSocketStore } from "@/stores/useSocketStore";
 import type { User } from "@/types/user";
 import { cn } from "@/lib/utils";
-import UserAvatar from "../chat/UserAvatar";
+import UserAvatar from "@/components/common/avatar/UserAvatar";
 import AvatarUploader from "./AvatarUploader";
 import { useRef, useState, type ChangeEvent } from "react";
 import { useUserStore } from "@/stores/useUserStore";
