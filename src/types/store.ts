@@ -97,6 +97,7 @@ export interface ChatState {
     memberIds: string[],
   ) => Promise<void>;
   deleteConversation: (conversationId: string) => Promise<void>;
+  leaveGroup: (conversationId: string) => Promise<void>;
   removeConversation: (conversationId: string) => void;
 }
 

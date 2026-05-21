@@ -104,4 +104,9 @@ export const chatService = {
     );
     return res.data.conversation;
   },
+
+  async leaveGroup(conversationId: string) {
+    const res = await api.post(`/conversations/${conversationId}/leave`);
+    return res.data;
+  },
 };

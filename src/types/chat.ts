@@ -56,6 +56,7 @@ export interface Message {
   updatedAt?: string | null;
   createdAt: string;
   isOwn?: boolean;
+  isSystem?: boolean;
   isDeleted?: boolean;
   deletedAt?: string | null;
   deletedBy?: string | null;

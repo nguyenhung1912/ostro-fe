@@ -49,7 +49,7 @@ export const AIActionsMenu: React.FC<AIActionsMenuProps> = ({
     try {
       const summary = await aiService.summarizeConversation(conversationId);
       setModalState((prev) => ({ ...prev, content: summary, isLoading: false }));
-    } catch (error) {
+    } catch {
       setModalState((prev) => ({ ...prev, isLoading: false }));
       sileo.error({ title: "Lỗi", description: "Không thể tóm tắt hội thoại." });
     }
@@ -60,7 +60,7 @@ export const AIActionsMenu: React.FC<AIActionsMenuProps> = ({
     try {
       const actions = await aiService.extractActionItems(conversationId);
       setModalState((prev) => ({ ...prev, content: actions, isLoading: false }));
-    } catch (error) {
+    } catch {
       setModalState((prev) => ({ ...prev, isLoading: false }));
       sileo.error({ title: "Lỗi", description: "Không thể trích xuất công việc." });
     }
@@ -71,7 +71,7 @@ export const AIActionsMenu: React.FC<AIActionsMenuProps> = ({
     try {
       const title = await aiService.generateGroupTitle(conversationId);
       setModalState((prev) => ({ ...prev, content: title, isLoading: false }));
-    } catch (error) {
+    } catch {
       setModalState((prev) => ({ ...prev, isLoading: false }));
       sileo.error({ title: "Lỗi", description: "Không thể tạo tên nhóm." });
     }
@@ -87,7 +87,7 @@ export const AIActionsMenu: React.FC<AIActionsMenuProps> = ({
       const improved = await aiService.improveMessage(currentDraft, tone);
       onUpdateDraft(improved);
       sileo.success({ description: "Đã cập nhật tin nhắn." });
-    } catch (error) {
+    } catch {
       sileo.error({ description: "Không thể cải thiện tin nhắn." });
     }
   };
@@ -102,7 +102,7 @@ export const AIActionsMenu: React.FC<AIActionsMenuProps> = ({
       const translated = await aiService.translateMessage(currentDraft, lang);
       onUpdateDraft(translated);
       sileo.success({ description: "Đã dịch tin nhắn." });
-    } catch (error) {
+    } catch {
       sileo.error({ description: "Không thể dịch tin nhắn." });
     }
   };
