@@ -325,6 +325,16 @@ export const useChatStore = create<ChatState>()(
         }
       },
 
+      leaveGroup: async (conversationId) => {
+        try {
+          await chatService.leaveGroup(conversationId);
+          get().removeConversation(conversationId);
+        } catch (error) {
+          console.error("[ChatStore] Failed to leave group:", error);
+          throw error;
+        }
+      },
+
       removeConversation: (conversationId) => {
         set((state) => ({
           conversations: state.conversations.filter(

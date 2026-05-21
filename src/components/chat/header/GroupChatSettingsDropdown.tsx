@@ -29,20 +29,21 @@ const GroupChatSettingsDropdown = ({
   onOpenMembers,
   onOpenAddMember,
 }: GroupChatSettingsDropdownProps) => {
-  const { deleteConversation } = useChatStore();
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const { leaveGroup } = useChatStore();
+  const [isLeaveDialogOpen, setIsLeaveDialogOpen] = useState(false);
+  const [isLeaving, setIsLeaving] = useState(false);
 
-  const handleDeleteConversation = async () => {
+  const handleLeaveGroup = async () => {
     try {
-      setIsDeleting(true);
-      await deleteConversation(currentChat._id);
+      setIsLeaving(true);
+      await leaveGroup(currentChat._id);
       sileo.success({ title: "Đã rời nhóm", description: "Bạn sẽ không còn nhận được tin nhắn mới từ nhóm này." });
-      setIsDeleteDialogOpen(false);
-    } catch {
-      sileo.error({ title: "Không thể rời nhóm", description: "Hệ thống gặp sự cố. Kiểm tra kết nối mạng và thử lại." });
+      setIsLeaveDialogOpen(false);
+    } catch (error) {
+      const message = (error as any).response?.data?.message || "Hệ thống gặp sự cố. Kiểm tra kết nối mạng và thử lại.";
+      sileo.error({ title: "Không thể rời nhóm", description: message });
     } finally {
-      setIsDeleting(false);
+      setIsLeaving(false);
     }
   };
 
@@ -73,36 +74,35 @@ const GroupChatSettingsDropdown = ({
           </DropdownMenuItem>
           <DropdownMenuItem
             className="text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer"
-            onSelect={() => setIsDeleteDialogOpen(true)}
+            onSelect={() => setIsLeaveDialogOpen(true)}
           >
-            <Trash2 className="size-4 mr-2" /> Xoá cuộc trò chuyện
+            <Trash2 className="size-4 mr-2" /> Rời nhóm
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+      <Dialog open={isLeaveDialogOpen} onOpenChange={setIsLeaveDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Xoá cuộc trò chuyện?</DialogTitle>
+            <DialogTitle>Rời nhóm?</DialogTitle>
           </DialogHeader>
           <div className="text-muted-foreground text-sm py-2">
-            Bạn có chắc chắn muốn xoá cuộc trò chuyện này không? Hành động này
-            không thể hoàn tác.
+            Bạn có chắc chắn muốn rời khỏi nhóm này không? Bạn sẽ không thể xem hay gửi tin nhắn nữa.
           </div>
           <DialogFooter>
             <Button
               variant="ghost"
-              onClick={() => setIsDeleteDialogOpen(false)}
-              disabled={isDeleting}
+              onClick={() => setIsLeaveDialogOpen(false)}
+              disabled={isLeaving}
             >
               Hủy
             </Button>
             <Button
               variant="destructive"
-              onClick={handleDeleteConversation}
-              disabled={isDeleting}
+              onClick={handleLeaveGroup}
+              disabled={isLeaving}
             >
-              {isDeleting ? "Đang xoá..." : "Xoá"}
+              {isLeaving ? "Đang rời..." : "Rời nhóm"}
             </Button>
           </DialogFooter>
         </DialogContent>

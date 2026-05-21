@@ -13,7 +13,7 @@ const SentRequestAction = ({ requestId }: { requestId: string }) => {
       setIsCanceling(true);
       await cancelRequest(requestId);
       sileo.success({ title: "Lời mời đã bị thu hồi", description: "Yêu cầu kết bạn đã được huỷ bỏ. Người dùng sẽ không còn thấy lời mời này." });
-    } catch (error) {
+    } catch {
       sileo.error({ title: "Thu hồi lời mời thất bại", description: "Không thể huỷ yêu cầu. Kiểm tra kết nối mạng và thử lại." });
     } finally {
       setIsCanceling(false);

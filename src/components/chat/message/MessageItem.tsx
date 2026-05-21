@@ -82,6 +82,16 @@ const MessageItem = ({
     }
   };
 
+  if (message.isSystem) {
+    return (
+      <div className="flex justify-center w-full my-4">
+        <span className="text-xs italic text-muted-foreground bg-secondary/30 px-3 py-1 rounded-full border border-border/50 shadow-sm">
+          {message.content}
+        </span>
+      </div>
+    );
+  }
+
   return (
     <>
       <div
