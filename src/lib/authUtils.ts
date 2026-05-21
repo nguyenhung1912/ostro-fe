@@ -1,8 +1,9 @@
 import axios from "axios";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 import { EXPLICIT_SIGN_OUT_KEY } from "@/lib/storageKeys";
 
-const AUTH_TOAST_ID = "auth-status";
+
+
 
 export const explicitSignOut = {
   check: (): boolean => {
@@ -29,8 +30,10 @@ export const explicitSignOut = {
 };
 
 export const authToast = {
-  success: (message: string) => toast.success(message, { id: AUTH_TOAST_ID }),
-  error: (message: string) => toast.error(message, { id: AUTH_TOAST_ID }),
+  success: (title: string, description: string) =>
+    sileo.success({ title, description }),
+  error: (title: string, description: string) =>
+    sileo.error({ title, description }),
 };
 
 export const getAuthErrorMessage = (

@@ -52,7 +52,7 @@ export function UtilityBar({
   };
 
   return (
-    <div className="w-[64px] flex flex-col justify-between items-center py-4 bg-slate-50 text-slate-600 dark:bg-zinc-950 dark:text-zinc-400 border-r border-slate-200/80 dark:border-border/20 flex-shrink-0">
+    <div className="w-[64px] flex flex-col justify-between items-center py-4 bg-slate-50 text-slate-600 dark:bg-black/25 dark:text-zinc-400 border-r border-slate-200/80 dark:border-border/20 flex-shrink-0 backdrop-blur-md">
       {/* Top: Current User Avatar with green online dot */}
       <div className="flex flex-col items-center">
         {user && (

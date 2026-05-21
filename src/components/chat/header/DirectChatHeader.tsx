@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 import {
   Dialog,
   DialogContent,
@@ -72,9 +72,9 @@ const DirectChatHeader = ({ currentChat }: { currentChat: Conversation }) => {
     }
     try {
       await chatService.renameConversation(currentChat._id, editName);
-      toast.success("Đổi tên thành công!");
+      sileo.success({ title: "Tên đã được cập nhật", description: "Biệt danh mới của cuộc trò chuyện đã được lưu." });
     } catch {
-      toast.error("Không thể đổi tên cuộc trò chuyện");
+      sileo.error({ title: "Cập nhật tên thất bại", description: "Không thể lưu thay đổi. Kiểm tra kết nối mạng và thử lại." });
     } finally {
       setIsEditing(false);
     }
@@ -89,10 +89,10 @@ const DirectChatHeader = ({ currentChat }: { currentChat: Conversation }) => {
     try {
       setIsDeleting(true);
       await deleteConversation(currentChat._id);
-      toast.success("Đã xoá cuộc trò chuyện");
+      sileo.success({ title: "Cuộc trò chuyện đã bị xoá", description: "Toàn bộ tin nhắn đã được xóa vĩnh viễn khỏi thiết bị của bạn." });
       setIsDeleteDialogOpen(false);
     } catch {
-      toast.error("Không thể xoá cuộc trò chuyện");
+      sileo.error({ title: "Xoá thất bại", description: "Không thể xoá cuộc trò chuyện. Kiểm tra kết nối mạng và thử lại." });
     } finally {
       setIsDeleting(false);
     }

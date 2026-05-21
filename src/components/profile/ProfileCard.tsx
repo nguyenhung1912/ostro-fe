@@ -6,7 +6,7 @@ import AvatarUploader from "./AvatarUploader";
 import { useRef, useState, type ChangeEvent } from "react";
 import { useUserStore } from "@/stores/useUserStore";
 import { Camera, Loader2 } from "lucide-react";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 
 interface ProfileCardProps {
   user: User | null;
@@ -30,13 +30,13 @@ const ProfileCard = ({ user }: ProfileCardProps) => {
     if (!file) return;
 
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-      toast.error("Vui lòng chọn ảnh JPG, PNG hoặc WebP.");
+      sileo.error({ title: "Không hỗ trợ định dạng này", description: "Ảnh bìa chỉ có thể sử dụng định dạng JPG, PNG hoặc WebP." });
       input.value = "";
       return;
     }
 
     if (file.size > 1024 * 1024) {
-      toast.error("Ảnh bìa không được vượt quá 1MB.");
+      sileo.error({ title: "Ảnh bìa quá lớn", description: "Ảnh bìa không được vượt quá 1MB. Vui lòng chọn ảnh nhỏ hơn." });
       input.value = "";
       return;
     }

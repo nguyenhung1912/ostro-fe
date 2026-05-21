@@ -15,7 +15,7 @@ import type { Friend } from "@/types/user";
 import type { Participant } from "@/types/chat";
 import InviteSuggestionList from "../new-group-chat/InviteSuggestionList";
 import SelectedUsersList from "../new-group-chat/SelectedUsersList";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 import { useChatStore } from "@/stores/useChatStore";
 import { chatService } from "@/services/chatService";
 
@@ -64,7 +64,7 @@ const AddGroupMemberModal = ({
     try {
       e.preventDefault();
       if (invitedUsers.length === 0) {
-        toast.warning("Vui lòng chọn ít nhất một thành viên để thêm.");
+        sileo.warning({ title: "Chưa chọn thành viên", description: "Vui lòng chọn ít nhất một người bạn để thêm vào nhóm." });
         return;
       }
 
@@ -75,11 +75,11 @@ const AddGroupMemberModal = ({
       );
 
       updateConversation(updated);
-      toast.success("Thêm thành viên vào nhóm thành công!");
+      sileo.success({ title: "Thêm thành viên thành công", description: `Đã thêm ${invitedUsers.length} thành viên mới vào nhóm.` });
       onClose();
     } catch (error) {
       console.error("[AddGroupMemberModal] Failed to add members:", error);
-      toast.error("Không thể thêm thành viên vào nhóm.");
+      sileo.error({ title: "Thêm thành viên thất bại", description: "Bạn có thể không có quyền quản trị hoặc kết nối mạng có vấn đề." });
     } finally {
       setLoading(false);
     }

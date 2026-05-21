@@ -217,7 +217,8 @@ export function SignUpForm({
                 }}
                 onError={() => {
                   authToast.error(
-                    "Đăng ký bằng Google thất bại. Vui lòng thử lại.",
+                    "Đăng ký qua Google thất bại",
+                    "Vui lòng thử lại.",
                   );
                 }}
                 useOneTap

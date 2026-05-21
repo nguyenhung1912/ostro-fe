@@ -1,7 +1,7 @@
 import { useFriendStore } from "@/stores/useFriendStore";
 import FriendRequestItem from "./FriendRequestItem";
 import { Button } from "../ui/button";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 
 const ReceivedRequests = () => {
   const { acceptRequest, declineRequest, loading, receivedList } =
@@ -18,18 +18,35 @@ const ReceivedRequests = () => {
   const handleAccept = async (requestId: string) => {
     try {
       await acceptRequest(requestId);
-      toast.success("Đã chấp nhận lời mời kết bạn.");
+      sileo.success({
+        title: "Đã chấp nhận kết bạn",
+        description:
+          "Hai bạn đã được kết nối thành công. Hãy bắt đầu trò chuyện!",
+      });
     } catch (error) {
       console.error("[ReceivedRequests] Accept failed:", error);
+      sileo.error({
+        title: "Chấp nhận không thành công",
+        description:
+          "Không thể xử lý yêu cầu. Kiểm tra kết nối mạng và thử lại.",
+      });
     }
   };
 
   const handleDecline = async (requestId: string) => {
     try {
       await declineRequest(requestId);
-      toast.info("Đã từ chối lời mời kết bạn.");
+      sileo.info({
+        title: "Đã từ chối lời mời",
+        description: "Yêu cầu kết bạn đã được gỡ bỏ khỏi danh sách.",
+      });
     } catch (error) {
       console.error("[ReceivedRequests] Decline failed:", error);
+      sileo.error({
+        title: "Từ chối không thành công",
+        description:
+          "Không thể xử lý yêu cầu. Kiểm tra kết nối mạng và thử lại.",
+      });
     }
   };
 

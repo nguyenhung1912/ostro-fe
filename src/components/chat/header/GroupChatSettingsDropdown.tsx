@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 
 interface GroupChatSettingsDropdownProps {
   currentChat: Conversation;
@@ -37,10 +37,10 @@ const GroupChatSettingsDropdown = ({
     try {
       setIsDeleting(true);
       await deleteConversation(currentChat._id);
-      toast.success("Đã xoá cuộc trò chuyện");
+      sileo.success({ title: "Đã rời nhóm", description: "Bạn sẽ không còn nhận được tin nhắn mới từ nhóm này." });
       setIsDeleteDialogOpen(false);
     } catch {
-      toast.error("Không thể xoá cuộc trò chuyện");
+      sileo.error({ title: "Không thể rời nhóm", description: "Hệ thống gặp sự cố. Kiểm tra kết nối mạng và thử lại." });
     } finally {
       setIsDeleting(false);
     }

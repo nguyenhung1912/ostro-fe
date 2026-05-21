@@ -1,7 +1,7 @@
 import { useFriendStore } from "@/stores/useFriendStore";
 import FriendRequestItem from "./FriendRequestItem";
 import { useState } from "react";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 import { Loader2, X } from "lucide-react";
 
 const SentRequestAction = ({ requestId }: { requestId: string }) => {
@@ -12,9 +12,9 @@ const SentRequestAction = ({ requestId }: { requestId: string }) => {
     try {
       setIsCanceling(true);
       await cancelRequest(requestId);
-      toast.success("Đã hủy lời mời kết bạn");
+      sileo.success({ title: "Lời mời đã bị thu hồi", description: "Yêu cầu kết bạn đã được huỷ bỏ. Người dùng sẽ không còn thấy lời mời này." });
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Đã có lỗi xảy ra");
+      sileo.error({ title: "Thu hồi lời mời thất bại", description: "Không thể huỷ yêu cầu. Kiểm tra kết nối mạng và thử lại." });
     } finally {
       setIsCanceling(false);
     }

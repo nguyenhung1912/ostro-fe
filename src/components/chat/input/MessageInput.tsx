@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { ImagePlus, Loader2, Send, X } from "lucide-react";
 import EmojiPicker from "@/components/chat/input/EmojiPicker";
 import { useChatStore } from "@/stores/useChatStore";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 import { chatService } from "@/services/chatService";
 
 const MAX_MESSAGE_IMAGE_SIZE = 1024 * 1024;
@@ -96,7 +96,10 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
 
       setValue(currentValue);
       setSendError(message);
-      toast.error(message);
+      sileo.error({
+        title: "Không gửi được tin nhắn",
+        description: "Kiểm tra kết nối mạng hoặc thử gửi lại.",
+      });
     } finally {
       setIsSending(false);
       setUploadProgress(0);
@@ -110,13 +113,19 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
     if (!file) return;
 
     if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
-      toast.error("Vui lòng chọn ảnh JPG, PNG hoặc WebP.");
+      sileo.error({
+        title: "Không hỗ trợ định dạng này",
+        description: "Chỉ có thể đính kèm ảnh JPG, PNG hoặc WebP.",
+      });
       input.value = "";
       return;
     }
 
     if (file.size > MAX_MESSAGE_IMAGE_SIZE) {
-      toast.error("Ảnh gửi trong chat không được vượt quá 1MB.");
+      sileo.error({
+        title: "Tệp tin quá lớn",
+        description: "Chỉ có thể đính kèm ảnh có dung lượng dưới 1MB.",
+      });
       input.value = "";
       return;
     }

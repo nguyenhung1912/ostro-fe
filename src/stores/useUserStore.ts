@@ -2,7 +2,7 @@ import { userService } from "@/services/userService";
 import type { UserState } from "@/types/store";
 import { create } from "zustand";
 import { useAuthStore } from "./useAuthStore";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 import { useChatStore } from "./useChatStore";
 
 export const useUserStore = create<UserState>(() => ({
@@ -21,7 +21,10 @@ export const useUserStore = create<UserState>(() => ({
       }
     } catch (error) {
       console.error("[UserStore] Failed to update avatar URL:", error);
-      toast.error("Tải ảnh đại diện thất bại. Vui lòng thử lại.");
+      sileo.error({ 
+        title: "Không thể đổi ảnh đại diện", 
+        description: "Đã có lỗi xảy ra khi tải ảnh lên. Bạn thử lại xem sao nhé." 
+      });
     }
   },
 
@@ -38,7 +41,10 @@ export const useUserStore = create<UserState>(() => ({
       }
     } catch (error) {
       console.error("[UserStore] Failed to update cover URL:", error);
-      toast.error("Tải ảnh bìa thất bại. Vui lòng thử lại.");
+      sileo.error({ 
+        title: "Không thể đổi ảnh bìa", 
+        description: "Tải ảnh lên không thành công. Bạn vui lòng thử lại nhé." 
+      });
       throw error;
     }
   },
@@ -49,10 +55,16 @@ export const useUserStore = create<UserState>(() => ({
       const user = await userService.updateProfile(payload);
       setUser(user);
       useChatStore.getState().fetchConversations();
-      toast.success("Đã cập nhật hồ sơ.");
+      sileo.success({ 
+        title: "Cập nhật thành công", 
+        description: "Thông tin mới của bạn đã được lưu lại rồi nhé." 
+      });
     } catch (error) {
       console.error("[UserStore] Failed to update profile:", error);
-      toast.error("Cập nhật hồ sơ thất bại. Vui lòng thử lại.");
+      sileo.error({ 
+        title: "Không thể lưu thông tin", 
+        description: "Đã có lỗi xảy ra. Bạn vui lòng kiểm tra và thử lại sau nha." 
+      });
       throw error;
     }
   },
@@ -60,10 +72,16 @@ export const useUserStore = create<UserState>(() => ({
   changePassword: async (payload) => {
     try {
       await userService.changePassword(payload);
-      toast.success("Đã đổi mật khẩu.");
+      sileo.success({ 
+        title: "Đổi mật khẩu thành công", 
+        description: "Bạn nhớ dùng mật khẩu mới này cho lần đăng nhập tới nhé!" 
+      });
     } catch (error) {
       console.error("[UserStore] Failed to change password:", error);
-      toast.error("Đổi mật khẩu thất bại. Vui lòng kiểm tra lại.");
+      sileo.error({ 
+        title: "Đổi mật khẩu thất bại", 
+        description: "Mật khẩu hiện tại chưa đúng hoặc đã có lỗi xảy ra. Bạn thử lại nhé." 
+      });
       throw error;
     }
   },
@@ -71,11 +89,17 @@ export const useUserStore = create<UserState>(() => ({
   deleteAccount: async (password) => {
     try {
       await userService.deleteAccount(password);
-      toast.success("Tài khoản đã được xoá.");
+      sileo.success({ 
+        title: "Đã xóa tài khoản", 
+        description: "Tài khoản của bạn đã được gỡ bỏ. Cảm ơn bạn đã đồng hành cùng Ostro nhé!" 
+      });
       useAuthStore.getState().clearState();
     } catch (error) {
       console.error("[UserStore] Failed to delete account:", error);
-      toast.error("Xoá tài khoản thất bại. Vui lòng kiểm tra mật khẩu.");
+      sileo.error({ 
+        title: "Không thể xóa tài khoản", 
+        description: "Mật khẩu xác nhận chưa chính xác. Bạn vui lòng kiểm tra lại nha." 
+      });
       throw error;
     }
   },
