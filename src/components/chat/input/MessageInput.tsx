@@ -3,6 +3,7 @@ import type { Conversation } from "@/types/chat";
 import React, { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { ImagePlus, Loader2, Send, X } from "lucide-react";
 import EmojiPicker from "@/components/chat/input/EmojiPicker";
+import { AIActionsMenu } from "@/components/chat/input/AIActionsMenu";
 import { useChatStore } from "@/stores/useChatStore";
 import { sileo } from "sileo";
 import { chatService } from "@/services/chatService";
@@ -177,6 +178,14 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
           aria-invalid={!!sendError}
           placeholder="Nhập tin nhắn..."
           className="flex-1 bg-transparent outline-none text-sm text-foreground placeholder:text-muted-foreground/60 min-w-0"
+        />
+
+        {/* AI Action Menu */}
+        <AIActionsMenu
+          conversationId={selectedConvo._id}
+          currentDraft={value}
+          onUpdateDraft={setValue}
+          disabled={isSending}
         />
 
         {/* Emoji picker */}
