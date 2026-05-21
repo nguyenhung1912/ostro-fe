@@ -7,8 +7,8 @@ import LandingPage from "./pages/LandingPage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import ChatAppPage from "./pages/ChatAppPage";
-import { Toaster } from "sonner";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { Toaster } from "sileo";
 import { useThemeStore } from "./stores/useThemeStore";
 import { useEffect } from "react";
 import { useAuthStore } from "./stores/useAuthStore";
@@ -45,18 +45,7 @@ function App() {
 
   return (
     <>
-      <Toaster
-        position="bottom-right"
-        expand={false}
-        richColors={false}
-        toastOptions={{
-          className:
-            "!rounded-xl !border !border-border !bg-background !shadow-sm !text-foreground !font-medium !text-sm",
-          style: {
-            borderRadius: "12px",
-          },
-        }}
-      />
+      <Toaster position="bottom-right" theme={isDark ? "dark" : "light"} />
       <GoogleOAuthProvider
         clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || ""}
       >
