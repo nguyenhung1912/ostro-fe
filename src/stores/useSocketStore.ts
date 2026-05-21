@@ -115,10 +115,7 @@ export const useSocketStore = create<SocketState>((set, get) => ({
     });
 
     socket.on("delete-conversation", ({ conversationId }) => {
-      useChatStore
-        .getState()
-        .deleteConversation(conversationId)
-        .catch(() => {});
+      useChatStore.getState().removeConversation(conversationId);
     });
 
     socket.on("rename-conversation", ({ conversation }) => {
