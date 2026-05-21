@@ -10,7 +10,7 @@ import { UserPlus } from "lucide-react";
 import type { User } from "@/types/user";
 import { useFriendStore } from "@/stores/useFriendStore";
 import { useForm, useWatch } from "react-hook-form";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 import SearchForm from "../add-friend-modal/SearchForm";
 import SendFriendRequestForm from "../add-friend-modal/SendFriendRequestForm";
 import { UserSearch } from "lucide-react";
@@ -67,7 +67,10 @@ const AddFriendModal = () => {
     try {
       setSendError("");
       await addFriend(searchUser._id, data.message.trim());
-      toast.success("Đã gửi lời mời kết bạn thành công!");
+      sileo.success({
+        title: "Lời mời đã được gửi",
+        description: `${searchUser.displayName} sẽ nhận được thông báo và có thể chấp nhận lời mời của bạn.`,
+      });
 
       handleCancel();
     } catch (error) {
@@ -78,7 +81,11 @@ const AddFriendModal = () => {
           : "Gửi lời mời kết bạn thất bại. Vui lòng thử lại.";
 
       setSendError(message);
-      toast.error(message);
+      sileo.error({
+        title: "Gửi lời mời thất bại",
+        description:
+          "Yêu cầu kết bạn đã được gửi trước đó hoặc tài khoản không tồn tại.",
+      });
     }
   });
 

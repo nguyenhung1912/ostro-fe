@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useChatStore } from "@/stores/useChatStore";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 import { TextMessageBubble } from "@/components/chat/message/TextMessageBubble";
 import { ImageMessageBubble } from "@/components/chat/message/ImageMessageBubble";
 
@@ -78,7 +78,7 @@ const MessageItem = ({
       await recallMessage(message._id, message.conversationId);
     } catch (error) {
       console.error("[MessageItem] Failed to recall message:", error);
-      toast.error("Thu hồi tin nhắn thất bại. Vui lòng thử lại.");
+      sileo.error({ title: "Không thể thu hồi", description: "Tin nhắn đã quá thời hạn được phép thu hồi hoặc đã bị xoá." });
     }
   };
 

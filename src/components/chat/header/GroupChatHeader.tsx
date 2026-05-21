@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 import GroupChatSettingsDropdown from "@/components/chat/header/GroupChatSettingsDropdown";
 import AddGroupMemberModal from "@/components/group-management/AddGroupMemberModal";
 import GroupMembersModal from "@/components/group-management/GroupMembersModal";
@@ -43,9 +43,12 @@ const GroupChatHeader = ({ currentChat }: { currentChat: Conversation }) => {
     }
     try {
       await chatService.renameConversation(currentChat._id, editName);
-      toast.success("Đổi tên thành công!");
+      sileo.success({ title: "Tên nhóm đã cập nhật", description: "Tên mới đã được áp dụng và hiển thị cho mọi thành viên trong nhóm." });
     } catch {
-      toast.error("Không thể đổi tên cuộc trò chuyện");
+      sileo.error({
+        title: "Cập nhật tên nhóm thất bại",
+        description: "Không thể lưu thay đổi. Kiểm tra kết nối mạng và thử lại.",
+      });
     } finally {
       setIsEditing(false);
     }

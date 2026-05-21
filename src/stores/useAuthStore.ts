@@ -52,11 +52,15 @@ export const useAuthStore = create<AuthState>()(
             lastName,
           );
           authToast.success(
-            "Đăng ký thành công. Bạn có thể đăng nhập ngay bây giờ.",
+            "Đăng ký thành công!",
+            "Tài khoản của bạn đã được tạo. Hãy đăng nhập để bắt đầu.",
           );
           return true;
         } catch {
-          authToast.error("Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.");
+          authToast.error(
+            "Đăng ký không thành công",
+            "Tên đăng nhập hoặc email có thể đã được sử dụng. Vui lòng kiểm tra lại.",
+          );
           return false;
         } finally {
           set({ loading: false });
@@ -76,19 +80,23 @@ export const useAuthStore = create<AuthState>()(
 
           const fetchedUser = await get().fetchMe({ showErrorToast: false });
           if (!fetchedUser) {
-            authToast.error("Xác minh thất bại. Vui lòng thử lại.");
-            return false;
+            authToast.error(
+              "Phiên đăng nhập đã hết hạn",
+              "Không thể tải thông tin. Vui lòng đăng nhập lại để tiếp tục.",
+            );
           }
+            return false;
 
           explicitSignOut.clear();
           useChatStore.getState().fetchConversations();
 
-          authToast.success("Chào mừng trở lại Ostro! 👋");
+          authToast.success("Chào mừng trở lại!", "Bạn đã đăng nhập vào Ostro thành công.");
           return true;
         } catch {
           get().clearState();
           authToast.error(
-            "Đăng nhập thất bại. Sai tên đăng nhập hoặc mật khẩu.",
+            "Đăng nhập không thành công",
+            "Tên đăng nhập hoặc mật khẩu không chính xác. Vui lòng kiểm tra lại.",
           );
           return false;
         } finally {
@@ -109,18 +117,24 @@ export const useAuthStore = create<AuthState>()(
 
           const fetchedUser = await get().fetchMe({ showErrorToast: false });
           if (!fetchedUser) {
-            authToast.error("Xác minh thất bại. Vui lòng thử lại.");
+            authToast.error(
+              "Phiên đăng nhập đã hết hạn",
+              "Không thể tải thông tin. Vui lòng đăng nhập lại để tiếp tục.",
+            );
             return false;
           }
 
           explicitSignOut.clear();
           useChatStore.getState().fetchConversations();
 
-          authToast.success("Chào mừng bạn!");
+          authToast.success("Đăng nhập Google thành công!", "Bạn đã đăng nhập vào Ostro thông qua tài khoản Google của bạn.");
           return true;
         } catch {
           get().clearState();
-          authToast.error("Đăng nhập Google thất bại. Vui lòng thử lại.");
+          authToast.error(
+            "Đăng nhập Google thất bại",
+            "Không thể xác thực tài khoản Google. Vui lòng thử lại.",
+          );
           return false;
         } finally {
           set({ loading: false });
@@ -132,9 +146,12 @@ export const useAuthStore = create<AuthState>()(
 
         try {
           await authService.signOut();
-          authToast.success("Đã đăng xuất thành công.");
+          authToast.success("Đăng xuất thành công", "Hẹn gặp lại bạn lần sau nhé!");
         } catch {
-          authToast.error("Đăng xuất thất bại. Vui lòng thử lại.");
+          authToast.error(
+            "Đã đăng xuất thành công",
+            "Tài khoản của bạn đã được thoát an toàn khỏi thiết bị này.",
+          );
         } finally {
           explicitSignOut.mark();
           get().clearState();
@@ -152,7 +169,8 @@ export const useAuthStore = create<AuthState>()(
 
           if (showErrorToast) {
             authToast.error(
-              "Không thể tải thông tin tài khoản. Vui lòng thử lại.",
+              "Không thể tải dữ liệu",
+              "Kết nối bị gián đoạn hoặc bạn đã hết thời gian đăng nhập. Vui lòng thử lại hoặc đăng nhập lại nhé.",
             );
           }
 
@@ -182,7 +200,8 @@ export const useAuthStore = create<AuthState>()(
         } catch {
           if (showErrorToast) {
             authToast.error(
-              "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+              "Bạn đã hết thời gian đăng nhập",
+              "Để bảo mật tài khoản, vui lòng đăng nhập lại để tiếp tục sử dụng.",
             );
           }
 

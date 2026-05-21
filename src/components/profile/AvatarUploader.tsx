@@ -2,7 +2,7 @@ import { useUserStore } from "@/stores/useUserStore";
 import { useRef, useState, type ChangeEvent } from "react";
 import { Button } from "../ui/button";
 import { Camera, Loader2 } from "lucide-react";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 
 const MAX_AVATAR_SIZE = 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -26,13 +26,13 @@ const AvatarUploader = () => {
     }
 
     if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
-      toast.error("Vui lòng chọn ảnh JPG, PNG hoặc WebP.");
+      sileo.error({ title: "Không hỗ trợ định dạng này", description: "Ảnh đại diện chỉ có thể sử dụng định dạng JPG, PNG hoặc WebP." });
       input.value = "";
       return;
     }
 
     if (file.size > MAX_AVATAR_SIZE) {
-      toast.error("Ảnh đại diện không được vượt quá 1MB.");
+      sileo.error({ title: "Ảnh quá lớn", description: "Ảnh đại diện không được vượt quá 1MB. Vui lòng chọn ảnh nhỏ hơn." });
       input.value = "";
       return;
     }

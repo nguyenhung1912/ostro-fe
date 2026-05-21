@@ -15,7 +15,7 @@ import { Input } from "../ui/input";
 import type { Friend } from "@/types/user";
 import InviteSuggestionList from "../new-group-chat/InviteSuggestionList";
 import SelectedUsersList from "../new-group-chat/SelectedUsersList";
-import { toast } from "sonner";
+import { sileo } from "sileo";
 import { useChatStore } from "@/stores/useChatStore";
 
 const NewGroupChatModal = () => {
@@ -53,7 +53,10 @@ const NewGroupChatModal = () => {
     try {
       e.preventDefault();
       if (invitedUsers.length < 2) {
-        toast.warning("Vui lòng chọn ít nhất hai thành viên để tạo nhóm.");
+        sileo.warning({
+          title: "Chưa đủ thành viên",
+          description: "Nhóm trò chuyện cần có ít nhất 2 người (ngoài bạn).",
+        });
         return;
       }
 
@@ -63,12 +66,21 @@ const NewGroupChatModal = () => {
         invitedUsers.map((u) => u._id),
       );
 
+      sileo.success({
+        title: "Nhóm đã được tạo",
+        description: `Nhóm "${groupName}" đã sẵn sàng. Hãy bắt đầu trò chuyện!`,
+      });
+
       setSearch("");
       setInvitedUsers([]);
       setGroupName("");
       setOpen(false);
     } catch (error) {
       console.error("[NewGroupChatModal] Failed to create group:", error);
+      sileo.error({
+        title: "Tạo nhóm thất bại",
+        description: "Không thể tạo nhóm. Kiểm tra kết nối mạng và thử lại.",
+      });
     }
   };
 
