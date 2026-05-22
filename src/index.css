@@ -1,111 +1,315 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+@custom-variant dark (&:is(.dark *));
+@config "../tailwind.config.ts";
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+    /* Minimalist Light Mode - Paper & Ink Editorial */
+    --background: 45 14% 97%; /* #FAF9F6 Ivory Paper */
+    --foreground: 60 4% 16%; /* #2B2B28 Charcoal */
+
+    --card: 45 14% 97%;
+    --card-foreground: 60 4% 16%;
+    --popover: 45 14% 97%;
+    --popover-foreground: 60 4% 16%;
+
+    /* Organic Accent - Fountain Pen Ink */
+    --primary: 212 50% 25%; /* #1F3C5E Deep Navy */
+    --primary-foreground: 45 14% 97%; /* Ivory text on navy */
+
+    /* Soft warm grays for separation */
+    --secondary: 45 10% 93%;
+    --secondary-foreground: 60 4% 16%;
+
+    --muted: 45 10% 93%;
+    --muted-foreground: 60 4% 40%;
+
+    --accent: 45 10% 93%;
+    --accent-foreground: 60 4% 16%;
+
+    /* Chat specifics */
+    --chat-bubble-sent: 212 50% 25%;
+    --chat-bubble-sent-foreground: 45 14% 97%;
+    --chat-bubble-received: 45 10% 93%;
+    --chat-bubble-received-foreground: 60 4% 16%;
+
+    /* Status colors */
+    --online: 142 71% 45%;
+    --offline: 0 0% 80%;
+
+    /* State colors */
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 10%;
+    --info: 217 91% 60%;
+    --info-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs - ultra-light */
+    --border: 45 10% 88%;
+    --input: 45 10% 88%;
+    --ring: 212 50% 25%;
+
+    /* Smooth radius */
+    --radius: 12px;
+
+    /* Sidebar specifics */
+    --sidebar-background: 45 14% 97%;
+    --sidebar-foreground: 60 4% 16%;
+    --sidebar-primary: 212 50% 25%;
+    --sidebar-primary-foreground: 45 14% 97%;
+    --sidebar-accent: 45 10% 93%;
+    --sidebar-accent-foreground: 60 4% 16%;
+    --sidebar-border: 45 10% 88%;
+    --sidebar-ring: 212 50% 25%;
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  .dark {
+    /* Premium Glassmorphic Theme - Bright, Glowing, High-Contrast */
+    --background: 240 10% 2.5% / 60%; /* Rich dark space-glass with 60% opacity */
+    --foreground: 0 0% 98%; /* Ultra-crisp bright white/off-white */
+
+    --card: 240 10% 4% / 70%; /* Translucent cards */
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 6% / 95%; /* High-opacity popovers for overlay readability */
+    --popover-foreground: 0 0% 98%;
+
+    /* Bright vibrant electric royal blue */
+    --primary: 226 100% 64%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 6% 10% / 60%; /* Soft translucent gray */
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 6% 10% / 50%;
+    --muted-foreground: 240 5% 65%; /* Readable muted text */
+
+    --accent: 240 6% 10% / 75%;
+    --accent-foreground: 0 0% 98%;
+
+    /* Chat bubble - sent is bright glowing primary blue, received is sophisticated glass */
+    --chat-bubble-sent: 226 100% 64%;
+    --chat-bubble-sent-foreground: 0 0% 100%;
+    --chat-bubble-received: 240 6% 12% / 75%;
+    --chat-bubble-received-foreground: 0 0% 98%;
+
+    /* Translucent sleek borders */
+    --border: 240 6% 15% / 45%;
+    --input: 240 6% 15% / 45%;
+    --ring: 226 100% 64%;
+
+    --offline: 0 0% 30%;
+
+    /* Sidebar specifics matching the glowing space-glass look */
+    --sidebar-background: 240 10% 2.5% / 65%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 226 100% 64%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 6% 10% / 70%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 6% 15% / 45%;
+    --sidebar-ring: 226 100% 64%;
+  }
+
+  html.dark,
+  html.dark body {
+    background-color: #000000 !important;
+  }
+
+  .dark [data-slot="sidebar-inset"],
+  .dark [data-slot="sidebar-container"] {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  body {
+    @apply text-foreground font-sans antialiased;
+    background-color: hsl(var(--background));
+    min-height: 100vh;
+  }
+
+  /* ============================================================
+   * Sileo Toast Integration
+   * Sileo renders its background as SVG <rect> elements inside
+   * [data-sileo-pill] and [data-sileo-body]. We must target those
+   * SVG fills directly; applying CSS background to the wrapper div
+   * does NOT work and causes the description text color to become
+   * invisible (Sileo's default colors assume its own background).
+   * ============================================================ */
+
+  /* Strip any wrapper bg/border Sileo sets on the container div */
+  [data-sileo-toast] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Paint the SVG pill & body shapes with our card color + border */
+  [data-sileo-toast] [data-sileo-pill],
+  [data-sileo-toast] [data-sileo-body] {
+    fill: hsl(var(--card)) !important;
+    stroke: hsl(var(--border)) !important;
+    stroke-width: 1px !important;
+  }
+
+  /* Force title + description text to always use our tokens */
+  [data-sileo-viewport] [data-sileo-title] {
+    color: hsl(var(--foreground)) !important;
+    font-weight: 600 !important;
+  }
+
+  [data-sileo-viewport] [data-sileo-description] {
+    color: hsl(var(--muted-foreground)) !important;
   }
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
+@layer components {
+  /* Legacy Glass Utilities - to be removed from components */
+  .glass,
+  .glass-panel {
+    @apply bg-background border border-border rounded-[var(--radius)] shadow-none;
+  }
 
-body {
-  margin: 0;
-}
+  /* Chat bubble variants */
+  .chat-bubble-sent {
+    @apply bg-[hsl(var(--chat-bubble-sent))] text-[hsl(var(--chat-bubble-sent-foreground))] font-normal rounded-2xl rounded-tr-sm px-4 py-2.5 shadow-none transition-colors;
+  }
+  .chat-bubble-sent:hover {
+    @apply opacity-90;
+  }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
+  .chat-bubble-received {
+    @apply bg-[hsl(var(--chat-bubble-received))] text-[hsl(var(--chat-bubble-received-foreground))] font-normal rounded-2xl rounded-tl-sm px-4 py-2.5 shadow-none;
+  }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+  .error-message {
+    @apply text-sm font-medium text-destructive bg-destructive/10 border border-destructive/20 p-3 rounded-lg;
+  }
+
+  .success-message {
+    @apply text-sm font-medium text-emerald-600 bg-emerald-500/10 border border-emerald-500/20 p-3 rounded-lg;
+  }
+
+  /* Status indicators */
+  .status-online {
+    @apply bg-[hsl(var(--online))] border-[2px] border-background rounded-full;
+  }
+  .status-offline {
+    @apply bg-[hsl(var(--offline))] border-[2px] border-background rounded-full;
+  }
+
+  /* Scrollbar - Minimalist */
+  .beautiful-scrollbar {
+    @apply scrollbar-thin scrollbar-thumb-muted-foreground/30 hover:scrollbar-thumb-muted-foreground/50 scrollbar-track-transparent;
+  }
+
+  /* Animations */
+  .transition-bounce {
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .transition-smooth {
+    transition: all 0.2s ease;
+  }
+
+  /* Smooth Buttons */
+  .btn-smooth {
+    @apply transition-all active:scale-95 font-medium rounded-lg;
+  }
+
+  .message-bounce {
+    animation: messageSlideIn 0.2s ease forwards;
+  }
+
+  @keyframes messageSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+
+:root {
+  --sidebar: hsl(var(--sidebar-background));
+  --sidebar-foreground: hsl(var(--sidebar-foreground));
+  --sidebar-primary: hsl(var(--sidebar-primary));
+  --sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --sidebar-accent: hsl(var(--sidebar-accent));
+  --sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --sidebar-border: hsl(var(--sidebar-border));
+  --sidebar-ring: hsl(var(--sidebar-ring));
+}
+
+.dark {
+  --sidebar: hsl(var(--sidebar-background));
+  --sidebar-foreground: hsl(var(--sidebar-foreground));
+  --sidebar-primary: hsl(var(--sidebar-primary));
+  --sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --sidebar-accent: hsl(var(--sidebar-accent));
+  --sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --sidebar-border: hsl(var(--sidebar-border));
+  --sidebar-ring: hsl(var(--sidebar-ring));
+}
+
+@theme inline {
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  *::-webkit-scrollbar {
+    display: none;
   }
 }
-p {
-  margin: 0;
+
+/* Liquid Glass UI Styling */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.01);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: none;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.15) 80%,
+    rgba(255, 255, 255, 0.45) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }

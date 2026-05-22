@@ -1,0 +1,14 @@
+import { cn } from "@/lib/utils";
+
+const StatusBadge = ({ status }: { status: "online" | "offline" }) => {
+  return (
+    <div
+      className={cn(
+        "absolute bottom-0 right-0 size-3.5 z-10",
+        status === "online" && "status-online",
+        status === "offline" && "status-offline",
+      )}
+    ></div>
+  );
+};
+export default StatusBadge;
