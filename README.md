@@ -2,12 +2,12 @@
 
 🇬🇧 **English** | 🇻🇳 **Tiếng Việt**
 
-## 📖 About / Giới thiệu
+## About / Giới thiệu
 
 **[EN]** Ostro Frontend is the modern, responsive user interface for the Ostro application. Built with React 19, Vite, and Tailwind CSS v4, it provides a fast and seamless user experience, incorporating real-time messaging, Google OAuth authentication, and elegant UI components.
 **[VN]** Ostro Frontend là giao diện người dùng hiện đại, có tính phản hồi cao dành cho ứng dụng Ostro. Được xây dựng bằng React 19, Vite và Tailwind CSS v4, dự án mang lại trải nghiệm người dùng nhanh chóng và mượt mà, tích hợp nhắn tin theo thời gian thực, xác thực Google OAuth và các thành phần giao diện bắt mắt.
 
-## 🚀 Tech Stack / Công nghệ sử dụng
+## Tech Stack / Công nghệ sử dụng
 
 - **Core:** React 19, TypeScript, Vite
 - **Routing:** React Router v7
@@ -18,7 +18,7 @@
 - **Authentication:** Google OAuth
 - **Other Tools:** Husky, Lint-staged, ESLint, Prettier
 
-## 📂 Project Structure / Cấu trúc dự án
+## Project Structure / Cấu trúc dự án
 
 ```text
 ostro-fe/
@@ -33,7 +33,7 @@ ostro-fe/
 │   └── types/        # TypeScript type definitions / Định nghĩa kiểu TypeScript
 ```
 
-## 🛠️ Getting Started / Hướng dẫn cài đặt
+## Getting Started / Hướng dẫn cài đặt
 
 ### Prerequisites / Yêu cầu hệ thống
 
@@ -75,14 +75,14 @@ pnpm run dev
 **[EN]** The application will run at `http://localhost:5173`.
 **[VN]** Ứng dụng sẽ chạy tại `http://localhost:5173`.
 
-## 📜 Scripts / Các lệnh có sẵn
+## Scripts / Các lệnh có sẵn
 
 - `pnpm dev`: Start the development server / Khởi chạy server phát triển.
 - `pnpm build`: Build the app for production / Đóng gói ứng dụng cho môi trường production.
 - `pnpm preview`: Preview the production build locally / Xem trước bản build production tại local.
 - `pnpm lint`: Run ESLint to find and fix problems / Chạy ESLint để tìm và sửa lỗi code.
 
-## 🤝 Contributing / Đóng góp
+## Contributing / Đóng góp
 
 **[EN]** Contributions are always welcome! Please create a feature branch and submit a Pull Request. Code must pass all ESLint and Prettier checks before merging.
 **[VN]** Mọi đóng góp đều được hoan nghênh! Vui lòng tạo nhánh feature và gửi Pull Request. Code phải vượt qua các kiểm tra của ESLint và Prettier trước khi được merge.
