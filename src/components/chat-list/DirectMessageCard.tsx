@@ -43,6 +43,7 @@ const DirectMessageCard = ({ convo }: { convo: Conversation }) => {
       onSelect={handleSelectConversation}
       unreadCount={unreadCount}
       timestamp={timestamp}
+      isPinned={convo.pinnedBy?.includes(user._id)}
       leftSection={
         <div className="relative">
           <UserAvatar
