@@ -98,6 +98,7 @@ export interface ChatState {
   ) => Promise<void>;
   deleteConversation: (conversationId: string) => Promise<void>;
   leaveGroup: (conversationId: string) => Promise<void>;
+  togglePinConversation: (conversationId: string) => Promise<void>;
   removeConversation: (conversationId: string) => void;
 }
 

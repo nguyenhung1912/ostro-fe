@@ -47,48 +47,11 @@ function TwitterIcon({ className }: { className?: string }) {
 export default function LandingPage() {
   const { accessToken, initializeAuth, signOut } = useAuthStore();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const animationFrameRef = useRef<number | null>(null);
-  const fadingOutRef = useRef<boolean>(false);
 
   useEffect(() => {
     // Initialize auth check so we know if the user is logged in
     void initializeAuth();
   }, [initializeAuth]);
-
-  // RequestAnimationFrame-based fade system
-  const startFade = (
-    targetOpacity: number,
-    duration: number,
-    callback?: () => void,
-  ) => {
-    if (animationFrameRef.current !== null) {
-      cancelAnimationFrame(animationFrameRef.current);
-      animationFrameRef.current = null;
-    }
-
-    const video = videoRef.current;
-    if (!video) return;
-
-    const currentOpacity = parseFloat(video.style.opacity) || 0;
-    const startTime = performance.now();
-
-    const animate = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const newOpacity =
-        currentOpacity + (targetOpacity - currentOpacity) * progress;
-      video.style.opacity = newOpacity.toString();
-
-      if (progress < 1) {
-        animationFrameRef.current = requestAnimationFrame(animate);
-      } else {
-        animationFrameRef.current = null;
-        if (callback) callback();
-      }
-    };
-
-    animationFrameRef.current = requestAnimationFrame(animate);
-  };
 
   useEffect(() => {
     const video = videoRef.current;
@@ -98,48 +61,24 @@ export default function LandingPage() {
     video.style.opacity = "0";
 
     const handlePlay = () => {
-      // Fade in from current opacity to 1 on play/loop start
-      if (!fadingOutRef.current) {
-        startFade(1, 500);
-      }
+      video.style.opacity = "1";
     };
 
     const handleTimeUpdate = () => {
       if (!video || !video.duration) return;
 
       const timeLeft = video.duration - video.currentTime;
-      // Start fading out when 0.55 seconds remain before video ends
-      if (timeLeft <= 0.55 && !fadingOutRef.current) {
-        fadingOutRef.current = true;
-        startFade(0, 500);
+      if (timeLeft <= 0.55) {
+        video.style.opacity = "0";
       }
     };
 
     const handleEnded = () => {
       if (!video) return;
-
-      if (animationFrameRef.current !== null) {
-        cancelAnimationFrame(animationFrameRef.current);
-        animationFrameRef.current = null;
-      }
-
-      // Ensure opacity is set to 0 immediately
-      video.style.opacity = "0";
-
-      // Reset video after 100ms and fade back in
-      setTimeout(() => {
-        if (!video) return;
-        video.currentTime = 0;
-        video
-          .play()
-          .then(() => {
-            fadingOutRef.current = false;
-            startFade(1, 500);
-          })
-          .catch((err) => {
-            console.error("Failed to autoplay video loop:", err);
-          });
-      }, 100);
+      video.currentTime = 0;
+      video.play().catch((err) => {
+        console.error("Failed to autoplay video loop:", err);
+      });
     };
 
     video.addEventListener("play", handlePlay);
@@ -155,9 +94,6 @@ export default function LandingPage() {
       video.removeEventListener("play", handlePlay);
       video.removeEventListener("timeupdate", handleTimeUpdate);
       video.removeEventListener("ended", handleEnded);
-      if (animationFrameRef.current !== null) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
     };
   }, []);
 
@@ -170,7 +106,7 @@ export default function LandingPage() {
         muted
         playsInline
         autoPlay
-        className="absolute top-0 left-0 w-full h-full object-cover translate-y-[17%] pointer-events-none z-0"
+        className="absolute top-0 left-0 w-full h-full object-cover translate-y-[17%] pointer-events-none z-0 transition-opacity duration-500"
       />
 
       {/* Subtle overlay to enhance dark cinematic mood */}

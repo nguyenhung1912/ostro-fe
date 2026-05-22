@@ -68,7 +68,7 @@ const PrivacySettings = () => {
   return (
     <Card className="rounded-2xl glass">
       <CardHeader className="pb-4">
-        <CardTitle className="flex items-center gap-2 font-black uppercase tracking-tight">
+        <CardTitle className="flex items-center gap-2 uppercase tracking-tight">
           <Shield className="h-5 w-5 text-primary" />
           Quyền riêng tư & Bảo mật
         </CardTitle>

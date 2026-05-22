@@ -56,7 +56,7 @@ const PersonalInfoForm = ({ userInfo }: Props) => {
   return (
     <Card className="rounded-2xl glass">
       <CardHeader className="pb-4">
-        <CardTitle className="flex items-center gap-2 font-black uppercase tracking-tight">
+        <CardTitle className="flex items-center gap-2 uppercase tracking-tight">
           <Heart className="size-5 text-primary" />
           Thông tin cá nhân
         </CardTitle>

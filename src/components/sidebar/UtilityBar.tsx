@@ -195,51 +195,14 @@ export function UtilityBar({
           )}
         </button>
 
-        {/* Settings dropdown button */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button
-              className="p-3 rounded-xl hover:bg-slate-200/60 dark:hover:bg-zinc-900/50 text-slate-500 hover:text-slate-800 dark:text-zinc-500 dark:hover:text-zinc-300 transition-all duration-150 active:scale-95 cursor-pointer focus:outline-none"
-              title="Cài đặt"
-            >
-              <Settings className="size-5.5" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="w-56 p-2 rounded-xl border border-border bg-popover shadow-sm ml-2"
-            side="right"
-            align="end"
-            sideOffset={8}
-          >
-            <DropdownMenuItem
-              onClick={() => setProfileOpen(true)}
-              className="cursor-pointer"
-            >
-              <UserIcon className="size-4 mr-2" />
-              Tài Khoản
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => setFriendRequestOpen(true)}
-              className="cursor-pointer"
-            >
-              <Bell className="size-4 mr-2" />
-              <span>Thông Báo</span>
-              {friendRequestCount > 0 && (
-                <Badge className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[10px] font-semibold">
-                  {friendRequestBadge}
-                </Badge>
-              )}
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={handleLogout}
-              className="cursor-pointer text-red-500 hover:text-red-600 focus:bg-red-50 focus:text-red-600 dark:focus:bg-red-950/20"
-            >
-              <LogOut className="size-4 mr-2" />
-              Đăng xuất
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {/* Settings button */}
+        <button
+          onClick={() => setProfileOpen(true)}
+          className="p-3 rounded-xl hover:bg-slate-200/60 dark:hover:bg-zinc-900/50 text-slate-500 hover:text-slate-800 dark:text-zinc-500 dark:hover:text-zinc-300 transition-all duration-150 active:scale-95 cursor-pointer focus:outline-none"
+          title="Cài đặt tài khoản"
+        >
+          <Settings className="size-5.5" />
+        </button>
       </div>
     </div>
   );

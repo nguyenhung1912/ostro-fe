@@ -84,13 +84,16 @@ export const useAuthStore = create<AuthState>()(
               "Phiên đăng nhập đã hết hạn",
               "Không thể tải thông tin. Vui lòng đăng nhập lại để tiếp tục.",
             );
-          }
             return false;
+          }
 
           explicitSignOut.clear();
           useChatStore.getState().fetchConversations();
 
-          authToast.success("Chào mừng trở lại!", "Bạn đã đăng nhập vào Ostro thành công.");
+          authToast.success(
+            "Chào mừng trở lại!",
+            "Bạn đã đăng nhập vào Ostro thành công.",
+          );
           return true;
         } catch {
           get().clearState();
@@ -127,7 +130,10 @@ export const useAuthStore = create<AuthState>()(
           explicitSignOut.clear();
           useChatStore.getState().fetchConversations();
 
-          authToast.success("Đăng nhập Google thành công!", "Bạn đã đăng nhập vào Ostro thông qua tài khoản Google của bạn.");
+          authToast.success(
+            "Đăng nhập Google thành công!",
+            "Bạn đã đăng nhập vào Ostro thông qua tài khoản Google của bạn.",
+          );
           return true;
         } catch {
           get().clearState();
@@ -146,7 +152,10 @@ export const useAuthStore = create<AuthState>()(
 
         try {
           await authService.signOut();
-          authToast.success("Đăng xuất thành công", "Hẹn gặp lại bạn lần sau nhé!");
+          authToast.success(
+            "Đăng xuất thành công",
+            "Hẹn gặp lại bạn lần sau nhé!",
+          );
         } catch {
           authToast.error(
             "Đã đăng xuất thành công",
