@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { useChatStore } from "@/stores/useChatStore";
+import { useAuthStore } from "@/stores/useAuthStore";
 import type { Conversation } from "@/types/chat";
-import { MoreVertical, Trash2, UserPlus, Users } from "lucide-react";
+import {
+  MoreVertical,
+  Trash2,
+  UserPlus,
+  Users,
+  Pin,
+  PinOff,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,7 +37,8 @@ const GroupChatSettingsDropdown = ({
   onOpenMembers,
   onOpenAddMember,
 }: GroupChatSettingsDropdownProps) => {
-  const { leaveGroup } = useChatStore();
+  const { leaveGroup, togglePinConversation } = useChatStore();
+  const { user } = useAuthStore();
   const [isLeaveDialogOpen, setIsLeaveDialogOpen] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
 
@@ -37,10 +46,15 @@ const GroupChatSettingsDropdown = ({
     try {
       setIsLeaving(true);
       await leaveGroup(currentChat._id);
-      sileo.success({ title: "Đã rời nhóm", description: "Bạn sẽ không còn nhận được tin nhắn mới từ nhóm này." });
+      sileo.success({
+        title: "Đã rời nhóm",
+        description: "Bạn sẽ không còn nhận được tin nhắn mới từ nhóm này.",
+      });
       setIsLeaveDialogOpen(false);
-    } catch (error) {
-      const message = (error as any).response?.data?.message || "Hệ thống gặp sự cố. Kiểm tra kết nối mạng và thử lại.";
+    } catch (error: unknown) {
+      const message =
+        (error as { response?: { data?: { message?: string } } }).response?.data
+          ?.message || "Hệ thống gặp sự cố. Kiểm tra kết nối mạng và thử lại.";
       sileo.error({ title: "Không thể rời nhóm", description: message });
     } finally {
       setIsLeaving(false);
@@ -73,6 +87,29 @@ const GroupChatSettingsDropdown = ({
             <UserPlus className="size-4 mr-2" /> Thêm thành viên
           </DropdownMenuItem>
           <DropdownMenuItem
+            className="cursor-pointer"
+            onSelect={async () => {
+              try {
+                await togglePinConversation(currentChat._id);
+              } catch {
+                sileo.error({
+                  title: "Lỗi",
+                  description: "Không thể ghim cuộc trò chuyện.",
+                });
+              }
+            }}
+          >
+            {currentChat.pinnedBy?.includes(user?._id || "") ? (
+              <>
+                <PinOff className="size-4 mr-2" /> Bỏ ghim
+              </>
+            ) : (
+              <>
+                <Pin className="size-4 mr-2" /> Ghim nhóm
+              </>
+            )}
+          </DropdownMenuItem>
+          <DropdownMenuItem
             className="text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer"
             onSelect={() => setIsLeaveDialogOpen(true)}
           >
@@ -87,7 +124,8 @@ const GroupChatSettingsDropdown = ({
             <DialogTitle>Rời nhóm?</DialogTitle>
           </DialogHeader>
           <div className="text-muted-foreground text-sm py-2">
-            Bạn có chắc chắn muốn rời khỏi nhóm này không? Bạn sẽ không thể xem hay gửi tin nhắn nữa.
+            Bạn có chắc chắn muốn rời khỏi nhóm này không? Bạn sẽ không thể xem
+            hay gửi tin nhắn nữa.
           </div>
           <DialogFooter>
             <Button
