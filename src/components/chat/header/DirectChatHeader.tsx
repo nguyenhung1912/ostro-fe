@@ -15,6 +15,8 @@ import {
   MoreVertical,
   Trash2,
   Edit2,
+  Pin,
+  PinOff,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -40,7 +42,7 @@ import {
 } from "@/components/ui/dialog";
 
 const DirectChatHeader = ({ currentChat }: { currentChat: Conversation }) => {
-  const { deleteConversation } = useChatStore();
+  const { deleteConversation, togglePinConversation } = useChatStore();
   const { user } = useAuthStore();
   const { onlineUsers } = useSocketStore();
 
@@ -72,9 +74,16 @@ const DirectChatHeader = ({ currentChat }: { currentChat: Conversation }) => {
     }
     try {
       await chatService.renameConversation(currentChat._id, editName);
-      sileo.success({ title: "Tên đã được cập nhật", description: "Biệt danh mới của cuộc trò chuyện đã được lưu." });
+      sileo.success({
+        title: "Tên đã được cập nhật",
+        description: "Biệt danh mới của cuộc trò chuyện đã được lưu.",
+      });
     } catch {
-      sileo.error({ title: "Cập nhật tên thất bại", description: "Không thể lưu thay đổi. Kiểm tra kết nối mạng và thử lại." });
+      sileo.error({
+        title: "Cập nhật tên thất bại",
+        description:
+          "Không thể lưu thay đổi. Kiểm tra kết nối mạng và thử lại.",
+      });
     } finally {
       setIsEditing(false);
     }
@@ -89,10 +98,18 @@ const DirectChatHeader = ({ currentChat }: { currentChat: Conversation }) => {
     try {
       setIsDeleting(true);
       await deleteConversation(currentChat._id);
-      sileo.success({ title: "Cuộc trò chuyện đã bị xoá", description: "Toàn bộ tin nhắn đã được xóa vĩnh viễn khỏi thiết bị của bạn." });
+      sileo.success({
+        title: "Cuộc trò chuyện đã bị xoá",
+        description:
+          "Toàn bộ tin nhắn đã được xóa vĩnh viễn khỏi thiết bị của bạn.",
+      });
       setIsDeleteDialogOpen(false);
     } catch {
-      sileo.error({ title: "Xoá thất bại", description: "Không thể xoá cuộc trò chuyện. Kiểm tra kết nối mạng và thử lại." });
+      sileo.error({
+        title: "Xoá thất bại",
+        description:
+          "Không thể xoá cuộc trò chuyện. Kiểm tra kết nối mạng và thử lại.",
+      });
     } finally {
       setIsDeleting(false);
     }
@@ -209,6 +226,29 @@ const DirectChatHeader = ({ currentChat }: { currentChat: Conversation }) => {
             align="end"
             className="w-48 bg-background border-border/50 shadow-xl"
           >
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onSelect={async () => {
+                try {
+                  await togglePinConversation(currentChat._id);
+                } catch {
+                  sileo.error({
+                    title: "Lỗi",
+                    description: "Không thể ghim cuộc trò chuyện.",
+                  });
+                }
+              }}
+            >
+              {currentChat.pinnedBy?.includes(user?._id || "") ? (
+                <>
+                  <PinOff className="size-4 mr-2" /> Bỏ ghim
+                </>
+              ) : (
+                <>
+                  <Pin className="size-4 mr-2" /> Ghim cuộc trò chuyện
+                </>
+              )}
+            </DropdownMenuItem>
             <DropdownMenuItem
               className="text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer"
               onSelect={() => setIsDeleteDialogOpen(true)}
