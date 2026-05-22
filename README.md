@@ -41,6 +41,8 @@
 
 Built with cutting-edge technologies including **React 19**, **Vite**, and **Tailwind CSS v4**, the project delivers a responsive and maintainable architecture suitable for both rapid development and production-scale deployment.
 
+> 📝 **API Documentation:** Once the server is running, you can access the interactive API docs at [http://localhost:5001/api-docs/#/](http://localhost:5001/api-docs/#/)
+
 ---
 
 ## ✨ Core Features
@@ -326,6 +328,8 @@ See the `LICENSE` file for more information.
 **Ostro Frontend** là ứng dụng giao diện phía client được xây dựng với mục tiêu tối ưu hiệu năng, khả năng mở rộng và trải nghiệm người dùng.
 
 Dự án sử dụng các công nghệ hiện đại như **React 19**, **Vite** và **Tailwind CSS v4** nhằm mang lại kiến trúc frontend mạnh mẽ, dễ bảo trì và phù hợp cho cả phát triển nhanh lẫn triển khai production quy mô lớn.
+
+📝 Tài liệu API: Sau khi server khởi chạy, bạn có thể truy cập tài liệu API tại đường dẫn http://localhost:5001/api-docs/#/
 
 ---
 
