@@ -7,7 +7,17 @@ import { useAuthStore } from "./useAuthStore";
 import { useSocketStore } from "./useSocketStore";
 
 const sortConversations = (conversations: Conversation[]) => {
+  const { user } = useAuthStore.getState();
+  const userId = user?._id;
+
   return [...conversations].sort((a, b) => {
+    if (userId) {
+      const aPinned = a.pinnedBy?.includes(userId) ?? false;
+      const bPinned = b.pinnedBy?.includes(userId) ?? false;
+      if (aPinned && !bPinned) return -1;
+      if (!aPinned && bPinned) return 1;
+    }
+
     const timeA =
       a.lastMessage?.createdAt || a.lastMessageAt || a.updatedAt || a.createdAt;
     const timeB =
@@ -331,6 +341,31 @@ export const useChatStore = create<ChatState>()(
           get().removeConversation(conversationId);
         } catch (error) {
           console.error("[ChatStore] Failed to leave group:", error);
+          throw error;
+        }
+      },
+
+      togglePinConversation: async (conversationId) => {
+        try {
+          const { isPinned } =
+            await chatService.togglePinConversation(conversationId);
+          const { user } = useAuthStore.getState();
+          if (!user) return;
+
+          set((state) => {
+            const conversations = state.conversations.map((c) => {
+              if (c._id === conversationId) {
+                const newPinnedBy = isPinned
+                  ? [...(c.pinnedBy || []), user._id]
+                  : (c.pinnedBy || []).filter((id) => id !== user._id);
+                return { ...c, pinnedBy: newPinnedBy };
+              }
+              return c;
+            });
+            return { conversations: sortConversations(conversations) };
+          });
+        } catch (error) {
+          console.error("[ChatStore] Failed to toggle pin:", error);
           throw error;
         }
       },
