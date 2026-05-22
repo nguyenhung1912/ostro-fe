@@ -124,7 +124,7 @@ export default function LandingPage() {
               <img
                 src="/logo.svg"
                 alt="Ostro Logo"
-                className="h-8 w-auto drop-shadow-md"
+                className="h-9 w-auto drop-shadow-md"
               />
               <span className="tracking-wide">Ostro</span>
             </Link>

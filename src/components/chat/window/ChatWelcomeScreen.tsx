@@ -13,7 +13,7 @@ const ChatWelcomeScreen = () => {
               <img
                 src="/logo.svg"
                 alt="Ostro logo"
-                className="size-12 opacity-80"
+                className="size-18 opacity-80"
               />
             </div>
           </div>
