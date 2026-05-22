@@ -57,6 +57,7 @@ const GroupChatCard = ({ convo }: { convo: Conversation }) => {
       onSelect={handleSelectConversation}
       unreadCount={unreadCount}
       timestamp={timestamp}
+      isPinned={convo.pinnedBy?.includes(user._id)}
       leftSection={
         <GroupChatAvatar participants={convo.participants} type="chat" />
       }
