@@ -10,13 +10,17 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
 import { authToast } from "@/lib/authUtils";
+import {
+  PASSWORD_POLICY_MESSAGE,
+  strongPasswordPattern,
+} from "@/lib/passwordPolicy";
 
 const signUpSchema = z.object({
   firstname: z.string().min(1, "Tên bắt buộc phải có"),
   lastname: z.string().min(1, "Họ bắt buộc phải có"),
   username: z.string().min(3, "Tên đăng nhập phải có ít nhất 3 ký tự"),
   email: z.string().email("Email không hợp lệ"),
-  password: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
+  password: z.string().regex(strongPasswordPattern, PASSWORD_POLICY_MESSAGE),
 });
 
 type SignUpFormValues = z.infer<typeof signUpSchema>;
