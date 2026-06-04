@@ -78,7 +78,11 @@ const MessageItem = ({
       await recallMessage(message._id, message.conversationId);
     } catch (error) {
       console.error("[MessageItem] Failed to recall message:", error);
-      sileo.error({ title: "Không thể thu hồi", description: "Tin nhắn đã quá thời hạn được phép thu hồi hoặc đã bị xoá." });
+      sileo.error({
+        title: "Không thể thu hồi",
+        description:
+          "Tin nhắn đã quá thời hạn được phép thu hồi hoặc đã bị xoá.",
+      });
     }
   };
 
@@ -139,12 +143,13 @@ const MessageItem = ({
                     message.isOwn ? "chat-bubble-sent" : "chat-bubble-received",
                   )}
                 >
-                  {message.imgUrl ? (
+                  {message.imgUrl && (
                     <ImageMessageBubble
                       message={message}
-                      isLastInGroup={isLastInGroup}
+                      isLastInGroup={!message.content && isLastInGroup}
                     />
-                  ) : (
+                  )}
+                  {message.content && (
                     <TextMessageBubble
                       message={message}
                       searchKeyword={searchKeyword}
