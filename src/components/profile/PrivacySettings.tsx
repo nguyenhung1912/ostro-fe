@@ -13,12 +13,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUserStore } from "@/stores/useUserStore";
+import {
+  PASSWORD_POLICY_MESSAGE,
+  strongPasswordPattern,
+} from "@/lib/passwordPolicy";
 
 const passwordSchema = z
   .object({
     currentPassword: z.string().min(1, "Nhập mật khẩu hiện tại"),
-    newPassword: z.string().min(6, "Mật khẩu mới phải có ít nhất 6 ký tự"),
-    confirmPassword: z.string().min(6, "Xác nhận mật khẩu mới"),
+    newPassword: z
+      .string()
+      .regex(strongPasswordPattern, PASSWORD_POLICY_MESSAGE),
+    confirmPassword: z.string().min(1, "Xác nhận mật khẩu mới"),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: "Mật khẩu xác nhận không khớp",
