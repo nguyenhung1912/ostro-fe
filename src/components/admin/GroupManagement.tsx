@@ -148,9 +148,9 @@ export function GroupManagement() {
         ) : (
           <>
             <div className="overflow-x-auto beautiful-scrollbar">
-              <table className="w-full text-sm text-left border-collapse">
+              <table className="w-full text-sm md:text-[15px] text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-border/40 bg-secondary/15 text-xs text-muted-foreground uppercase font-semibold">
+                  <tr className="border-b border-border/40 bg-secondary/15 text-xs md:text-sm text-muted-foreground uppercase font-bold">
                     <th className="px-6 py-4">Tên nhóm</th>
                     <th className="px-6 py-4">Người tạo</th>
                     <th className="px-6 py-4">Số thành viên</th>
@@ -174,15 +174,15 @@ export function GroupManagement() {
                         key={group._id}
                         className="hover:bg-secondary/5 transition-colors"
                       >
-                        <td className="px-6 py-4 font-semibold text-foreground">
+                        <td className="px-6 py-4 font-bold text-foreground text-sm md:text-base">
                           {group.group.name || "Nhóm không tên"}
                         </td>
-                        <td className="px-6 py-4 text-muted-foreground">
+                        <td className="px-6 py-4 text-muted-foreground text-sm md:text-[15px]">
                           {group.group.createdBy?.displayName ||
                             group.group.createdBy?.username ||
                             "Hệ thống"}
                         </td>
-                        <td className="px-6 py-4 text-muted-foreground font-medium">
+                        <td className="px-6 py-4 text-muted-foreground font-semibold text-sm md:text-[15px]">
                           {memberCount} thành viên
                         </td>
                         <td className="px-6 py-4">

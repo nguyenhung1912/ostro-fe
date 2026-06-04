@@ -212,10 +212,10 @@ export function AnalyticsMetrics() {
       {/* Chart 1: Message Volume */}
       <Card className="liquid-glass border-border/40 bg-card overflow-hidden">
         <CardHeader>
-          <CardTitle className="text-sm font-semibold tracking-wide text-foreground">
+          <CardTitle className="text-sm md:text-base font-bold tracking-wide text-foreground">
             Lưu lượng tin nhắn (7 ngày qua)
           </CardTitle>
-          <CardDescription className="text-xs text-muted-foreground">
+          <CardDescription className="text-xs md:text-sm text-muted-foreground">
             Tổng số tin nhắn được gửi đi hàng ngày trên hệ thống.
           </CardDescription>
         </CardHeader>
@@ -230,10 +230,10 @@ export function AnalyticsMetrics() {
       {/* Chart 2: Registration Growth */}
       <Card className="liquid-glass border-border/40 bg-card overflow-hidden">
         <CardHeader>
-          <CardTitle className="text-sm font-semibold tracking-wide text-foreground">
+          <CardTitle className="text-sm md:text-base font-bold tracking-wide text-foreground">
             Tốc độ tăng trưởng tài khoản (14 ngày qua)
           </CardTitle>
-          <CardDescription className="text-xs text-muted-foreground">
+          <CardDescription className="text-xs md:text-sm text-muted-foreground">
             Số lượng người dùng mới đăng ký hàng ngày.
           </CardDescription>
         </CardHeader>
@@ -248,10 +248,10 @@ export function AnalyticsMetrics() {
       {/* Chart 3: Active Users Ratio */}
       <Card className="liquid-glass border-border/40 bg-card overflow-hidden lg:col-span-2">
         <CardHeader>
-          <CardTitle className="text-sm font-semibold tracking-wide text-foreground">
+          <CardTitle className="text-sm md:text-base font-bold tracking-wide text-foreground">
             Tương quan hoạt động người dùng (DAU vs MAU)
           </CardTitle>
-          <CardDescription className="text-xs text-muted-foreground">
+          <CardDescription className="text-xs md:text-sm text-muted-foreground">
             So sánh trực tiếp số lượng người dùng hoạt động trong ngày (DAU) và
             tháng (MAU).
           </CardDescription>

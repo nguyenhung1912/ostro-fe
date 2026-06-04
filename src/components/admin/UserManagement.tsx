@@ -235,7 +235,7 @@ export function UserManagement() {
             <button
               key={filter.value}
               onClick={() => setStatusFilter(filter.value)}
-              className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+              className={`px-3 py-1.5 rounded-md text-xs md:text-sm font-semibold transition-all ${
                 statusFilter === filter.value
                   ? "bg-card text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
@@ -266,9 +266,9 @@ export function UserManagement() {
         ) : (
           <>
             <div className="overflow-x-auto beautiful-scrollbar">
-              <table className="w-full text-sm text-left border-collapse table-fixed">
+              <table className="w-full text-sm md:text-[15px] text-left border-collapse table-fixed">
                 <thead>
-                  <tr className="border-b border-border/40 bg-secondary/15 text-xs text-muted-foreground uppercase font-semibold">
+                  <tr className="border-b border-border/40 bg-secondary/15 text-xs md:text-sm text-muted-foreground uppercase font-bold">
                     <th className="px-6 py-4 w-[28%]">Người dùng</th>
                     <th className="px-6 py-4 w-[24%]">Email</th>
                     <th className="px-6 py-4 w-[16%]">Trạng thái</th>
@@ -295,10 +295,10 @@ export function UserManagement() {
                             </AvatarFallback>
                           </Avatar>
                           <div className="flex flex-col min-w-0">
-                            <span className="font-semibold text-foreground truncate">
+                            <span className="font-bold text-foreground text-sm md:text-base truncate">
                               {user.displayName}
                             </span>
-                            <span className="text-xs text-muted-foreground truncate">
+                            <span className="text-xs md:text-sm text-muted-foreground truncate">
                               @{user.username}
                             </span>
                           </div>
@@ -317,7 +317,7 @@ export function UserManagement() {
                               <Button
                                 variant="outline"
                                 size="sm"
-                                className="capitalize text-xs px-2.5 py-1 h-7 border-border/40 hover:bg-secondary/10"
+                                className="capitalize text-xs md:text-sm px-3 py-1 h-8 border-border/40 hover:bg-secondary/10"
                               >
                                 {user.role}
                               </Button>
@@ -353,7 +353,7 @@ export function UserManagement() {
                             </DropdownMenuContent>
                           </DropdownMenu>
                         ) : (
-                          <span className="capitalize text-xs font-semibold text-muted-foreground">
+                          <span className="capitalize text-xs md:text-sm font-semibold text-muted-foreground">
                             {user.role}
                           </span>
                         )}

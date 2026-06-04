@@ -102,7 +102,7 @@ export default function AdminDashboardPage() {
                   Admin Dashboard
                 </h1>
               </div>
-              <p className="text-xs text-muted-foreground mt-0.5">
+              <p className="text-sm text-muted-foreground mt-1">
                 Quản lý hệ thống Ostro Chat • Quyền hạn:{" "}
                 <span className="capitalize font-semibold text-primary">
                   {user.role}
@@ -116,7 +116,7 @@ export default function AdminDashboardPage() {
               variant="outline"
               size="sm"
               onClick={() => void loadSummaryData()}
-              className="text-xs h-9 border-border/40 hover:bg-secondary/10"
+              className="text-sm h-9 px-3.5 border-border/40 hover:bg-secondary/10"
               disabled={loading}
             >
               {loading && <Loader2 className="h-3 w-3 animate-spin mr-1.5" />}
@@ -126,7 +126,7 @@ export default function AdminDashboardPage() {
         </header>
 
         {/* Dashboard Tabs Navigation */}
-        <div className="flex border-b border-border/30 gap-1 overflow-x-auto beautiful-scrollbar">
+        <div className="flex border-b border-border/30 gap-1 overflow-x-auto overflow-y-hidden">
           {(
             [
               { id: "overview", label: "Tổng quan", icon: LayoutDashboard },
@@ -140,7 +140,7 @@ export default function AdminDashboardPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-all whitespace-nowrap -mb-[2px] ${
+                className={`flex items-center gap-2 px-4 py-3 text-sm md:text-base font-semibold border-b-2 transition-all whitespace-nowrap -mb-[2px] ${
                   activeTab === tab.id
                     ? "border-primary text-primary"
                     : "border-transparent text-muted-foreground hover:text-foreground"
@@ -193,11 +193,11 @@ export default function AdminDashboardPage() {
             <div className="grid grid-cols-1 gap-6">
               {/* Quick User Actions Summary Box */}
               <div className="liquid-glass border border-border/40 rounded-xl p-6 space-y-4">
-                <div className="flex items-center gap-2 text-foreground font-semibold text-base">
-                  <LayoutDashboard className="h-4 w-4 text-primary" />
+                <div className="flex items-center gap-2 text-foreground font-bold text-lg">
+                  <LayoutDashboard className="h-5 w-5 text-primary" />
                   <span>Trung tâm Điều hành Hệ thống</span>
                 </div>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   Chào mừng bạn quay trở lại trang quản trị. Tại đây, bạn có
                   quyền theo dõi lưu lượng hoạt động của máy chủ, kiểm duyệt các
                   nhóm chat công khai hoặc riêng tư, phân quyền cho điều phối
@@ -206,19 +206,19 @@ export default function AdminDashboardPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
                   <Button
                     onClick={() => setActiveTab("users")}
-                    className="h-10 text-xs text-foreground bg-primary/10 border border-primary/20 hover:bg-primary/20 cursor-pointer"
+                    className="h-10 text-sm text-foreground bg-primary/10 border border-primary/20 hover:bg-primary/20 cursor-pointer font-medium"
                   >
                     Đi đến Quản lý Người dùng
                   </Button>
                   <Button
                     onClick={() => setActiveTab("groups")}
-                    className="h-10 text-xs text-foreground bg-secondary/20 border border-border/40 hover:bg-secondary/35 cursor-pointer"
+                    className="h-10 text-sm text-foreground bg-secondary/20 border border-border/40 hover:bg-secondary/35 cursor-pointer font-medium"
                   >
-                    Đi đến Quản lý Phòng/Nhóm
+                    Đi đến Quản lý Nhóm
                   </Button>
                   <Button
                     onClick={() => setActiveTab("charts")}
-                    className="h-10 text-xs text-foreground bg-secondary/20 border border-border/40 hover:bg-secondary/35 cursor-pointer"
+                    className="h-10 text-sm text-foreground bg-secondary/20 border border-border/40 hover:bg-secondary/35 cursor-pointer font-medium"
                   >
                     Xem Biểu đồ Phân tích
                   </Button>

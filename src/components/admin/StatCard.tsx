@@ -22,7 +22,7 @@ export function StatCard({
   return (
     <Card className="liquid-glass border-border/40 backdrop-blur-md transition-all duration-300 hover:scale-[1.01] hover:border-primary/20">
       <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-        <CardTitle className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+        <CardTitle className="text-xs md:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
           {title}
         </CardTitle>
         <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
@@ -30,11 +30,11 @@ export function StatCard({
         </div>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold tracking-tight text-foreground">
+        <div className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">
           {value}
         </div>
         {(description || trend) && (
-          <div className="flex items-center gap-1.5 mt-1 text-xs">
+          <div className="flex items-center gap-1.5 mt-1.5 text-xs md:text-[13px]">
             {trend && (
               <span
                 className={
