@@ -7,6 +7,9 @@ export interface User {
   coverUrl?: string;
   bio?: string;
   phone?: string;
+  role?: "admin" | "moderator" | "user";
+  isBanned?: boolean;
+  isActivated?: boolean;
   createdAt?: string;
   updatedAt?: string;
 }
