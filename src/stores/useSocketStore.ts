@@ -23,10 +23,6 @@ export const useSocketStore = create<SocketState>((set, get) => ({
 
     set({ socket });
 
-    socket.on("connect", () => {
-      console.log("[SocketStore] Successfully established connection.");
-    });
-
     // online users
     socket.on("online-users", (userIds) => {
       set({ onlineUsers: userIds });
