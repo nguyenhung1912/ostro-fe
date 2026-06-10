@@ -230,7 +230,7 @@ export default function LandingPage() {
           <TwitterIcon className="h-5 w-5" />
         </a>
         <a
-          href="https://ostro.chat"
+          href="#"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Ghé thăm trang web chính thức của Ostro"
