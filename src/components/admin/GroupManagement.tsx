@@ -132,7 +132,7 @@ export function GroupManagement() {
       </div>
 
       {/* Groups Grid / Table */}
-      <div className="rounded-xl border border-border/45 bg-card overflow-hidden">
+      <div className="rounded-xl border border-white/60 bg-white/40 backdrop-blur-xl shadow-lg shadow-black/5 overflow-hidden dark:bg-card dark:border-border/45 dark:shadow-none">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -150,7 +150,7 @@ export function GroupManagement() {
             <div className="overflow-x-auto beautiful-scrollbar">
               <table className="w-full text-sm md:text-[15px] text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-border/40 bg-secondary/15 text-xs md:text-sm text-muted-foreground uppercase font-bold">
+                  <tr className="border-b border-border/70 bg-secondary/40 text-xs md:text-sm text-muted-foreground uppercase font-bold dark:border-b-border/40 dark:bg-secondary/15">
                     <th className="px-6 py-4">Tên nhóm</th>
                     <th className="px-6 py-4">Người tạo</th>
                     <th className="px-6 py-4">Số thành viên</th>
@@ -172,7 +172,7 @@ export function GroupManagement() {
                     return (
                       <tr
                         key={group._id}
-                        className="hover:bg-secondary/5 transition-colors"
+                        className="hover:bg-secondary/20 transition-colors dark:hover:bg-secondary/5"
                       >
                         <td className="px-6 py-4 font-bold text-foreground text-sm md:text-base">
                           {group.group.name || "Nhóm không tên"}

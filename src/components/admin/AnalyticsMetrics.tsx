@@ -210,7 +210,7 @@ export function AnalyticsMetrics() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Chart 1: Message Volume */}
-      <Card className="liquid-glass border-border/40 bg-card overflow-hidden">
+      <Card className="bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg shadow-black/5 overflow-hidden dark:bg-card dark:border-border/40 dark:shadow-none dark:liquid-glass">
         <CardHeader>
           <CardTitle className="text-sm md:text-base font-bold tracking-wide text-foreground">
             Lưu lượng tin nhắn (7 ngày qua)
@@ -228,7 +228,7 @@ export function AnalyticsMetrics() {
       </Card>
 
       {/* Chart 2: Registration Growth */}
-      <Card className="liquid-glass border-border/40 bg-card overflow-hidden">
+      <Card className="bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg shadow-black/5 overflow-hidden dark:bg-card dark:border-border/40 dark:shadow-none dark:liquid-glass">
         <CardHeader>
           <CardTitle className="text-sm md:text-base font-bold tracking-wide text-foreground">
             Tốc độ tăng trưởng tài khoản (14 ngày qua)
@@ -246,7 +246,7 @@ export function AnalyticsMetrics() {
       </Card>
 
       {/* Chart 3: Active Users Ratio */}
-      <Card className="liquid-glass border-border/40 bg-card overflow-hidden lg:col-span-2">
+      <Card className="bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg shadow-black/5 overflow-hidden lg:col-span-2 dark:bg-card dark:border-border/40 dark:shadow-none dark:liquid-glass">
         <CardHeader>
           <CardTitle className="text-sm md:text-base font-bold tracking-wide text-foreground">
             Tương quan hoạt động người dùng (DAU vs MAU)

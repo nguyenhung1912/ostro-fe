@@ -222,7 +222,7 @@ export function UserManagement() {
         </div>
 
         {/* Status filters */}
-        <div className="flex flex-wrap gap-1.5 p-1 bg-secondary/30 rounded-lg border border-border/40 w-fit">
+        <div className="flex flex-wrap gap-1.5 p-1 bg-secondary/50 rounded-lg border border-border/70 w-fit dark:bg-secondary/30 dark:border-border/40">
           {(
             [
               { label: "Tất cả", value: "all" },
@@ -248,7 +248,7 @@ export function UserManagement() {
       </div>
 
       {/* Users Table */}
-      <div className="rounded-xl border border-border/45 bg-card overflow-hidden">
+      <div className="rounded-xl border border-white/60 bg-white/40 backdrop-blur-xl shadow-lg shadow-black/5 overflow-hidden dark:bg-card dark:border-border/45 dark:shadow-none">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -268,7 +268,7 @@ export function UserManagement() {
             <div className="overflow-x-auto beautiful-scrollbar">
               <table className="w-full text-sm md:text-[15px] text-left border-collapse table-fixed">
                 <thead>
-                  <tr className="border-b border-border/40 bg-secondary/15 text-xs md:text-sm text-muted-foreground uppercase font-bold">
+                  <tr className="border-b border-border/70 bg-secondary/40 text-xs md:text-sm text-muted-foreground uppercase font-bold dark:border-b-border/40 dark:bg-secondary/15">
                     <th className="px-6 py-4 w-[28%]">Người dùng</th>
                     <th className="px-6 py-4 w-[24%]">Email</th>
                     <th className="px-6 py-4 w-[16%]">Trạng thái</th>
@@ -281,7 +281,7 @@ export function UserManagement() {
                   {paginatedUsers.map((user) => (
                     <tr
                       key={user._id}
-                      className="hover:bg-secondary/5 transition-colors"
+                      className="hover:bg-secondary/20 transition-colors dark:hover:bg-secondary/5"
                     >
                       <td className="px-6 py-4 overflow-hidden text-ellipsis">
                         <div className="flex items-center gap-3">

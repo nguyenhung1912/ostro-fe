@@ -126,7 +126,7 @@ export default function AdminDashboardPage() {
         </header>
 
         {/* Dashboard Tabs Navigation */}
-        <div className="flex border-b border-border/30 gap-1 overflow-x-auto overflow-y-hidden">
+        <div className="flex border-b border-border/60 gap-1 overflow-x-auto overflow-y-hidden dark:border-border/30">
           {(
             [
               { id: "overview", label: "Tổng quan", icon: LayoutDashboard },
@@ -192,7 +192,7 @@ export default function AdminDashboardPage() {
           {activeTab === "overview" && (
             <div className="grid grid-cols-1 gap-6">
               {/* Quick User Actions Summary Box */}
-              <div className="liquid-glass border border-border/40 rounded-xl p-6 space-y-4">
+              <div className="bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg shadow-black/5 rounded-xl p-6 space-y-4 dark:bg-transparent dark:border-border/40 dark:shadow-none dark:liquid-glass">
                 <div className="flex items-center gap-2 text-foreground font-bold text-lg">
                   <LayoutDashboard className="h-5 w-5 text-primary" />
                   <span>Trung tâm Điều hành Hệ thống</span>
