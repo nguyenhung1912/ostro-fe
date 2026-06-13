@@ -8,9 +8,8 @@ export interface AdminUser {
   avatarUrl?: string;
   role: "admin" | "moderator" | "user";
   isBanned: boolean;
-  isActivated: boolean;
   createdAt: string;
-  status: "online" | "offline" | "banned" | "inactive";
+  status: "online" | "offline" | "banned";
 }
 
 export interface AdminGroupParticipant {

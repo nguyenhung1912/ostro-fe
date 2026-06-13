@@ -36,7 +36,7 @@ export function UserManagement() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<
-    "all" | "online" | "offline" | "banned" | "inactive"
+    "all" | "online" | "offline" | "banned"
   >("all");
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -196,12 +196,6 @@ export function UserManagement() {
             Banned
           </Badge>
         );
-      case "inactive":
-        return (
-          <Badge className="bg-amber-500/15 text-amber-500 hover:bg-amber-500/20 border-none font-medium capitalize">
-            Chưa kích hoạt
-          </Badge>
-        );
       default:
         return null;
     }
@@ -229,7 +223,6 @@ export function UserManagement() {
               { label: "Online", value: "online" },
               { label: "Offline", value: "offline" },
               { label: "Banned", value: "banned" },
-              { label: "Chưa kích hoạt", value: "inactive" },
             ] as const
           ).map((filter) => (
             <button
