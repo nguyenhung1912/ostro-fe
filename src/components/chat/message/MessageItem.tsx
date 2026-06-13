@@ -120,6 +120,13 @@ const MessageItem = ({
 
         {/* message & actions wrapper */}
         <div className="flex flex-col gap-1 max-w-[calc(100%-3rem)]">
+          {selectedConvo.type === "group" && !message.isOwn && isGroupBreak && (
+            <span className="text-[11px] font-semibold text-muted-foreground/85 select-none ml-1 mb-0.5 animate-in fade-in duration-200">
+              {participant?.nickname ||
+                participant?.displayName ||
+                "Thành viên"}
+            </span>
+          )}
           {isDeleted ? (
             <div
               className={cn(
