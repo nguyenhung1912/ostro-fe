@@ -20,7 +20,10 @@ const signUpSchema = z.object({
   lastname: z.string().min(1, "Họ bắt buộc phải có"),
   username: z.string().min(3, "Tên đăng nhập phải có ít nhất 3 ký tự"),
   email: z.string().email("Email không hợp lệ"),
-  password: z.string().regex(strongPasswordPattern, PASSWORD_POLICY_MESSAGE),
+  password: z
+    .string()
+    .min(10, PASSWORD_POLICY_MESSAGE)
+    .regex(strongPasswordPattern, PASSWORD_POLICY_MESSAGE),
 });
 
 type SignUpFormValues = z.infer<typeof signUpSchema>;

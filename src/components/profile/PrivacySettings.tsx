@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUserStore } from "@/stores/useUserStore";
+import { useAuthStore } from "@/stores/useAuthStore";
 import {
   PASSWORD_POLICY_MESSAGE,
   strongPasswordPattern,
@@ -23,6 +24,7 @@ const passwordSchema = z
     currentPassword: z.string().min(1, "Nhập mật khẩu hiện tại"),
     newPassword: z
       .string()
+      .min(10, PASSWORD_POLICY_MESSAGE)
       .regex(strongPasswordPattern, PASSWORD_POLICY_MESSAGE),
     confirmPassword: z.string().min(1, "Xác nhận mật khẩu mới"),
   })
@@ -31,18 +33,35 @@ const passwordSchema = z
     path: ["confirmPassword"],
   });
 
-const deleteSchema = z.object({
-  password: z.string().min(1, "Nhập mật khẩu để xoá tài khoản"),
-  confirmText: z.literal("DELETE", {
-    error: "Nhập DELETE để xác nhận",
-  }),
-});
+const getDeleteSchema = (isGoogleUser: boolean) =>
+  z
+    .object({
+      password: z.string().optional(),
+      confirmText: z.literal("DELETE", {
+        error: "Nhập DELETE để xác nhận",
+      }),
+    })
+    .refine(
+      (data) => {
+        if (!isGoogleUser && !data.password) {
+          return false;
+        }
+        return true;
+      },
+      {
+        message: "Nhập mật khẩu để xoá tài khoản",
+        path: ["password"],
+      },
+    );
 
 type PasswordFormValues = z.infer<typeof passwordSchema>;
-type DeleteFormValues = z.infer<typeof deleteSchema>;
+type DeleteFormValues = z.infer<ReturnType<typeof getDeleteSchema>>;
 
 const PrivacySettings = () => {
+  const { user } = useAuthStore();
+  const isGoogleUser = !!user?.googleId;
   const { changePassword, deleteAccount } = useUserStore();
+
   const passwordForm = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: {
@@ -51,8 +70,9 @@ const PrivacySettings = () => {
       confirmPassword: "",
     },
   });
+
   const deleteForm = useForm<DeleteFormValues>({
-    resolver: zodResolver(deleteSchema),
+    resolver: zodResolver(getDeleteSchema(isGoogleUser)),
     defaultValues: {
       password: "",
       confirmText: "" as DeleteFormValues["confirmText"],
@@ -68,7 +88,7 @@ const PrivacySettings = () => {
   };
 
   const handleDeleteAccount = async (data: DeleteFormValues) => {
-    await deleteAccount(data.password);
+    await deleteAccount(data.password ?? "");
   };
 
   return (
@@ -84,62 +104,69 @@ const PrivacySettings = () => {
       </CardHeader>
 
       <CardContent className="space-y-6">
-        <form
-          onSubmit={passwordForm.handleSubmit(handleChangePassword)}
-          className="space-y-4"
+        {!isGoogleUser && (
+          <form
+            onSubmit={passwordForm.handleSubmit(handleChangePassword)}
+            className="space-y-4"
+          >
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="space-y-2 md:col-span-2">
+                <Label htmlFor="currentPassword">Mật khẩu hiện tại</Label>
+                <Input
+                  id="currentPassword"
+                  type="password"
+                  {...passwordForm.register("currentPassword")}
+                />
+                {passwordForm.formState.errors.currentPassword && (
+                  <p className="error-message">
+                    {passwordForm.formState.errors.currentPassword.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="newPassword">Mật khẩu mới</Label>
+                <Input
+                  id="newPassword"
+                  type="password"
+                  {...passwordForm.register("newPassword")}
+                />
+                {passwordForm.formState.errors.newPassword && (
+                  <p className="error-message">
+                    {passwordForm.formState.errors.newPassword.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">Xác nhận mật khẩu mới</Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  {...passwordForm.register("confirmPassword")}
+                />
+                {passwordForm.formState.errors.confirmPassword && (
+                  <p className="error-message">
+                    {passwordForm.formState.errors.confirmPassword.message}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              disabled={passwordForm.formState.isSubmitting}
+            >
+              {passwordForm.formState.isSubmitting
+                ? "Đang đổi mật khẩu..."
+                : "Đổi mật khẩu"}
+            </Button>
+          </form>
+        )}
+
+        <div
+          className={`pt-5 ${!isGoogleUser ? "border-t border-border/50" : ""}`}
         >
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="currentPassword">Mật khẩu hiện tại</Label>
-              <Input
-                id="currentPassword"
-                type="password"
-                {...passwordForm.register("currentPassword")}
-              />
-              {passwordForm.formState.errors.currentPassword && (
-                <p className="error-message">
-                  {passwordForm.formState.errors.currentPassword.message}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="newPassword">Mật khẩu mới</Label>
-              <Input
-                id="newPassword"
-                type="password"
-                {...passwordForm.register("newPassword")}
-              />
-              {passwordForm.formState.errors.newPassword && (
-                <p className="error-message">
-                  {passwordForm.formState.errors.newPassword.message}
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Xác nhận mật khẩu mới</Label>
-              <Input
-                id="confirmPassword"
-                type="password"
-                {...passwordForm.register("confirmPassword")}
-              />
-              {passwordForm.formState.errors.confirmPassword && (
-                <p className="error-message">
-                  {passwordForm.formState.errors.confirmPassword.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <Button type="submit" disabled={passwordForm.formState.isSubmitting}>
-            {passwordForm.formState.isSubmitting
-              ? "Đang đổi mật khẩu..."
-              : "Đổi mật khẩu"}
-          </Button>
-        </form>
-
-        <div className="border-t border-border/50 pt-5">
           <h4 className="mb-3 flex items-center gap-2 font-medium text-destructive">
             <Trash2 className="size-4" />
             Khu vực nguy hiểm
@@ -149,21 +176,23 @@ const PrivacySettings = () => {
             onSubmit={deleteForm.handleSubmit(handleDeleteAccount)}
             className="space-y-4"
           >
-            <div className="space-y-2">
-              <Label htmlFor="deletePassword">
-                Vui lòng nhập lại mật khẩu của bạn, để xác thực
-              </Label>
-              <Input
-                id="deletePassword"
-                type="password"
-                {...deleteForm.register("password")}
-              />
-              {deleteForm.formState.errors.password && (
-                <p className="error-message">
-                  {deleteForm.formState.errors.password.message}
-                </p>
-              )}
-            </div>
+            {!isGoogleUser && (
+              <div className="space-y-2">
+                <Label htmlFor="deletePassword">
+                  Vui lòng nhập lại mật khẩu của bạn, để xác thực
+                </Label>
+                <Input
+                  id="deletePassword"
+                  type="password"
+                  {...deleteForm.register("password")}
+                />
+                {deleteForm.formState.errors.password && (
+                  <p className="error-message">
+                    {deleteForm.formState.errors.password.message}
+                  </p>
+                )}
+              </div>
+            )}
 
             <div className="space-y-2">
               <Label htmlFor="confirmText">
