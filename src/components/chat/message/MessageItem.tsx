@@ -146,7 +146,7 @@ const MessageItem = ({
               <div className="relative">
                 <div
                   className={cn(
-                    "text-sm leading-relaxed break-words relative",
+                    "text-sm leading-relaxed wrap-break-word relative",
                     message.isOwn ? "chat-bubble-sent" : "chat-bubble-received",
                   )}
                 >

@@ -169,7 +169,7 @@
   /* Legacy Glass Utilities - to be removed from components */
   .glass,
   .glass-panel {
-    @apply bg-background border border-border rounded-[var(--radius)] shadow-none;
+    @apply bg-background border border-border rounded-lg shadow-none;
   }
 
   /* Chat bubble variants */
@@ -194,10 +194,10 @@
 
   /* Status indicators */
   .status-online {
-    @apply bg-[hsl(var(--online))] border-[2px] border-background rounded-full;
+    @apply bg-[hsl(var(--online))] border-2 border-background rounded-full;
   }
   .status-offline {
-    @apply bg-[hsl(var(--offline))] border-[2px] border-background rounded-full;
+    @apply bg-[hsl(var(--offline))] border-2 border-background rounded-full;
   }
 
   /* Scrollbar - Minimalist */

@@ -77,19 +77,19 @@ export default function AdminDashboardPage() {
       {/* Absolute Mesh Gradients */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
         {/* Light Mode Blobs */}
-        <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-pink-500/20 rounded-full blur-[120px] dark:hidden" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-violet-600/20 rounded-full blur-[120px] dark:hidden" />
-        <div className="absolute top-[30%] left-[20%] w-[400px] h-[400px] bg-indigo-400/15 rounded-full blur-[100px] dark:hidden" />
+        <div className="absolute top-[-10%] right-[-10%] w-150 h-150 bg-pink-500/20 rounded-full blur-[120px] dark:hidden" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-150 h-150 bg-violet-600/20 rounded-full blur-[120px] dark:hidden" />
+        <div className="absolute top-[30%] left-[20%] w-100 h-100 bg-indigo-400/15 rounded-full blur-[100px] dark:hidden" />
 
         {/* Dark Mode Blobs & 3D Bubbles */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-600/25 rounded-full blur-[120px] hidden dark:block" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/25 rounded-full blur-[120px] hidden dark:block" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-pink-600/15 rounded-full blur-[150px] hidden dark:block" />
-        <div className="absolute top-[10%] left-[5%] w-[180px] h-[180px] dark-bubble hidden dark:block opacity-40" />
-        <div className="absolute top-[5%] right-[25%] w-[80px] h-[80px] dark-bubble hidden dark:block opacity-30" />
-        <div className="absolute top-[35%] left-[-2%] w-[240px] h-[240px] dark-bubble hidden dark:block opacity-35" />
-        <div className="absolute bottom-[10%] right-[15%] w-[300px] h-[300px] dark-bubble hidden dark:block opacity-45" />
-        <div className="absolute bottom-[5%] left-[40%] w-[150px] h-[150px] dark-bubble hidden dark:block opacity-30" />
+        <div className="absolute top-0 left-1/4 w-125 h-125 bg-purple-600/25 rounded-full blur-[120px] hidden dark:block" />
+        <div className="absolute bottom-0 right-1/4 w-125 h-125 bg-blue-600/25 rounded-full blur-[120px] hidden dark:block" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-pink-600/15 rounded-full blur-[150px] hidden dark:block" />
+        <div className="absolute top-[10%] left-[5%] w-45 h-45 dark-bubble hidden dark:block opacity-40" />
+        <div className="absolute top-[5%] right-[25%] w-20 h-20 dark-bubble hidden dark:block opacity-30" />
+        <div className="absolute top-[35%] left-[-2%] w-60 h-60 dark-bubble hidden dark:block opacity-35" />
+        <div className="absolute bottom-[10%] right-[15%] w-75 h-75 dark-bubble hidden dark:block opacity-45" />
+        <div className="absolute bottom-[5%] left-[40%] w-37.5 h-37.5 dark-bubble hidden dark:block opacity-30" />
       </div>
 
       <div className="max-w-7xl mx-auto space-y-8 relative z-10 bg-white/40 border border-white/50 backdrop-blur-2xl shadow-glass rounded-2xl p-6 md:p-8 dark:bg-black/35 dark:border-white/10 dark:backdrop-blur-3xl dark:shadow-2xl">
@@ -151,7 +151,7 @@ export default function AdminDashboardPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-3 text-sm md:text-base font-semibold border-b-2 transition-all whitespace-nowrap -mb-[2px] ${
+                className={`flex items-center gap-2 px-4 py-3 text-sm md:text-base font-semibold border-b-2 transition-all whitespace-nowrap -mb-0.5 ${
                   activeTab === tab.id
                     ? "border-primary text-primary"
                     : "border-transparent text-muted-foreground hover:text-foreground"

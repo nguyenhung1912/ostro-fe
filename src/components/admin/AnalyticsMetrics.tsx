@@ -219,7 +219,7 @@ export function AnalyticsMetrics() {
             Tổng số tin nhắn được gửi đi hàng ngày trên hệ thống.
           </CardDescription>
         </CardHeader>
-        <CardContent className="h-[250px] w-full pb-4">
+        <CardContent className="h-62.5 w-full pb-4">
           <Line
             data={messageVolumeData}
             options={chartOptions as ChartOptions<"line">}
@@ -237,7 +237,7 @@ export function AnalyticsMetrics() {
             Số lượng người dùng mới đăng ký hàng ngày.
           </CardDescription>
         </CardHeader>
-        <CardContent className="h-[250px] w-full pb-4">
+        <CardContent className="h-62.5 w-full pb-4">
           <Bar
             data={growthData}
             options={chartOptions as ChartOptions<"bar">}
@@ -256,7 +256,7 @@ export function AnalyticsMetrics() {
             tháng (MAU).
           </CardDescription>
         </CardHeader>
-        <CardContent className="h-[250px] w-full pb-4 max-w-2xl mx-auto">
+        <CardContent className="h-62.5 w-full pb-4 max-w-2xl mx-auto">
           <Bar
             data={dauMauData}
             options={
