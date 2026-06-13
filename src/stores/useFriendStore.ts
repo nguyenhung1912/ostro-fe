@@ -18,7 +18,7 @@ const getFriendErrorMessage = (error: unknown) => {
   return "Lỗi xảy ra khi xử lý lời mời kết bạn. Hãy thử lại!";
 };
 
-export const useFriendStore = create<FriendState>((set) => ({
+export const useFriendStore = create<FriendState>((set, get) => ({
   friends: [],
   loading: false,
   receivedList: [],
@@ -77,6 +77,8 @@ export const useFriendStore = create<FriendState>((set) => ({
           (request) => request._id !== requestId,
         ),
       }));
+
+      await get().getFriends();
     } catch (error) {
       console.error("[FriendStore] Failed to accept friend request:", error);
       throw new Error(getFriendErrorMessage(error), { cause: error });

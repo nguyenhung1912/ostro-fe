@@ -10,6 +10,7 @@ export interface User {
   role?: "admin" | "moderator" | "user";
   isBanned?: boolean;
   isActivated?: boolean;
+  googleId?: string;
   createdAt?: string;
   updatedAt?: string;
 }

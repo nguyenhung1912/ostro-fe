@@ -199,18 +199,15 @@ export const useChatStore = create<ChatState>()(
       addMessage: async (message) => {
         try {
           const { user } = useAuthStore.getState();
-          const { fetchMessages } = get();
-
-          message.isOwn = message.senderId === user?._id;
-
           const convoId = message.conversationId;
 
-          let prevItems = get().messages[convoId]?.items ?? [];
-
-          if (prevItems.length === 0) {
-            await fetchMessages(message.conversationId);
-            prevItems = get().messages[convoId]?.items ?? [];
+          const convoMessagesState = get().messages[convoId];
+          if (!convoMessagesState) {
+            return;
           }
+
+          message.isOwn = message.senderId === user?._id;
+          const prevItems = convoMessagesState.items;
 
           set((state) => {
             if (prevItems.some((m) => m._id === message._id)) {
@@ -222,8 +219,8 @@ export const useChatStore = create<ChatState>()(
                 ...state.messages,
                 [convoId]: {
                   items: [...prevItems, message],
-                  hasMore: state.messages[convoId].hasMore,
-                  nextCursor: state.messages[convoId].nextCursor ?? undefined,
+                  hasMore: convoMessagesState.hasMore,
+                  nextCursor: convoMessagesState.nextCursor ?? undefined,
                 },
               },
             };
