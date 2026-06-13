@@ -134,15 +134,15 @@ export function AnalyticsMetrics() {
             family: "Inter",
             size: 10,
           },
+          // int
           precision: 0,
         },
       },
     },
   };
 
-  // 1. Message Volume Chart Data
+  // Message Volume Chart Data
   const messageDates = data.messageVolume.map((item) => {
-    // Format date string YYYY-MM-DD to DD/MM
     const parts = item.date.split("-");
     return parts.length === 3 ? `${parts[2]}/${parts[1]}` : item.date;
   });
@@ -167,7 +167,7 @@ export function AnalyticsMetrics() {
     ],
   };
 
-  // 2. Registration Growth Chart Data
+  // Registration Growth Chart Data
   const growthDates = data.registrationGrowth.map((item) => {
     const parts = item.date.split("-");
     return parts.length === 3 ? `${parts[2]}/${parts[1]}` : item.date;
@@ -188,7 +188,7 @@ export function AnalyticsMetrics() {
     ],
   };
 
-  // 3. DAU / MAU Activity comparison (Bar Chart)
+  // DAU / MAU Activity comparison (Bar Chart)
   const dauMauData = {
     labels: [
       "Số người dùng hoạt động trong ngày (DAU)",
