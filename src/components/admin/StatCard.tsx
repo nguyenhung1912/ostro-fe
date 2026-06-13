@@ -20,7 +20,7 @@ export function StatCard({
   trend,
 }: StatCardProps) {
   return (
-    <Card className="bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg shadow-black/5 transition-all duration-300 hover:scale-[1.01] hover:border-primary/20 dark:bg-card dark:border-border/40 dark:shadow-none dark:liquid-glass dark:backdrop-blur-md">
+    <Card className="bg-white/60 border border-white/50 backdrop-blur-xl shadow-glass transition-all duration-300 hover:scale-[1.01] hover:border-primary/20 dark:bg-black/60 dark:border-white/5 dark:backdrop-blur-xl dark:shadow-lg">
       <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
         <CardTitle className="text-xs md:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
           {title}

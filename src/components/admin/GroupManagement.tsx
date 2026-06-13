@@ -132,7 +132,7 @@ export function GroupManagement() {
       </div>
 
       {/* Groups Grid / Table */}
-      <div className="rounded-xl border border-white/60 bg-white/40 backdrop-blur-xl shadow-lg shadow-black/5 overflow-hidden dark:bg-card dark:border-border/45 dark:shadow-none">
+      <div className="rounded-xl border border-white/50 bg-white/60 backdrop-blur-xl shadow-glass overflow-hidden dark:bg-black/60 dark:border-white/5 dark:backdrop-blur-xl dark:shadow-lg">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-3">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -150,7 +150,7 @@ export function GroupManagement() {
             <div className="overflow-x-auto beautiful-scrollbar">
               <table className="w-full text-sm md:text-[15px] text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-border/70 bg-secondary/40 text-xs md:text-sm text-muted-foreground uppercase font-bold dark:border-b-border/40 dark:bg-secondary/15">
+                  <tr className="border-b border-zinc-200/80 bg-zinc-50 text-xs md:text-sm text-zinc-600 uppercase font-bold dark:border-b-zinc-800/80 dark:bg-zinc-950/40 dark:text-zinc-300">
                     <th className="px-6 py-4">Tên nhóm</th>
                     <th className="px-6 py-4">Người tạo</th>
                     <th className="px-6 py-4">Số thành viên</th>

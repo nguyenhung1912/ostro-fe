@@ -86,7 +86,7 @@ export function AnalyticsMetrics() {
     );
   }
 
-  // Common Options
+  // common Options
   const textColor = isDark
     ? "rgba(255, 255, 255, 0.7)"
     : "rgba(17, 24, 39, 0.7)";
@@ -155,13 +155,13 @@ export function AnalyticsMetrics() {
         fill: true,
         label: "Số tin nhắn",
         data: messageCounts,
-        borderColor: isDark ? "#3b82f6" : "#1f3c5e", // Electric blue in dark / Navy in light
+        borderColor: isDark ? "#3b82f6" : "#7c3aed",
         backgroundColor: isDark
           ? "rgba(59, 130, 246, 0.1)"
-          : "rgba(31, 60, 94, 0.06)",
+          : "rgba(124, 58, 237, 0.08)",
         tension: 0.35,
         borderWidth: 2,
-        pointBackgroundColor: isDark ? "#3b82f6" : "#1f3c5e",
+        pointBackgroundColor: isDark ? "#3b82f6" : "#7c3aed",
         pointHoverRadius: 6,
       },
     ],
@@ -182,7 +182,7 @@ export function AnalyticsMetrics() {
         data: growthCounts,
         backgroundColor: isDark
           ? "rgba(244, 63, 94, 0.75)"
-          : "rgba(217, 119, 6, 0.75)", // Pink in dark / Amber in light
+          : "rgba(124, 58, 237, 0.8)",
         borderRadius: 4,
       },
     ],
@@ -200,7 +200,7 @@ export function AnalyticsMetrics() {
         data: [data.dau, data.mau],
         backgroundColor: isDark
           ? ["rgba(59, 130, 246, 0.8)", "rgba(139, 92, 246, 0.8)"]
-          : ["rgba(31, 60, 94, 0.8)", "rgba(128, 161, 193, 0.8)"],
+          : ["rgba(124, 58, 237, 0.85)", "rgba(236, 72, 153, 0.85)"],
         borderRadius: 6,
         barThickness: 40,
       },
@@ -210,7 +210,7 @@ export function AnalyticsMetrics() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Chart 1: Message Volume */}
-      <Card className="bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg shadow-black/5 overflow-hidden dark:bg-card dark:border-border/40 dark:shadow-none dark:liquid-glass">
+      <Card className="bg-white/60 border border-white/50 backdrop-blur-xl shadow-glass overflow-hidden dark:bg-black/60 dark:border-white/5 dark:backdrop-blur-xl dark:shadow-lg">
         <CardHeader>
           <CardTitle className="text-sm md:text-base font-bold tracking-wide text-foreground">
             Lưu lượng tin nhắn (7 ngày qua)
@@ -228,7 +228,7 @@ export function AnalyticsMetrics() {
       </Card>
 
       {/* Chart 2: Registration Growth */}
-      <Card className="bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg shadow-black/5 overflow-hidden dark:bg-card dark:border-border/40 dark:shadow-none dark:liquid-glass">
+      <Card className="bg-white/60 border border-white/50 backdrop-blur-xl shadow-glass overflow-hidden dark:bg-black/60 dark:border-white/5 dark:backdrop-blur-xl dark:shadow-lg">
         <CardHeader>
           <CardTitle className="text-sm md:text-base font-bold tracking-wide text-foreground">
             Tốc độ tăng trưởng tài khoản (14 ngày qua)
@@ -246,7 +246,7 @@ export function AnalyticsMetrics() {
       </Card>
 
       {/* Chart 3: Active Users Ratio */}
-      <Card className="bg-white/40 backdrop-blur-xl border border-white/60 shadow-lg shadow-black/5 overflow-hidden lg:col-span-2 dark:bg-card dark:border-border/40 dark:shadow-none dark:liquid-glass">
+      <Card className="bg-white/60 border border-white/50 backdrop-blur-xl shadow-glass overflow-hidden lg:col-span-2 dark:bg-black/60 dark:border-white/5 dark:backdrop-blur-xl dark:shadow-lg">
         <CardHeader>
           <CardTitle className="text-sm md:text-base font-bold tracking-wide text-foreground">
             Tương quan hoạt động người dùng (DAU vs MAU)
