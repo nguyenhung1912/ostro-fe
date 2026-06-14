@@ -206,11 +206,14 @@ export const useChatStore = create<ChatState>()(
             return;
           }
 
-          message.isOwn = message.senderId === user?._id;
+          const enrichedMessage = {
+            ...message,
+            isOwn: message.senderId === user?._id,
+          };
           const prevItems = convoMessagesState.items;
 
           set((state) => {
-            if (prevItems.some((m) => m._id === message._id)) {
+            if (prevItems.some((m) => m._id === enrichedMessage._id)) {
               return state;
             }
 
@@ -218,7 +221,7 @@ export const useChatStore = create<ChatState>()(
               messages: {
                 ...state.messages,
                 [convoId]: {
-                  items: [...prevItems, message],
+                  items: [...prevItems, enrichedMessage],
                   hasMore: convoMessagesState.hasMore,
                   nextCursor: convoMessagesState.nextCursor ?? undefined,
                 },
