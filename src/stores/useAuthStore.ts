@@ -72,9 +72,6 @@ export const useAuthStore = create<AuthState>()(
           get().clearState();
           set({ loading: true });
 
-          clearPersistedSessionState();
-          useChatStore.getState().reset();
-
           const { accessToken } = await authService.signIn(username, password);
           get().setAccessToken(accessToken);
 
@@ -111,9 +108,6 @@ export const useAuthStore = create<AuthState>()(
         try {
           get().clearState();
           set({ loading: true });
-
-          clearPersistedSessionState();
-          useChatStore.getState().reset();
 
           const { accessToken } = await authService.googleSignIn(credential);
           get().setAccessToken(accessToken);

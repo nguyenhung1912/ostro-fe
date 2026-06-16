@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { Camera, Loader2 } from "lucide-react";
 import { sileo } from "sileo";
 
-const MAX_AVATAR_SIZE = 1024 * 1024;
+const MAX_AVATAR_SIZE = 1024 * 1024 * 5;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 const AvatarUploader = () => {
@@ -26,13 +26,21 @@ const AvatarUploader = () => {
     }
 
     if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
-      sileo.error({ title: "Không hỗ trợ định dạng này", description: "Ảnh đại diện chỉ có thể sử dụng định dạng JPG, PNG hoặc WebP." });
+      sileo.error({
+        title: "Không hỗ trợ định dạng này",
+        description:
+          "Ảnh đại diện chỉ có thể sử dụng định dạng JPG, PNG hoặc WebP.",
+      });
       input.value = "";
       return;
     }
 
     if (file.size > MAX_AVATAR_SIZE) {
-      sileo.error({ title: "Ảnh quá lớn", description: "Ảnh đại diện không được vượt quá 1MB. Vui lòng chọn ảnh nhỏ hơn." });
+      sileo.error({
+        title: "Ảnh quá lớn",
+        description:
+          "Ảnh đại diện không được vượt quá 5MB. Vui lòng chọn ảnh nhỏ hơn.",
+      });
       input.value = "";
       return;
     }

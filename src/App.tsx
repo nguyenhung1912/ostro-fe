@@ -7,6 +7,7 @@ import LandingPage from "./pages/LandingPage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import ChatAppPage from "./pages/ChatAppPage";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { Toaster } from "sileo";
 import { useThemeStore } from "./stores/useThemeStore";
@@ -21,7 +22,10 @@ const router = createBrowserRouter([
   { path: "/signup", element: <SignUpPage /> },
   {
     element: <ProtectedRoute />,
-    children: [{ path: "/chat", element: <ChatAppPage /> }],
+    children: [
+      { path: "/chat", element: <ChatAppPage /> },
+      { path: "/admin", element: <AdminDashboardPage /> },
+    ],
   },
   { path: "*", element: <Navigate to="/" replace /> },
 ]);

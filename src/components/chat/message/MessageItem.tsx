@@ -78,7 +78,11 @@ const MessageItem = ({
       await recallMessage(message._id, message.conversationId);
     } catch (error) {
       console.error("[MessageItem] Failed to recall message:", error);
-      sileo.error({ title: "Không thể thu hồi", description: "Tin nhắn đã quá thời hạn được phép thu hồi hoặc đã bị xoá." });
+      sileo.error({
+        title: "Không thể thu hồi",
+        description:
+          "Tin nhắn đã quá thời hạn được phép thu hồi hoặc đã bị xoá.",
+      });
     }
   };
 
@@ -116,6 +120,13 @@ const MessageItem = ({
 
         {/* message & actions wrapper */}
         <div className="flex flex-col gap-1 max-w-[calc(100%-3rem)]">
+          {selectedConvo.type === "group" && !message.isOwn && isGroupBreak && (
+            <span className="text-[11px] font-semibold text-muted-foreground/85 select-none ml-1 mb-0.5 animate-in fade-in duration-200">
+              {participant?.nickname ||
+                participant?.displayName ||
+                "Thành viên"}
+            </span>
+          )}
           {isDeleted ? (
             <div
               className={cn(
@@ -135,16 +146,17 @@ const MessageItem = ({
               <div className="relative">
                 <div
                   className={cn(
-                    "text-sm leading-relaxed break-words relative",
+                    "text-sm leading-relaxed wrap-break-word relative",
                     message.isOwn ? "chat-bubble-sent" : "chat-bubble-received",
                   )}
                 >
-                  {message.imgUrl ? (
+                  {message.imgUrl && (
                     <ImageMessageBubble
                       message={message}
-                      isLastInGroup={isLastInGroup}
+                      isLastInGroup={!message.content && isLastInGroup}
                     />
-                  ) : (
+                  )}
+                  {message.content && (
                     <TextMessageBubble
                       message={message}
                       searchKeyword={searchKeyword}

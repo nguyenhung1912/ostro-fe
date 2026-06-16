@@ -13,6 +13,7 @@ import {
   LogOut,
   Bell,
   User as UserIcon,
+  Shield,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -93,6 +94,16 @@ export function UtilityBar({
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
+                {user &&
+                  (user.role === "admin" || user.role === "moderator") && (
+                    <DropdownMenuItem
+                      onClick={() => navigate("/admin")}
+                      className="cursor-pointer font-medium text-primary dark:text-blue-400"
+                    >
+                      <Shield className="size-4 mr-2" />
+                      Admin Dashboard
+                    </DropdownMenuItem>
+                  )}
                 <DropdownMenuItem
                   onClick={() => setProfileOpen(true)}
                   className="cursor-pointer"
