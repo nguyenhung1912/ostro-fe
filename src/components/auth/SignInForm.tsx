@@ -13,7 +13,7 @@ import { authToast } from "@/lib/authUtils";
 
 const signInSchema = z.object({
   username: z.string().min(3, "Tên đăng nhập phải có ít nhất 3 ký tự"),
-  password: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
+  password: z.string().min(1, "Mật khẩu không được để trống"),
 });
 
 type SignInFormValues = z.infer<typeof signInSchema>;

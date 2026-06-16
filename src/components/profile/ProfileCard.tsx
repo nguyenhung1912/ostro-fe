@@ -30,13 +30,20 @@ const ProfileCard = ({ user }: ProfileCardProps) => {
     if (!file) return;
 
     if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-      sileo.error({ title: "Không hỗ trợ định dạng này", description: "Ảnh bìa chỉ có thể sử dụng định dạng JPG, PNG hoặc WebP." });
+      sileo.error({
+        title: "Không hỗ trợ định dạng này",
+        description: "Ảnh bìa chỉ có thể sử dụng định dạng JPG, PNG hoặc WebP.",
+      });
       input.value = "";
       return;
     }
 
-    if (file.size > 1024 * 1024) {
-      sileo.error({ title: "Ảnh bìa quá lớn", description: "Ảnh bìa không được vượt quá 1MB. Vui lòng chọn ảnh nhỏ hơn." });
+    if (file.size > 1024 * 1024 * 5) {
+      sileo.error({
+        title: "Ảnh bìa quá lớn",
+        description:
+          "Ảnh bìa không được vượt quá 5MB. Vui lòng chọn ảnh nhỏ hơn.",
+      });
       input.value = "";
       return;
     }

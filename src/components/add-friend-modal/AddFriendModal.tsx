@@ -106,7 +106,7 @@ const AddFriendModal = () => {
         </div>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-106.25">
         <DialogHeader className="mb-2">
           <DialogTitle className="flex items-center gap-2 font-semibold text-xl text-foreground">
             <UserSearch className="w-5 h-5 text-muted-foreground" />

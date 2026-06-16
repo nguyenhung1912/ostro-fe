@@ -8,7 +8,7 @@ import { useChatStore } from "@/stores/useChatStore";
 import { sileo } from "sileo";
 import { chatService } from "@/services/chatService";
 
-const MAX_MESSAGE_IMAGE_SIZE = 1024 * 1024;
+const MAX_MESSAGE_IMAGE_SIZE = 1024 * 1024 * 5;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
@@ -125,7 +125,7 @@ const MessageInput = ({ selectedConvo }: { selectedConvo: Conversation }) => {
     if (file.size > MAX_MESSAGE_IMAGE_SIZE) {
       sileo.error({
         title: "Tệp tin quá lớn",
-        description: "Chỉ có thể đính kèm ảnh có dung lượng dưới 1MB.",
+        description: "Chỉ có thể đính kèm ảnh có dung lượng dưới 5MB.",
       });
       input.value = "";
       return;

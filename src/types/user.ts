@@ -7,6 +7,9 @@ export interface User {
   coverUrl?: string;
   bio?: string;
   phone?: string;
+  role?: "admin" | "moderator" | "user";
+  isBanned?: boolean;
+  googleId?: string;
   createdAt?: string;
   updatedAt?: string;
 }
