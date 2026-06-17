@@ -17,13 +17,13 @@ interface EmojiSelection {
   native?: string;
 }
 
-const EmojiPicker = ({ onChange, children }: EmojiPickerProps) => {
+const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
   const { isDark } = useThemeStore();
 
   return (
     <Popover>
-      <PopoverTrigger asChild={!!children} className="cursor-pointer">
-        {children || <Smile className="size-4" />}
+      <PopoverTrigger className="cursor-pointer">
+        <Smile className="size-4" />
       </PopoverTrigger>
 
       <PopoverContent
