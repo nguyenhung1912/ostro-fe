@@ -53,7 +53,7 @@ export function UtilityBar({
   };
 
   return (
-    <div className="w-[64px] flex flex-col justify-between items-center py-4 bg-slate-50 text-slate-600 dark:bg-black/25 dark:text-zinc-400 border-r border-slate-200/80 dark:border-border/20 flex-shrink-0 backdrop-blur-md">
+    <div className="w-16 flex flex-col justify-between items-center py-4 bg-slate-50 text-slate-600 dark:bg-black/25 dark:text-zinc-400 border-r border-slate-200/80 dark:border-border/20 shrink-0 backdrop-blur-md">
       {/* Top: Current User Avatar with green online dot */}
       <div className="flex flex-col items-center">
         {user && (
@@ -151,7 +151,7 @@ export function UtilityBar({
           title="Tin nhắn"
         >
           {activeTab === "chats" && (
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 bg-primary dark:bg-blue-500 rounded-r-md" />
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.75 h-6 bg-primary dark:bg-blue-500 rounded-r-md" />
           )}
           <MessageSquare className="size-6" />
         </button>
@@ -168,7 +168,7 @@ export function UtilityBar({
           title="Danh bạ"
         >
           {activeTab === "contacts" && (
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 bg-primary dark:bg-blue-500 rounded-r-md" />
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.75 h-6 bg-primary dark:bg-blue-500 rounded-r-md" />
           )}
           <Contact className="size-6" />
         </button>
@@ -185,7 +185,7 @@ export function UtilityBar({
           title="Nhóm"
         >
           {activeTab === "groups" && (
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 bg-primary dark:bg-blue-500 rounded-r-md" />
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.75 h-6 bg-primary dark:bg-blue-500 rounded-r-md" />
           )}
           <Users className="size-6" />
         </button>
