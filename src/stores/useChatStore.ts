@@ -91,7 +91,14 @@ export const useChatStore = create<ChatState>()(
           set((state) => {
             const prev = state.messages[convoId]?.items ?? [];
             const merged =
-              prev.length > 0 ? [...processed, ...prev] : processed;
+              prev.length > 0
+                ? [
+                    ...processed,
+                    ...prev.filter(
+                      (p) => !processed.some((m) => m._id === p._id),
+                    ),
+                  ]
+                : processed;
 
             return {
               messages: {
@@ -201,9 +208,21 @@ export const useChatStore = create<ChatState>()(
           const { user } = useAuthStore.getState();
           const convoId = message.conversationId;
 
-          const convoMessagesState = get().messages[convoId];
+          let convoMessagesState = get().messages[convoId];
           if (!convoMessagesState) {
-            return;
+            if (convoId === get().activeConversationId) {
+              convoMessagesState = {
+                items: [],
+                hasMore: false,
+                nextCursor: null,
+              };
+            } else {
+              console.log(
+                "[ChatStore] addMessage returning early because convoMessagesState is undefined for convoId:",
+                convoId,
+              );
+              return;
+            }
           }
 
           const enrichedMessage = {

@@ -14,6 +14,7 @@ const ChatWindowLayout = () => {
     markAsSeen,
     messageLoading,
     messages,
+    fetchMessages,
   } = useChatStore();
 
   const selectedConvo =
@@ -26,6 +27,14 @@ const ChatWindowLayout = () => {
 
   const selectedConvoId = selectedConvo?._id;
   const lastMessageId = selectedConvo?.lastMessage?._id;
+
+  useEffect(() => {
+    if (!selectedConvoId) return;
+
+    if (!messages[selectedConvoId]) {
+      fetchMessages(selectedConvoId);
+    }
+  }, [selectedConvoId, fetchMessages, messages]);
 
   useEffect(() => {
     if (!selectedConvoId) return;
