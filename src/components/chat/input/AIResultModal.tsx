@@ -1,5 +1,11 @@
 import React from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Loader2 } from "lucide-react";
 
 interface AIResultModalProps {
@@ -26,16 +32,16 @@ export const AIResultModal: React.FC<AIResultModalProps> = ({
               {title}
             </span>
           </DialogTitle>
-          <DialogDescription>
-            Kết quả từ Gemini AI
-          </DialogDescription>
+          <DialogDescription>Kết quả từ Gemini AI</DialogDescription>
         </DialogHeader>
 
-        <div className="flex-1 overflow-y-auto mt-2 min-h-[100px] text-sm text-foreground/90 whitespace-pre-wrap">
+        <div className="flex-1 overflow-y-auto mt-2 min-h-25 text-sm text-foreground/90 whitespace-pre-wrap">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center h-32 space-y-3">
               <Loader2 className="w-8 h-8 animate-spin text-primary" />
-              <p className="text-muted-foreground animate-pulse">AI đang xử lý...</p>
+              <p className="text-muted-foreground animate-pulse">
+                AI đang xử lý...
+              </p>
             </div>
           ) : content ? (
             <div className="p-4 rounded-lg bg-secondary/30 border border-border">

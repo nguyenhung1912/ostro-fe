@@ -20,7 +20,7 @@ const FriendRequestItem = ({
   if (!info) return;
 
   return (
-    <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 dark:bg-white/[0.03] p-3 hover:bg-white/10 transition-all gap-4">
+    <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 dark:bg-white/3 p-3 hover:bg-white/10 transition-all gap-4">
       <div className="flex items-center gap-3">
         <UserAvatar
           type="sidebar"
