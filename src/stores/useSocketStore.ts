@@ -7,21 +7,76 @@ import type { Conversation } from "@/types/chat";
 
 const baseUrl = import.meta.env.VITE_SOCKET_URL;
 
+let isRefreshingSocket = false;
+let visibilityHandler: (() => void) | null = null;
+
+const syncChatData = async () => {
+  try {
+    await useChatStore.getState().fetchConversations();
+    const activeConversationId = useChatStore.getState().activeConversationId;
+    if (activeConversationId) {
+      await useChatStore
+        .getState()
+        .syncActiveConversation(activeConversationId);
+    }
+  } catch (err) {
+    console.error("[Socket client] Error syncing chat data:", err);
+  }
+};
+
 export const useSocketStore = create<SocketState>((set, get) => ({
   socket: null,
   onlineUsers: [],
   connectSocket: () => {
-    const accessToken = useAuthStore.getState().accessToken;
     const existingSocket = get().socket;
 
     if (existingSocket) return;
 
     const socket: Socket = io(baseUrl, {
-      auth: { token: accessToken },
-      transports: ["websocket"],
+      auth: (cb) => {
+        cb({ token: useAuthStore.getState().accessToken });
+      },
+      transports: ["websocket", "polling"],
     });
 
     set({ socket });
+
+    // Handle connection & reconnection sync
+    socket.on("connect", () => {
+      console.log("[Socket client] Connected:", socket.id);
+      syncChatData();
+    });
+
+    // Handle connect_error & expired token refresh
+    socket.on("connect_error", async (error) => {
+      console.warn("[Socket client] Connect error:", error.message);
+
+      const isUnauthorized =
+        error.message.toLowerCase().includes("unauthorized") ||
+        error.message.includes("Token");
+      const isBanned = error.message.includes("bị khóa");
+
+      if (isUnauthorized && !isBanned) {
+        if (isRefreshingSocket) return;
+        isRefreshingSocket = true;
+
+        try {
+          const refreshed = await useAuthStore
+            .getState()
+            .refresh({ showErrorToast: false });
+          if (refreshed) {
+            socket.connect();
+          }
+        } catch (refreshErr) {
+          console.error(
+            "[Socket client] Failed to refresh token upon connect_error:",
+            refreshErr,
+          );
+        } finally {
+          isRefreshingSocket = false;
+        }
+      }
+    });
 
     // online users
     socket.on("online-users", (userIds) => {
@@ -129,9 +184,33 @@ export const useSocketStore = create<SocketState>((set, get) => ({
     socket.on("rename-conversation", ({ conversation }) => {
       useChatStore.getState().updateConversation(conversation);
     });
+
+    // Handle tab visibility change (sync when tab/app becomes visible)
+    if (typeof document !== "undefined") {
+      if (visibilityHandler) {
+        document.removeEventListener("visibilitychange", visibilityHandler);
+      }
+
+      visibilityHandler = () => {
+        if (document.visibilityState === "visible") {
+          const currentSocket = get().socket;
+          if (currentSocket && !currentSocket.connected) {
+            currentSocket.connect();
+          }
+          syncChatData();
+        }
+      };
+
+      document.addEventListener("visibilitychange", visibilityHandler);
+    }
   },
 
   disconnectSocket: () => {
+    if (typeof document !== "undefined" && visibilityHandler) {
+      document.removeEventListener("visibilitychange", visibilityHandler);
+      visibilityHandler = null;
+    }
+
     const socket = get().socket;
     if (socket) {
       socket.disconnect();
