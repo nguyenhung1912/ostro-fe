@@ -118,6 +118,63 @@ export const useChatStore = create<ChatState>()(
         }
       },
 
+      syncActiveConversation: async (conversationId) => {
+        const { activeConversationId } = get();
+        const { user } = useAuthStore.getState();
+
+        const convoId = conversationId ?? activeConversationId;
+        if (!convoId) return;
+
+        try {
+          const { messages: fetched, cursor } = await chatService.fetchMessages(
+            convoId,
+            "",
+          );
+
+          const processed = fetched.map((m) => ({
+            ...m,
+            isOwn: m.senderId === user?._id,
+          }));
+
+          set((state) => {
+            const current = state.messages[convoId];
+            const prevItems = current?.items ?? [];
+
+            const map = new Map(prevItems.map((m) => [m._id, m]));
+            processed.forEach((m) => {
+              map.set(m._id, m);
+            });
+
+            const merged = Array.from(map.values()).sort(
+              (a, b) =>
+                new Date(a.createdAt).getTime() -
+                new Date(b.createdAt).getTime(),
+            );
+
+            const nextCursor = current?.nextCursor
+              ? current.nextCursor
+              : (cursor ?? null);
+            const hasMore = current?.nextCursor ? current.hasMore : !!cursor;
+
+            return {
+              messages: {
+                ...state.messages,
+                [convoId]: {
+                  items: merged,
+                  hasMore,
+                  nextCursor,
+                },
+              },
+            };
+          });
+        } catch (error) {
+          console.error(
+            "[ChatStore] Failed to sync active conversation:",
+            error,
+          );
+        }
+      },
+
       sendDirectMessage: async (recipientId, content, imgUrl) => {
         try {
           const { activeConversationId } = get();
